@@ -34,9 +34,9 @@ a deployable version of your app.
 Here's what happens when you use webdev with dart2js
 and the `--output build` option:
 
-* Deployable files appear under your app's `build/web` directory.
+* Deployable files appear under your app's `build` directory.
 * dart2js compiles your app to JavaScript, saving the result
-  in the file `build/web/main.dart.js`.
+  in the file `build/main.dart.js`.
 
 For more information, see the [documentation for webdev][webdev].
 
