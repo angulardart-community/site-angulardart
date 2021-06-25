@@ -12,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
-      # - run: ./tool/get-deps.sh
       - run: git submodule update --init --recursive
       - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
       - run: command curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
@@ -20,6 +19,7 @@ jobs:
       - run: \curl -sSL https://get.rvm.io | bash -s stable
       - run: echo "export PATH=\"$PATH:$HOME/.rvm/bin\"" >> $HOME/.bashrc
       - run: echo "export PATH=\"$PATH:$HOME/.pub-cache/bin\"" >> $HOME/.bashrc
+      - run: source $HOME/.bashrc
       - run: source ./tool/env-set.sh && ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh
       - run: ./tool/shared/deploy.sh
       - uses: FirebaseExtended/action-hosting-deploy@v0
