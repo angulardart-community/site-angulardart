@@ -7,6 +7,7 @@ gem 'jekyll', '~> 3'
 gem 'jekyll-assets', '~> 3', group: :jekyll_plugins
 gem 'jekyll-toc'
 gem 'kramdown'
+gem 'kramdown-parser-gfm'
 gem 'liquid-tag-parser'
 gem 'nokogiri'
 gem 'sassc'
