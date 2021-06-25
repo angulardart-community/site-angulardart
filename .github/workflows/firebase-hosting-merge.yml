@@ -19,6 +19,7 @@ jobs:
       - run: command curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
       - run: \curl -sSL https://get.rvm.io | bash -s stable
       - run: echo "export PATH=\"$PATH:$HOME/.rvm/bin\"" >> $HOME/.bashrc
+      - run: echo "export PATH=\"$PATH:$HOME/.pub-cache/bin\"" >> $HOME/.bashrc
       - run: source ./tool/env-set.sh
       - run: ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh
       - run: ./tool/shared/deploy.sh
