@@ -33,11 +33,11 @@ while [[ "$1" == -* ]]; do
   esac
 done
 
-  ./tool/shared/write-ci-info.sh -v
-
-    set -x;
-    npx gulp build --clean --shallow-clone-example-apps;
-    ls -l publish/examples
+bundle install
+./tool/shared/write-ci-info.sh -v
+set -x;
+npx gulp build --clean --shallow-clone-example-apps;
+ls -l publish/examples
 
 if [[ -n "$CHECKS" ]]; then
     (set -x; ./tool/check-after-site-build.sh)
