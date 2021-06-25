@@ -27,18 +27,15 @@ if [[ $ARGS == *analyze* ]]; then
   # to do it all upfront, and it doesn't (as of now) make the build run for any
   # longer.
 
-  travis_fold start refresh_code_excerpts
     echo "Running Dart analyzer over examples"
     echo
     (set -x;
       # Skip analysis of examples tests using pageloader.
       npx gulp analyze --skip=doc/t
     )
-  travis_fold end refresh_code_excerpts
 fi
 
 if [[ $ARGS == *freshness* ]]; then
-  travis_fold start refresh_code_excerpts
     echo "Doc code excerpts: checking freshness"
     echo
     (
@@ -48,17 +45,13 @@ if [[ $ARGS == *freshness* ]]; then
       printf "$errorMessage" && git diff &&
       exit 1
     )
-  travis_fold end refresh_code_excerpts
 fi
 
 if [[ $ARGS == *format* ]]; then
-  travis_fold start dartfmt
     (set -x; npx gulp dartfmt)
-  travis_fold end dartfmt
 fi
 
 if [[ $ARGS == *sdk* ]]; then
-  travis_fold start SDK_constraints
     echo "SDK constraints: checking that example constraints match angular's"
     echo
     EX_SDK_VERS=$(set -x; grep sdk: examples/ng/doc/quickstart/pubspec.yaml)
@@ -82,5 +75,4 @@ if [[ $ARGS == *sdk* ]]; then
     else
       echo "Versions match (ignoring possible -dev.x.y suffix).";
     fi
-  travis_fold end SDK_constraints
 fi

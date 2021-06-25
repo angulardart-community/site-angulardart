@@ -15,14 +15,10 @@ function pub_global_activate() {
   fi
 }
 
-travis_fold start before_install.webdev
   pub_global_activate webdev
-travis_fold end before_install.webdev
 
 if [[ -z "$TASK" || "$TASK" == build* ]]; then
-  travis_fold start before_install.dartdoc
     pub_global_activate dartdoc
-  travis_fold end before_install.dartdoc
 
   # TODO(chalin): drop the following script and use site-angular submodule.
   #   Note that changes will be necessary in env-set.sh too.

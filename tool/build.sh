@@ -33,29 +33,17 @@ while [[ "$1" == -* ]]; do
   esac
 done
 
-travis_fold start ci_info
   ./tool/shared/write-ci-info.sh -v
-travis_fold end ci_info
 
-travis_fold start build_site
-  (
     set -x;
     npx gulp build --clean --shallow-clone-example-apps;
     ls -l publish/examples
-  )
-travis_fold end build_site
 
 if [[ -n "$CHECKS" ]]; then
-  travis_fold start build_site_checks
     (set -x; ./tool/check-after-site-build.sh)
-  travis_fold end build_site_checks
 fi
 
 if [[ -n "$CHECKS" || -n "$CHECK_LINKS" ]]; then
-  travis_fold start check_links
-    (
       set -x;
       ./tool/shared/check-links.sh $EXTRA_CHECK_LINK_ARGS $*;
-    )
-  travis_fold end check_links
 fi
