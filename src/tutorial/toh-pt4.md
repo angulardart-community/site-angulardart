@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: Services
 description: Create a reusable service to manage the hero data calls.
 prevpage:
@@ -325,12 +324,8 @@ like synchronous code. Rewrite `getHeroes()`:
 
 The `Future<void>` return type is the asynchronous equivalent of `void`.
 
-Read more about asynchronous programming using `async`/`await` in the [Async
-and await][] section of the Dart language tutorial on [Asynchronous
-Programming: Futures][].
-
-[Asynchronous Programming: Futures]: {{site.dartlang}}/tutorials/language/futures
-[Async and await]: {{site.dartlang}}/tutorials/language/futures#async-and-await
+To learn more about using `async` and `await`, read the
+[asynchronous programming codelab.]({{site.dartlang}}/codelabs/async-await)
 
 <div class="l-sub-section" markdown="1">
   At the end of this page, [Appendix: Take it slow](#slow) describes what the app might be like with a poor connection.
@@ -405,4 +400,4 @@ and see how the app behaves.
 
 [dart:async]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/dart-async-library.html
 [Future]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Future-class.html
-[OnInit]: /api/angular/angular/OnInit-class
+[OnInit]: {{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/OnInit-class.html

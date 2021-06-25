@@ -164,7 +164,7 @@ function gulp_task(name, taskOrTasks) {
     : _gulp_tasks(name, taskOrTasks);
 }
 
-config.dartdocProj = genDartdocForProjs();
+config.dartdocProj = null; // genDartdocForProjs(); FIXME: remove function too
 assert.deepEqual(config._dartdocProj, Object.keys(config.repoPath));
 
 function pkgAliasToPkgName(alias) {
@@ -245,28 +245,16 @@ gulp.task('_clean-only-once', (done) =>
 
 _require('example')
 _require('pkg-vers')
-_require('dartdoc')
 _require('example-frag')
 _require('example-add-apps')
-_require('api-list')
-_require('api')
 
 gulp.task('_build-prep', gulp.series(
   '_clean-only-once',
-  // 'get-stagehand-proj', // TODO: is stagehand proj still used?
   '_examples-get-repos',
   'create-example-fragments',
 ));
 
-gulp.task('_build-api-docs', gulp.series(
-  'dartdoc',
-  'build-api-list-json',
-  'finalize-api-docs',
-  // Make API lists available for the sitemap generation:
-  _copyApiList,
-));
-
-gulp.task('_jekyll-build', () => execp(`jekyll build`));
+gulp.task('_jekyll-build', () => execp(`bundle exec jekyll build`));
 
 // Task: build
 // Options:
@@ -274,7 +262,6 @@ gulp.task('_jekyll-build', () => execp(`jekyll build`));
 
 gulp.task('build', gulp.series(
   '_build-prep',
-  '_build-api-docs',
   '_examples-cp-to-site-folder',
   '_jekyll-build',
 ));
@@ -342,15 +329,14 @@ _require('example-template')
 
 function buildWebCompilerOptions() {
   const options = [
-    '--no-release',
-    // '--fail-on-severe', // On Travis we don't have a way to conveniently clear severe errors from previous runs, so omit this option for now.
+    // We don't have a way on Travis to conveniently clear severe errors from
+    // previous runs, so omit the following option for now:
+    // '--fail-on-severe',
     // '--delete-conflicting-outputs',
-    '--output=build',
+    '--output=web:build',
   ];
-  if (argv.webCompiler === 'dartdevc') options.push(`--no-release`);
-  // if (argv.webCompiler === 'dart2js' || !argv.webCompiler) options.push(
-  //   `--define='build_web_compilers|entrypoint=dart2js_args=["--checked"]'`
-  // );
+  if (argv.webCompiler === 'dartdevc' || !argv.webCompiler) options.push(`--no-release`);
+  // if (argv.webCompiler === 'dart2js') options.push(...);
   return options.join(' ');
 }
 
@@ -546,8 +532,11 @@ function copyFiles(fileNames, destPaths, optional_destFileMode) {
   return Q.all(copyPromises);
 }
 
-function logAndExit1() {
-  console.log.apply(null, arguments);
+function logAndExit1(msg, optional_cb) {
+  console.log(msg);
+  if (optional_cb) {
+    optional_cb(new Error(`logAndExit:\n${msg}`));
+  }
   process.exit(1);
 }
 

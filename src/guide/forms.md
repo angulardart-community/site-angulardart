@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: Forms
 description: A form creates a cohesive, effective, and compelling data entry experience. An Angular form coordinates a set of data-bound user controls, tracks changes, validates input, and presents errors.
 sideNavGroup: basic
@@ -58,7 +57,7 @@ The *Hero Employment Agency* uses this form to maintain personal information abo
 Every hero needs a job. It's the company mission to match the right hero with the right crisis.
 
 Two of the three fields on this form are _required_.
-Following [material design guidelines](https://material.io/guidelines/components/text-fields.html#text-fields-layout),
+Following [material design guidelines](https://material.io/components/text-fields),
 required fields have an asterisk (*).
 
 If you delete the hero name, the form displays a validation error in an attention-grabbing style:
@@ -98,8 +97,8 @@ dependencies:
 +++ forms/pubspec.yaml
 @@ -8,2 +8,3 @@
  dependencies:
-   angular: ^5.0.0
-+  angular_forms: ^2.0.0
+   angular: ^5.3.0
++  angular_forms: ^2.1.2
 ```
 
 <?code-excerpt path-base="examples/ng/doc/forms"?>
@@ -481,13 +480,13 @@ to the _Name_ `<input>` tag and use it to display the input's CSS classes.
 
   The `spy` [template reference variable](template-syntax#ref-vars) gets bound to the
   `<input>` DOM element, whereas the `name` variable (through the `#name="ngForm"` syntax)
-  gets bound to the [NgModel]({{site.api}}/angular_forms/angular_forms/NgModel-class.html)
+  gets bound to the [NgModel]({{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgModel-class.html)
   associated with the input element.
 
-  Why "ngForm"?  A [Directive]({{site.api}}/angular/angular/Directive-class)'s
-  [exportAs]({{site.api}}/angular/angular/Directive/exportAs) property tells Angular
+  Why "ngForm"?  A [Directive]({{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/di/Directive-class.html)'s
+  [exportAs]({{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/di/Directive/exportAs.html) property tells Angular
   how to link the reference variable to the directive. You set `name` to "ngForm"
-  because the [ngModel]({{site.api}}/angular_forms/angular_forms/NgModel-class.html)
+  because the [ngModel]({{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgModel-class.html)
   directive's `exportAs` property is "ngForm".
 </div>
 
@@ -841,16 +840,16 @@ Here’s the code for the final version of the app:
   <?code-pane "web/main.dart" linenums?>
 </code-tabs>
 
-[angular_forms]: {{site.api}}/angular_forms/angular_forms/angular_forms-library
+[angular_forms]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/angular_forms-library.html
 [angular_forms@pub]: https://pub.dev/packages/angular_forms
 [Bootstrap]: https://getbootstrap.com
 [Bootstrap forms]: https://getbootstrap.com/docs/4.0/components/forms
 [Bootstrap custom-forms]: https://getbootstrap.com/docs/4.0/components/forms/#custom-forms
 [class binding]: template-syntax#class-binding
 [hidden]: https://developer.mozilla.org/docs/Web/HTML/Global_attributes/hidden
-[NgClass]: {{site.api}}/angular/angular/NgClass-class
-[NgControl]: {{site.api}}/angular_forms/angular_forms/NgControl-class
-[NgControlStatus]: {{site.api}}/angular_forms/angular_forms/NgControlStatus-class
-[NgForm]: {{site.api}}/angular_forms/angular_forms/NgForm-class
-[NgForm.form]: {{site.api}}/angular_forms/angular_forms/AbstractNgForm/form
-[NgModel]: {{site.api}}/angular_forms/angular_forms/NgModel-class
+[NgClass]: {{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/NgClass-class.html
+[NgControl]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgControl-class.html
+[NgControlStatus]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgControlStatus-class.html
+[NgForm]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgForm-class.html
+[NgForm.form]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/AbstractNgForm/form.html
+[NgModel]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/NgModel-class.html

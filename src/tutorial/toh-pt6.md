@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: HTTP
 description: Convert the service and components to use Angular's HTTP service.
 prevpage:
@@ -67,11 +66,11 @@ Update package dependencies by adding the Dart [http][] and
 --- toh-5/pubspec.yaml
 +++ toh-6/pubspec.yaml
 @@ -9,3 +9,5 @@
-   angular: ^5.0.0
-   angular_forms: ^2.0.0
-   angular_router: ^2.0.0-alpha+19
-+  http: ^0.11.0
-+  stream_transform: ^0.0.6
+   angular: ^5.3.1
+   angular_forms: ^2.1.0
+   angular_router: ^2.0.0-alpha
++  http: ^0.12.0
++  stream_transform: ^0.0.19
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-6"?>

@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: The Hero Editor
 description: Build a simple hero editor.
 prevpage:
@@ -9,6 +8,7 @@ nextpage:
   title: Master/Detail
   url: /tutorial/toh-pt2
 ---
+
 <?code-excerpt path-base="examples/ng/doc/toh-1"?>
 In this part of the tutorial, you'll modify the starter app to display
 information about a hero. Then you'll add the ability to edit the hero's data.
@@ -198,8 +198,8 @@ The `angular_forms` library comes in its own package. Add the package to the pub
 +++ toh-1/pubspec.yaml
 @@ -8,2 +8,3 @@
  dependencies:
-   angular: ^5.0.0
-+  angular_forms: ^2.0.0
+   angular: ^5.3.1
++  angular_forms: ^2.1.0
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-1"?>
@@ -265,5 +265,5 @@ You'll learn more about how to retrieve lists and bind them to the template.
 
 [angular_forms]: {{site.api}}/angular_forms
 [webdev serve]: {{site.pub-pkg}}/webdev#usage
-[formDirectives]: {{site.api}}/angular_forms/angular_forms/formDirectives-constant
+[formDirectives]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/formDirectives-constant.html
 [interpolation syntax]: /guide/template-syntax#interpolation

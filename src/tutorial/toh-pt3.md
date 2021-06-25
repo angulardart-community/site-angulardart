@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: Multiple Components
 description: Refactor the master/detail view into separate components.
 prevpage:
@@ -9,6 +8,7 @@ nextpage:
   title: Services
   url: /tutorial/toh-pt4
 ---
+
 <?code-excerpt path-base="examples/ng/doc/toh-3"?>
 The `AppComponent` is doing _everything_ at the moment.
 In the beginning, it showed details of a single hero.

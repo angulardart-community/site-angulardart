@@ -1,7 +1,8 @@
-# Site for _AngularDart_ ([angulardart.dev][])
+# AngularDart Community Website/Documentation
 
-[![Build Status](https://travis-ci.com/dart-lang/site-angulardart.svg?token=ufcxuyv7xRMxuesyaqn3&branch=master)](https://travis-ci.com/dart-lang/site-angulardart)
-[![first-timers-only SVG][]][first-timers-only]
+> The official [repo](https://github.com/angulardart/angular) has been archived and doesn't allow any changes, hence I created this fork so that we, the AngularDart community, can work on improvements by ourselves (and perhaps have our own documentation site?).
+> 
+> Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
 
 The [angulardart.dev][] site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
 
@@ -76,14 +77,14 @@ Once everything is installed, you need to do a full site build at least once:
 
 The generated site is placed in the `publish` folder. To serve this folder use:
 
-- `npx superstatic --port 4001`
+- `npx superstatic --port 4000`
 
 Or, if you aren't testing redirects, use this command (which has the bonus of
 autorefreshing your browser after edits):
 
 - `jekyll serve --livereload`
 
-To view the generated site open [localhost:4001](http://localhost:4001/)
+To view the generated site open [localhost:4000](http://localhost:4000/)
 in a browser.
 
 You can build, serve, and have a watcher for changes by running the

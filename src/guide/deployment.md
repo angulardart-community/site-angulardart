@@ -34,9 +34,9 @@ a deployable version of your app.
 Here's what happens when you use webdev with dart2js
 and the `--output build` option:
 
-* Deployable files appear under your app's `build/web` directory.
+* Deployable files appear under your app's `build` directory.
 * dart2js compiles your app to JavaScript, saving the result
-  in the file `build/web/main.dart.js`.
+  in the file `build/main.dart.js`.
 
 For more information, see the [documentation for webdev][webdev].
 
@@ -157,14 +157,7 @@ and were built using [peanut.][peanut]
 
 ### Firebase
 
-For a walk-through of using Firebase to serve a chat app, see
-[Build a Real-Time Chat Web App with Dart, Angular 2, and Firebase 3.](http://dart.academy/build-a-real-time-chat-web-app-with-dart-angular-2-and-firebase-3/)
-{% comment %}
-TODO: Instead of just pointing to that very long article,
-show how to deploy here.
-{% endcomment %}
-
-Other resources:
+AngularDart and Firebase resources:
 
 * The Google I/O 2017 codelab
   [Build an AngularDart & Firebase Web App](https://codelabs.developers.google.com/codelabs/angulardart-firebase-web-app/)

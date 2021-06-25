@@ -10,7 +10,7 @@ nextpage:
   url: /guide/testing/component/simulating-user-action
 ---
 <?code-excerpt path-base="examples/ng/doc"?>
-{% capture pageloaderObjectsApi %}{{site.pub-api}}/pageloader/latest/pageloader.objects{% endcapture %}
+{% capture pageloaderObjectsApi %}{{site.pub-api}}/pageloader/latest/webdriver{% endcapture %}
 
 {% include_relative _page-top-toc.md %}
 
@@ -40,12 +40,13 @@ Add the package to the pubspec dependencies:
 +++ toh-1/pubspec.yaml
 @@ -11,6 +12,7 @@
  dev_dependencies:
-   angular_test: ^2.0.0
-   build_runner: ^1.0.0
-   build_test: ^0.10.2
-   build_web_compilers: ^0.4.0
-+  pageloader: ^3.0.0
-   test: ^1.0.0
+   angular_test: ^2.3.0
+-  build_runner: ^1.3.0
++  build_runner: ^1.7.0
+   build_test: ^0.10.0
+   build_web_compilers: ^2.4.0
++  pageloader: ^3.2.0
+   test: ^1.6.0
 ```
 
 ## Imports
@@ -86,6 +87,7 @@ and take note of the app component template:
 
 [final code]: /tutorial/toh-pt1#the-road-youve-travelled
 
+<a id="toh-1-template"></a>
 <?code-excerpt "toh-1/lib/app_component.dart (template)" title?>
 ```
   template: '''
@@ -171,7 +173,7 @@ this:
 
 Because of its [@ByTagName()]({{pageloaderObjectsApi}}/ByTagName-class.html)
 annotation, the `_h1` field will get bound to the app component
-[template's `<h1>` element](#toh-1libapp_componentdart-template).
+[template's `<h1>` element](#toh-1-template).
 
 Other basic tags, which you'll soon see examples of, include:
 - [@ByClass()]({{pageloaderObjectsApi}}/ByClass-class.html)
@@ -220,7 +222,7 @@ for this:
   });
 ```
 
-After looking at the app component's [template](#toh-1libapp_componentdart-template),
+After looking at the app component's [template](#toh-1-template),
 you might define the PO `heroId` and `heroName` fields like this:
 
 <?code-excerpt "toh-1/test/app_po.dart (AppPO hero)" title?>

@@ -1,5 +1,4 @@
 ---
-layout: angular
 title: "Component Testing: Basics"
 description: Techniques and practices for component testing of AngularDart apps.
 sideNavGroup: advanced
@@ -28,11 +27,11 @@ under **`dev_dependencies`**, for example:
 <?code-excerpt "toh-0/pubspec.yaml (dev_dependencies)" title?>
 ```
   dev_dependencies:
-    angular_test: ^2.0.0
-    build_runner: ^1.0.0
-    build_test: ^0.10.2
-    build_web_compilers: ^0.4.0
-    test: ^1.0.0
+    angular_test: ^2.3.0
+    build_runner: ^1.3.0
+    build_test: ^0.10.0
+    build_web_compilers: ^2.4.0
+    test: ^1.6.0
 ```
 
 ## API basics: _test_() and _expect_()
@@ -113,6 +112,6 @@ complete coverage of the package capabilities, see the
 [NgTestBed]: {{site.pub-api}}/angular_test/latest/angular_test/NgTestBed-class.html
 [NgTestFixture]: {{site.pub-api}}/angular_test/latest/angular_test/NgTestFixture-class.html
 [pubspec]: {{site.dartlang}}/tools/pub/pubspec
-[setUpAll()]: {{site.pub-api}}/test/latest/test/setUpAll.html
-[tearDownAll()]: {{site.pub-api}}/test/latest/test/tearDownAll.html
+[setUpAll()]: {{site.pub-api}}/test_core/latest/test_core/setUpAll.html
+[tearDownAll()]: {{site.pub-api}}/testing/component/basics/latest/testing/component/basics/tearDownAll.html
 [test]: https://pub.dev/packages/test
