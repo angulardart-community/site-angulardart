@@ -15,6 +15,8 @@ jobs:
       # - run: ./tool/get-deps.sh
       - run: git submodule update --init --recursive
       - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - run: command curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+      - run: command curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
       - run: \curl -sSL https://get.rvm.io | bash -s stable
       - run: echo "export PATH=\"$PATH:$HOME/.rvm/bin\"" >> $HOME/.bashrc
       - run: source ./tool/env-set.sh
