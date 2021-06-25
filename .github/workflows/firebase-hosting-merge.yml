@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
-      - run: ./tool/get-deps.sh
+      # - run: ./tool/get-deps.sh
       - run: source ./tool/env-set.sh
       - run: ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh
       - uses: FirebaseExtended/action-hosting-deploy@v0
