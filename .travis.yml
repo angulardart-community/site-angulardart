@@ -109,6 +109,68 @@ deploy:
       repo: dart-lang/site-angulardart
       branch: master
       condition: $TASK == ./tool/build.sh* && $TRAVIS_DART_VERSION != *dev* && $TRAVIS_EVENT_TYPE == push
+jobs:
+  include:
+    ## STAGE ----------------------------------------------
+    - stage: cache warmup and basic checks
+      env: TASK="build"
+      script:
+      - pub get
+      - bundle install
+      - npx gulp ng-pkg-pub-get # --skip=package_name|...
+      - npx gulp _build-prep --clean --shallow-clone-example-apps
+
+    - env: TASK="check-code-and-notes"
+      # FIXME: allow example app min SDK (2.0.0) to differ from angular's
+      script: ./tool/$TASK.sh code note fmt
+
+    - env: TASK="analyze"
+      # FIXME: skip analysis of apps with component tests until we can first build them
+      script: npx gulp $TASK --skip=doc/t
+
+    ## STAGE ----------------------------------------------
+    - stage: build site and test examples
+      env: TASK="build"
+      script:
+        - pub get
+        - ./tool/shared/write-ci-info.sh -v
+        - npx gulp _build-api-docs --use-cached-api-doc --dartdoc=all
+        - npx gulp _jekyll-build _examples-cp-to-site-folder
+        - ls -l publish/examples
+        - ls -l publish/assets/bootstrap/*
+      after_script:
+        - ./tool/check-after-site-build.sh || travis_terminate 1
+        # - ./tool/deploy/pr.sh || travis_terminate 1
+      deploy:
+        - provider: script
+          script: ./tool/shared/deploy.sh --robots ok default
+          skip_cleanup: true
+          on:
+            repo: dart-lang/site-angulardart
+            branch: master
+            condition: $TASK == build*
+    - env: TASK="test $TEST_OPT1"
+      script: npx gulp $TASK
+    - env: TASK="test $TEST_OPT2"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT1"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT2"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT3"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT1 --web-compiler=dart2js"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT2 --web-compiler=dart2js"
+      script: npx gulp $TASK
+    - env: TASK="e2e $E2E_OPT3 --web-compiler=dart2js"
+      script: npx gulp $TASK
+
+    # It takes too long to cache built site.
+    # ## STAGE ----------------------------------------------
+    # - stage: deploy
+    #   env: TASK="build"
+    #   deploy: ...
 
 # Only run Travis jobs for named branches (to avoid double builds for each PR)
 branches:
