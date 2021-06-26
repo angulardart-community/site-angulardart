@@ -37,7 +37,7 @@ offer specialized support for web programming.
 : A command line interface (CLI) for Dart web app development,
   including building and serving web apps.
 
-[stagehand](https://pub.dev/packages/stagehand)
+[stagehand](https://pub.dev/packages/stagehand) _usable, but soon to be deprecated_
 : A command line tool to create a new AngularDart project, similar to `dart create` or `flutter create`. It's recommended to use `stagehand web-angular` to generate a new AngularDart project to work on.
 
 [dart2js]({{site.dartlang}}/tools/dart2js)
