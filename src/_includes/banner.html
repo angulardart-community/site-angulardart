@@ -31,10 +31,9 @@ To revert to the default banner styling, change the div class to "banner".
   {%- else -%}
     <p class="banner__text">
       <i class="material-icons"> new_releases </i>
-      The content of this site is historical.
-      See the
-      <a href="https://groups.google.com/a/dartlang.org/g/announce/c/Kz84KNBcf3U">announcement</a>
-      for updates.
+      We're currently in the progress of migrating this site from Angular version {{site.data.pkg-vers.angular.prev-vers}} to {{site.data.pkg-vers.angular.vers}}.
+      Suggestions & Contributions are welcomed!
+      Visit <a href="{{site.repo.this}}">the repo</a> for more info.
     </p>
   {% endif -%}
 </div>

@@ -4,7 +4,7 @@
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
 
-The [angulardart.dev][] site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
+The [AngularDart](https://angulardart-community.web.app) **community** site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
 
 [We welcome contributions](CONTRIBUTING.md), and we're [first-timer
 friendly](http://www.firsttimersonly.com)!
@@ -77,14 +77,14 @@ Once everything is installed, you need to do a full site build at least once:
 
 The generated site is placed in the `publish` folder. To serve this folder use:
 
-- `npx superstatic --port 4000`
+- `npx superstatic --port 4002`
 
 Or, if you aren't testing redirects, use this command (which has the bonus of
 autorefreshing your browser after edits):
 
 - `jekyll serve --livereload`
 
-To view the generated site open [localhost:4000](http://localhost:4000/)
+To view the generated site open [localhost:4002](http://localhost:4002/)
 in a browser.
 
 You can build, serve, and have a watcher for changes by running the

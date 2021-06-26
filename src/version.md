@@ -9,6 +9,8 @@ release of the [Dart SDK]({{site.dartlang}}/tools/sdk){:.no-automatic-external},
 with the **current** package versions listed in **bold** below.
 Previous and next versions of packages are also shown when they exist.
 
+Since migration to the newest version(s) is still in progress, some documentations or examples might still be in the previous version(s).
+
 <style>#pkgs span.pad { padding-right: 0.2em }</style>
 {:#pkgs}
 {% for pkgDataPair in site.data.pkg-vers -%}
