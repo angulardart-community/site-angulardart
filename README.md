@@ -39,7 +39,7 @@ submodule-cloning techniques:
 
 - Clone this repo and its submodule _at the same_, use the
   `--recurse-submodules` option:<br>
-  `git clone --recurse-submodules https://github.com/dart-lang/site-angulardart.git`
+  `git clone --recurse-submodules https://github.com/angulardart-community/site-angulardart.git`
 - If you've already cloned this repo without its submodule, then run
   this command from the repo root:<br>
   `git submodule update --init --remote`
@@ -175,7 +175,6 @@ npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src
                         # so you'll lose uncommitted work under `src`!
 ```
 
-[Build Status SVG]: https://travis-ci.com/dart-lang/site-angulardart.svg?branch=master
 [Chrome]: https://www.google.ca/chrome
 [Cloning a repository]: https://help.github.com/articles/cloning-a-repository
 [Dart]: https://www.dartlang.org/install
