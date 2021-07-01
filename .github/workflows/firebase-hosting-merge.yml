@@ -21,6 +21,7 @@ jobs:
       - run: echo "export PATH=\"$PATH:$HOME/.rvm/bin\"" >> $HOME/.bashrc
       - run: echo "export PATH=\"$PATH:$HOME/.pub-cache/bin\"" >> $HOME/.bashrc
       - run: source $HOME/.bashrc
+      - run: mkdir $HOME/tmp
       - run: /usr/bin/bash -l -c "source ./tool/env-set.sh && ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh"
       # - run: ./tool/shared/deploy.sh
       - uses: FirebaseExtended/action-hosting-deploy@v0
