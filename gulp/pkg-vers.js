@@ -65,12 +65,12 @@ module.exports = function (gulp, plugins, config) {
         updatesAvailableToReport.push(u);
       }
     })
-    if (updatesAvailableToReport.length) {
-      const msg = `Angular and/or builder package updates are available:\n${updatesAvailableToReport.join('\n')}.\n`
-        + `Aborting build task. Update ${srcData}/pubspec.yaml and example pubspecs before proceeding.\n`;
-      plugins.logAndExit1(msg, cb);
-    } else {
+    // if (updatesAvailableToReport.length) {
+    //   const msg = `Angular and/or builder package updates are available:\n${updatesAvailableToReport.join('\n')}.\n`
+    //     + `Aborting build task. Update ${srcData}/pubspec.yaml and example pubspecs before proceeding.\n`;
+    //   plugins.logAndExit1(msg, cb);
+    // } else {
       plugins.myLog(allGood);
-    }
+    // }
   }
 };
