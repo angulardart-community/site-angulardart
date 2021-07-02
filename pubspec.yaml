@@ -19,4 +19,6 @@ dependency_overrides:
     # path: ../code_excerpt_updater
   code_excerpter:
     git: https://github.com/chalin/code_excerpter.git
+dependencies: 
+  dart_style: ^1.3.12
     # path: ../code_excerpter
