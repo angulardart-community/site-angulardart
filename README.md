@@ -39,7 +39,7 @@ submodule-cloning techniques:
 
 - Clone this repo and its submodule _at the same_, use the
   `--recurse-submodules` option:<br>
-  `git clone --recurse-submodules https://github.com/dart-lang/site-angulardart.git`
+  `git clone --recurse-submodules https://github.com/angulardart-community/site-angulardart.git`
 - If you've already cloned this repo without its submodule, then run
   this command from the repo root:<br>
   `git submodule update --init --remote`
@@ -57,12 +57,34 @@ if you already have the required packages installed.
 
 1. <code>cd <i>\<path-to-webdev-repo></i></code> &nbsp;&nbsp;# change to
    **root of this repo**, e.g.: `~/git/site-angulardart`
-1. `source ./tool/env-set.sh` &nbsp;&nbsp;#
+2. `source ./tool/env-set.sh` &nbsp;&nbsp;#
    initialize environment variables; install/use required Node & Ruby version
-1. `./tool/before-install.sh` &nbsp;&nbsp;#
+3. `./tool/before-install.sh` &nbsp;&nbsp;#
    install core set of required tools
-1. `./tool/install.sh` &nbsp;&nbsp;#
+4. `./tool/install.sh` &nbsp;&nbsp;#
    install everything else needed to build this site
+
+#### Some common problems that might occur during this process (Linux/Mac only; for Windows please do some research on yourself or open an issue):
+
+1. `nvm` or `rvm` not installed.
+   
+   Solution: if you're sure you've installed both of them, run `source $HOME/.bashrc`
+2. `dart pub get` getting stuck for hours.
+   
+   Solution: before running all the steps above, run the following in the project root:
+   ```
+   pub global activate webdev
+   pub global activate dartdoc
+   pub get
+   ```
+3. Something like:
+   ```
+   Error: ENOENT: no such file or directory, open '/home/runner/tmp/.v8flags-1-6.8.275.32-node.59.4bad0b8dd3074cd43f641c2ac22a3571.json'
+   ```
+   Solution: create a folder at your `$HOME` directory called `tmp`. This folder will be used during the build process.
+   ```
+   mkdir $HOME/tmp
+   ```
 
 > IMPORTANT:
 > - Any time you create a **new terminal/command window** to work on
@@ -153,7 +175,6 @@ npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src
                         # so you'll lose uncommitted work under `src`!
 ```
 
-[Build Status SVG]: https://travis-ci.com/dart-lang/site-angulardart.svg?branch=master
 [Chrome]: https://www.google.ca/chrome
 [Cloning a repository]: https://help.github.com/articles/cloning-a-repository
 [Dart]: https://www.dartlang.org/install

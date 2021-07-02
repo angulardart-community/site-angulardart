@@ -1,0 +1,168 @@
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/architecture
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/architecture
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/attribute-directives
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/attribute-directives
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/component-styles
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/component-styles
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/dependency-injection
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/dependency-injection
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/displaying-data
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/displaying-data
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/forms
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/forms
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/hierarchical-dependency-injection
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/hierarchical-dependency-injection
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/lifecycle-hooks
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/lifecycle-hooks
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/lottery
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/lottery
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/pipes
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/pipes
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/quickstart
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/quickstart
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/router
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/router
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/security
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/security
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/server-communication
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/server-communication
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/structural-directives
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/structural-directives
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/template-syntax
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/template-syntax
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-0
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-0
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-1
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-1
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-2
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-2
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-3
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-3
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-4
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-4
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-5
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-5
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/toh-6
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/toh-6
+Already up to date.
+
+> git checkout gh-pages # cwd: tmp/deploy-repos/examples/user-input
+Already on 'gh-pages'
+Your branch is up to date with 'origin/gh-pages'.
+
+> git pull # cwd: tmp/deploy-repos/examples/user-input
+Already up to date.
+
