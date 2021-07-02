@@ -22,7 +22,7 @@ jobs:
       - run: echo "export PATH=\"$PATH:$HOME/.pub-cache/bin\"" >> $HOME/.bashrc
       - run: source $HOME/.bashrc
       - run: mkdir $HOME/tmp
-      - run: /usr/bin/bash -l -c "source ./tool/env-set.sh && bundle install && bundle update --bundler./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh"
+      - run: /usr/bin/bash -l -c "source ./tool/env-set.sh && gem install bundler:2.2.18 && ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh"
       # - run: ./tool/shared/deploy.sh
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
