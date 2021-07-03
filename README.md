@@ -9,12 +9,15 @@ The [AngularDart](https://angulardart-community.web.app) **community** site, bui
 [We welcome contributions](CONTRIBUTING.md), and we're [first-timer
 friendly](http://www.firsttimersonly.com)!
 
-For simple changes (such as to CSS and text), you probably don't need to
-build this site.  Often you can make changes using the GitHub UI.
+Our main focus now is to keep the version of the website up-to-date with the latest version of AngularDart, but as stated above, fell free to submit anything. See the [migration guide](MIGRATION.md) for more info!
+
+For simple changes (such as to CSS and text), you probably don't need to build this site. Often you can make changes using the GitHub UI.
 
 If you want/need to build, read on.
 
 ## Before you build this site
+
+Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grind`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
 
 ### 1. Get the prerequisites
 
@@ -22,8 +25,8 @@ Install the following tools if you don't have them already.
 
 - **[nvm][]**, the Node Version Manager.
 - **[rvm][]**, the Ruby Version Manager.
-- **[Dart][]**
-- **[Chrome][]** v63 or later.
+- **[Dart][]** (what do you expect then?)
+- **[Chrome][]** v63 or later, or literally any web browser
 
 > IMPORTANT: Follow the installation instructions for each of the tools
 carefully. In particular, configure your shell/environment so
@@ -125,7 +128,7 @@ If you'd like to separately build and then serve, the commands are:
 
 - `npx gulp build --no-dartdoc` &nbsp;&nbsp;# build site without regenerating
    API docs
-- `npx superstatic --port 4001` &nbsp;&nbsp;# serve site under `publish`
+- `npx superstatic --port 4002` &nbsp;&nbsp;# serve site under `publish`
 
 Some `npx gulp build` options include:
 
@@ -167,9 +170,10 @@ command:
 
 ## Other useful Gulp tasks
 
-```
+```bash
 npx gulp test --filter=template  # unit test only the template-syntax example
 npx gulp e2e --filter=template   # end-to-end test only the template-syntax example
+npx gulp clean # clean temporary directories and build artifacts
 npx gulp clean && npx gulp build --dartdoc  # do a full build from a clean slate
 npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src`,
                         # so you'll lose uncommitted work under `src`!

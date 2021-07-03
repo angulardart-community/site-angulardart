@@ -13,6 +13,11 @@ build() {
 @DefaultTask()
 void usage() => print('Run `grind --help` to list available tasks.');
 
+@Task('Sync examples')
+syncExample() {
+
+}
+
 /// By default this cleans every temporary directory and build artifacts
 /// Because `grinder` doesn't have negatable falgs yet, if you don't
 /// want to delete something, **PASS THAT THING** as a flag
@@ -20,7 +25,7 @@ void usage() => print('Run `grind --help` to list available tasks.');
 /// For example, if you **DON'T** want to delete the "publish" folder,
 /// run `grind clean --publish`. It will clean everything else.
 @Task('Clean temporary directories and build artifacts')
-clean() async {
+clean() {
   // Ask grinder to add an negtable option
   TaskArgs args = context.invocation.arguments;
 

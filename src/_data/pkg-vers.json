@@ -28,6 +28,6 @@
   "SDK": {
     "channel": "stable",
     "prev-vers": "1.24.3",
-    "vers": "2.5.0"
+    "vers": "2.10.0"
   }
 }
