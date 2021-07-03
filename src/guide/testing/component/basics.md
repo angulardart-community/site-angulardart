@@ -27,9 +27,9 @@ under **`dev_dependencies`**, for example:
 <?code-excerpt "toh-0/pubspec.yaml (dev_dependencies)" title?>
 ```
   dev_dependencies:
-    angular_test: ^2.3.0
+    angular_test: ^3.0.0
     build_runner: ^1.3.0
-    build_test: ^0.10.0
+    build_test: ^1.3.6
     build_web_compilers: ^2.4.0
     test: ^1.6.0
 ```
