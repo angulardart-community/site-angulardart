@@ -17,7 +17,7 @@ If you want/need to build, read on.
 
 ## Before you build this site
 
-Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grind`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
+Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
 
 ### 1. Get the prerequisites
 
