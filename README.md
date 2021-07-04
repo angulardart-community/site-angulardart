@@ -4,12 +4,12 @@
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
 
-The [AngularDart](https://angulardart-community.web.app) **community** site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
+The [AngularDart](https://angulardart-community.web.app) **community-maintained** documentation site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
 
 [We welcome contributions](CONTRIBUTING.md), and we're [first-timer
 friendly](http://www.firsttimersonly.com)!
 
-Our main focus now is to keep the version of the website up-to-date with the latest version of AngularDart, but as stated above, fell free to submit anything. See the [migration guide](MIGRATION.md) for more info!
+Our main focus now is to keep the version of the website up-to-date with the latest version of AngularDart, but as stated above, feel free to submit anything. See the [migration guide](MIGRATION.md) for more info!
 
 For simple changes (such as to CSS and text), you probably don't need to build this site. Often you can make changes using the GitHub UI.
 
@@ -72,7 +72,7 @@ if you already have the required packages installed.
 1. `nvm` or `rvm` not installed.
    
    Solution: if you're sure you've installed both of them, run `source $HOME/.bashrc`
-2. `dart pub get` getting stuck for hours.
+2. `dart pub get` getting stuck for hours, usually on `dart_style`.
    
    Solution: before running all the steps above, run the following in the project root:
    ```
@@ -80,7 +80,7 @@ if you already have the required packages installed.
    pub global activate dartdoc
    pub get
    ```
-3. Something like:
+3. Something like :
    ```
    Error: ENOENT: no such file or directory, open '/home/runner/tmp/.v8flags-1-6.8.275.32-node.59.4bad0b8dd3074cd43f641c2ac22a3571.json'
    ```
