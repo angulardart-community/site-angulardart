@@ -19,13 +19,15 @@ If you want/need to build, read on.
 
 Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
 
+Also, if you do a full-site build, it takes up about 2 ~ 5GB of space, not counting `rvm` and `nvm`. Hard Drive Lives Matter!
+
 ### 1. Get the prerequisites
 
 Install the following tools if you don't have them already.
 
 - **[nvm][]**, the Node Version Manager.
 - **[rvm][]**, the Ruby Version Manager.
-- **[Dart][]** (what do you expect then?)
+- **[Dart][]** (what do you expect then?), most versions after 2.5 is fine
 - **[Chrome][]** v63 or later, or literally any web browser
 
 > IMPORTANT: Follow the installation instructions for each of the tools
