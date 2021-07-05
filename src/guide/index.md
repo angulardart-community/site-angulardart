@@ -84,6 +84,6 @@ Please tell us about any issues you find:
 
 * For **documentation and example** issues, use the
   [site-angulardart issue
-  tracker](https://github.com/dart-lang/site-angulardart/issues).
+  tracker]({{site.repo.this}}/issues).
 * To report issues with **AngularDart** itself, use the
   [Angular issue tracker](https://github.com/dart-lang/angular/issues).

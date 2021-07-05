@@ -8,11 +8,13 @@ import 'build.dart';
 
 main(args) => grind(args);
 
+List<String> examples = [];
+
 @Task('Clean fragments (code excerpts)')
 void cleanFrags() {
-	if (Directory(fragPath).existsSync()) {
-		delete(Directory(fragPath));
-	}
+  if (Directory(fragPath).existsSync()) {
+    delete(Directory(fragPath));
+  }
 }
 
 @Task('Build site')
@@ -30,7 +32,7 @@ void build() {
   Pub.run(
     'build_runner',
     arguments: [
-			'build',
+      'build',
       '--delete-conflicting-outputs',
       '--config',
       'excerpt',
@@ -42,22 +44,22 @@ void build() {
   Pub.run(
     'code_excerpt_updater',
     arguments: [
-			srcPath,
+      srcPath,
       '--fragment-dir-path',
-			fragPath, 
-			'--indentation',
-			'2',
-			'--write-in-place',
-			'tmp/code-excerpt-log.txt',
-			'--escape-ng-interpolation',
-			'--yaml',
-			'--replace=/\s*\/\/!<br>//g;/ellipsis(<\w+>)?(\(\))?;?/.../g;/\/\*(\s*\.\.\.\s*)\*\//\$1/g;/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;',
-			// ('--replace='
-			// + '/\s*\/\/!<br>//g;' // Use //!<br> to force a line break (against dartfmt)
-			// + '/ellipsis(<\w+>)?(\(\))?;?/.../g;' // ellipses; --> ...
-			// + '/\/\*(\s*\.\.\.\s*)\*\//\$1/g;' // /*...*/ --> ...
-			// + '/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;' // {/*-...-*/} --> ... (removed brackets too)
-			// ) 
+      fragPath,
+      '--indentation',
+      '2',
+      '--write-in-place',
+      'tmp/code-excerpt-log.txt',
+      '--escape-ng-interpolation',
+      '--yaml',
+      '--replace=/\s*\/\/!<br>//g;/ellipsis(<\w+>)?(\(\))?;?/.../g;/\/\*(\s*\.\.\.\s*)\*\//\$1/g;/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;',
+      // ('--replace='
+      // + '/\s*\/\/!<br>//g;' // Use //!<br> to force a line break (against dartfmt)
+      // + '/ellipsis(<\w+>)?(\(\))?;?/.../g;' // ellipses; --> ...
+      // + '/\/\*(\s*\.\.\.\s*)\*\//\$1/g;' // /*...*/ --> ...
+      // + '/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;' // {/*-...-*/} --> ... (removed brackets too)
+      // )
     ],
   );
 }
@@ -65,8 +67,36 @@ void build() {
 @DefaultTask()
 void usage() => print('Run `grind --help` to list available tasks.');
 
-@Task('Sync examples')
-syncExample() {}
+@Task('Get the list of examples')
+void getExampleList() {
+  if (examples.isEmpty) {
+    Directory('examples/acx').listSync().forEach((element) {
+      if (element is Directory) {
+        examples.add(p.basename(element.path));
+      }
+    });
+    Directory('examples/ng/doc').listSync().forEach((element) {
+      if (element is Directory) {
+        // All examples don't contain "_" symbol in their names
+        if (!p.basename(element.path).contains('_')) {
+          examples.add(p.basename(element.path));
+        }
+      }
+    });
+
+    examples.sort();
+  }
+}
+
+@Task('Get built examples')
+@Depends('get-example-list')
+void getBuiltExamples() {
+	Directory builtExamplesDir = Directory('tmp/deploy-repos/examples');
+	if (builtExamplesDir.existsSync()) {
+		// log();
+	} else {
+	}
+}
 
 /// By default this cleans every temporary directory and build artifacts
 /// Because `grinder` doesn't have negatable falgs yet, if you don't
