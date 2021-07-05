@@ -17,9 +17,8 @@ void cleanFrags() {
   }
 }
 
-@Task('Build site')
-@Depends('clean-frags')
-void build() {
+@Task('Create code excerpts')
+void createCodeExcerpts() {
   Pub.get();
 
   // Check if tmp/_fragments exists
@@ -39,8 +38,10 @@ void build() {
       '--output=$fragPath'
     ],
   );
+}
 
-  // Update code excerpts in Markdown files
+@Task('Update code excerpts in Markdown files')
+void updateCodeExcerpts() {
   Pub.run(
     'code_excerpt_updater',
     arguments: [
@@ -53,13 +54,25 @@ void build() {
       'tmp/code-excerpt-log.txt',
       '--escape-ng-interpolation',
       '--yaml',
-      '--replace=/\s*\/\/!<br>//g;/ellipsis(<\w+>)?(\(\))?;?/.../g;/\/\*(\s*\.\.\.\s*)\*\//\$1/g;/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;',
-      // ('--replace='
-      // + '/\s*\/\/!<br>//g;' // Use //!<br> to force a line break (against dartfmt)
-      // + '/ellipsis(<\w+>)?(\(\))?;?/.../g;' // ellipses; --> ...
-      // + '/\/\*(\s*\.\.\.\s*)\*\//\$1/g;' // /*...*/ --> ...
-      // + '/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/\$1/g;' // {/*-...-*/} --> ... (removed brackets too)
-      // )
+      File('tool/regex.txt')
+          .readAsStringSync(), // A work around because for whatever reason Dart just doesn't recognize it
+    ],
+  );
+}
+
+@Task('Build site')
+@Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts')
+void build() {
+	// Run `bundle install`, similar to `pub get` in Dart
+	run('bundle', arguments: ['install']);
+
+	// The site is built with [Jekyll](https://jekyllrb.com)
+  run(
+    'bundle',
+    arguments: [
+      'exec',
+			'jekyll',
+			'build',
     ],
   );
 }
@@ -91,11 +104,10 @@ void getExampleList() {
 @Task('Get built examples')
 @Depends('get-example-list')
 void getBuiltExamples() {
-	Directory builtExamplesDir = Directory('tmp/deploy-repos/examples');
-	if (builtExamplesDir.existsSync()) {
-		// log();
-	} else {
-	}
+  Directory builtExamplesDir = Directory('tmp/deploy-repos/examples');
+  if (builtExamplesDir.existsSync()) {
+    // log();
+  } else {}
 }
 
 /// By default this cleans every temporary directory and build artifacts
