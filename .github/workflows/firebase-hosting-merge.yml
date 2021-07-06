@@ -17,7 +17,7 @@ jobs:
           ruby-version: 2.4
           bundler-cache: true
       - run: git submodule update --init --recursive
-      - run: dart run grinder build
+      - run: dart run grinder build --refresh=all
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
