@@ -61,8 +61,11 @@ void updateCodeExcerpts() {
 }
 
 @Task('Build site')
-@Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts')
+@Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts',
+    'cp-built-examples')
 void build() {
+  TaskArgs args = context.invocation.arguments;
+
   // Run `bundle install`, similar to `pub get` in Dart
   run('bundle', arguments: ['install']);
 
@@ -124,33 +127,49 @@ void getExampleList() {
     examples.sort();
   }
 
-	log('bruh');
+  log('bruh');
 }
 
-
+/// Every example has a corresponding live example.
+/// We always upload the latest build to a Github repo,
+/// so that we don't have to build an example for it to show
+/// up on the site everytime
 @Task('Get built examples')
-// @Depends('get-example-list')
+@Depends('get-example-list')
 void getBuiltExamples() async {
-	
-  Directory builtExamplesDir = Directory('tmp/deploy-repos/examples');
-	if (!builtExamplesDir.existsSync()) {
-		builtExamplesDir.create(recursive: true);
-	}
+  if (!builtExamplesDir.existsSync()) {
+    builtExamplesDir.createSync(recursive: true);
+  }
+
+  // We only need gh-pages branch
   Future<void> pullRepo(String name) async => await runGit(
         [
           'clone',
-					'https://github.com/angulardart-community/$name',
-					'--branch',
-					'gh-pages',
-					'--single-branch',
-					builtExamplesDir.path,
-					'--depth',
-					'1'
+          'https://github.com/angulardart-community/$name',
+          '--branch',
+          'gh-pages',
+          '--single-branch',
+          name,
+          '--depth',
+          '1'
         ],
-				processWorkingDir: builtExamplesDir.path,
+        processWorkingDir: builtExamplesDir.path,
       );
 
-	await pullRepo('architecture');
+  for (String example in examples) {
+    await pullRepo(example);
+  }
+}
+
+@Task('Copy built examples to the site folder')
+@Depends('get-built-examples')
+void cpBuiltExamples() {
+  builtExamplesDir.listSync().forEach((example) {
+    if (example is Directory) {
+      copy(Directory(p.join(example.path, angularVersion.toString())),
+          Directory('publish/examples/${p.basename(example.path)}'));
+    }
+  });
 }
 
 /// By default this cleans every temporary directory and build artifacts
@@ -160,7 +179,7 @@ void getBuiltExamples() async {
 /// For example, if you **DON'T** want to delete the "publish" folder,
 /// run `grind clean --publish`. It will delete everything else.
 @Task('Clean temporary directories and build artifacts')
-clean() {
+void clean() {
   // Ask grinder to add an negtable option
   TaskArgs args = context.invocation.arguments;
 
@@ -189,5 +208,11 @@ clean() {
   bool cleanAssetCache = !args.getFlag('assetcache');
   if (cleanAssetCache && Directory('src/.asset-cache').existsSync()) {
     delete(Directory('src/.asset-cache'));
+  }
+
+  // TODO: also cleans the local tmp directory
+  bool cleanLocalTmp = !args.getFlag('localtmp');
+  if (cleanLocalTmp && Directory('tmp').existsSync()) {
+    delete(Directory('tmp'));
   }
 }
