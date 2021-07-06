@@ -71,11 +71,10 @@ void updateCodeExcerpts() {
 }
 
 @Task('Build site')
-@Depends('clean', 'activate-pkgs')
+@Depends('clean', 'activate-pkgs', 'add-live-examples')
 void build() {
 	createCodeExcerpts();
 	updateCodeExcerpts();
-	addLiveExamples();
 
   // Run `bundle install`, similar to `pub get` in Dart
   run('bundle', arguments: ['install']);
