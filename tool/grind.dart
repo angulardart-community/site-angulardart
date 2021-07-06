@@ -8,6 +8,7 @@ import 'constants.dart';
 main(args) => grind(args);
 
 List<String> examples = [];
+String homeDir = Platform.isWindows ? Platform.environment['UserProfile'] : Platform.environment['HOME'];
 
 @Task('Insert and update code excerpts in Markdown files')
 @Depends('clean-frags')
@@ -45,6 +46,12 @@ void createCodeExcerpts() {
 
 @Task('Update code excerpts in Markdown files')
 void updateCodeExcerpts() {
+	// Check and create the $HOME/tmp directory.
+	// code_excerpt_updater uses it
+	if (!Directory(p.join(homeDir, 'tmp')).existsSync()) {
+		Directory(p.join(homeDir, 'tmp')).createSync();
+	}
+
   Pub.run(
     'code_excerpt_updater',
     arguments: [
@@ -64,9 +71,12 @@ void updateCodeExcerpts() {
 }
 
 @Task('Build site')
-// @Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts',
-//     'add-live-examples')
+@Depends('clean', 'activate-pkgs')
 void build() {
+	createCodeExcerpts();
+	updateCodeExcerpts();
+	addLiveExamples();
+
   // Run `bundle install`, similar to `pub get` in Dart
   run('bundle', arguments: ['install']);
 
@@ -166,7 +176,7 @@ void getBuiltExamples() async {
       );
 
   for (String example in examples) {
-		log('Fetching example $example');
+    log('Fetching example $example');
     await pullRepo(example);
   }
 }
@@ -175,9 +185,21 @@ void getBuiltExamples() async {
 @Task('Copy built examples to the site folder')
 void cpBuiltExamples() {
   builtExamplesDir.listSync().forEach((example) {
+    String exampleName = p.basename(example.path);
+
     if (example is Directory) {
       copy(Directory(p.join(example.path, angularVersion.toString())),
-          Directory('publish/examples/${p.basename(example.path)}'));
+          Directory('publish/examples/$exampleName'));
+
+      // Modify <base href=...> to point to the correct directory
+			// The example "lottery" needs to be special treated
+      if (exampleName != 'lottery') {
+        String href = p.join('/examples', exampleName);
+        File index = File('publish/examples/$exampleName/index.html');
+        index.writeAsStringSync(index.readAsStringSync().replaceFirst(
+            '<base href=\"/$exampleName/$angularVersion/\">',
+            '<base href=\"$href/\">'));
+      }
     }
   });
 }
