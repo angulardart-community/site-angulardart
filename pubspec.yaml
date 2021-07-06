@@ -12,6 +12,8 @@ dev_dependencies:
   code_excerpter: any
   grinder: ^0.8.6
   linkcheck: ^2.0.0+1
+  shelf: ^1.1.4
+  shelf_static: ^1.0.0
 
 dependency_overrides:
   code_excerpt_updater:

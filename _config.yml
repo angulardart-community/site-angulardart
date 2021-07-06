@@ -1,7 +1,7 @@
 # Site settings
-title: angulardart.dev
-description: Documentation to help you build high-quality AngularDart apps, using Dart tools and libraries.
-main-url: &url https://angulardart.dev
+title: angulardart.xyz
+description: Community-maintained documentation to help you build high-quality AngularDart apps, using Dart tools and libraries.
+main-url: &url https://angulardart.xyz
 dev-url: https://angulardart-dartlang-org-dev.firebaseapp.com
 prev-url: https://webdev-angular4-dartlang-org.firebaseapp.com
 url: *url
@@ -12,7 +12,7 @@ repo:
 branch: master
 # site-status-issue-url: https://github.com/dart-lang/site-webdev/issues/1369
 # Setting port to 4001 can trigger redirect to the Angular Github repo; not sure why; help wanted
-port: 4002
+port: 5000
 
 # Global variables
 # use case:

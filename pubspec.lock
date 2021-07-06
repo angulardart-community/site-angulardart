@@ -363,12 +363,19 @@ packages:
     source: hosted
     version: "0.1.8"
   shelf:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.4"
+  shelf_static:
+    dependency: "direct dev"
+    description:
+      name: shelf_static
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   shelf_web_socket:
     dependency: transitive
     description:

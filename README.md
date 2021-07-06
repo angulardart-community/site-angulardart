@@ -104,14 +104,14 @@ Once everything is installed, you need to do a full site build at least once:
 
 The generated site is placed in the `publish` folder. To serve this folder use:
 
-- `npx superstatic --port 4002`
+- `npx superstatic --port 5000`
 
 Or, if you aren't testing redirects, use this command (which has the bonus of
 autorefreshing your browser after edits):
 
 - `jekyll serve --livereload`
 
-To view the generated site open [localhost:4002](http://localhost:4002/)
+To view the generated site open [localhost:5000](http://localhost:5000/)
 in a browser.
 
 You can build, serve, and have a watcher for changes by running the
@@ -130,7 +130,7 @@ If you'd like to separately build and then serve, the commands are:
 
 - `npx gulp build --no-dartdoc` &nbsp;&nbsp;# build site without regenerating
    API docs
-- `npx superstatic --port 4002` &nbsp;&nbsp;# serve site under `publish`
+- `npx superstatic --port 5000` &nbsp;&nbsp;# serve site under `publish`
 
 Some `npx gulp build` options include:
 
