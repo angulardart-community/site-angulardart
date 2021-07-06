@@ -120,7 +120,7 @@ DEPENDENCIES
   liquid-tag-parser
   nokogiri
   sassc
-  sprockets (= 4.0.beta8)
+  sprockets
   uglifier
 
 BUNDLED WITH

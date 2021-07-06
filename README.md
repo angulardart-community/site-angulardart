@@ -4,17 +4,22 @@
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
 
-The [AngularDart](https://angulardart-community.web.app) **community** site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
+The [AngularDart](https://angulardart-community.web.app) **community-maintained** documentation site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
 
 [We welcome contributions](CONTRIBUTING.md), and we're [first-timer
 friendly](http://www.firsttimersonly.com)!
 
-For simple changes (such as to CSS and text), you probably don't need to
-build this site.  Often you can make changes using the GitHub UI.
+Our main focus now is to keep the version of the website up-to-date with the latest version of AngularDart, but as stated above, feel free to submit anything. See the [migration guide](MIGRATION.md) for more info!
+
+For simple changes (such as to CSS and text), you probably don't need to build this site. Often you can make changes using the GitHub UI.
 
 If you want/need to build, read on.
 
 ## Before you build this site
+
+Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
+
+Also, if you do a full-site build, it takes up about 2 ~ 5GB of space, not counting `rvm` and `nvm`. Hard Drive Lives Matter!
 
 ### 1. Get the prerequisites
 
@@ -22,8 +27,8 @@ Install the following tools if you don't have them already.
 
 - **[nvm][]**, the Node Version Manager.
 - **[rvm][]**, the Ruby Version Manager.
-- **[Dart][]**
-- **[Chrome][]** v63 or later.
+- **[Dart][]** (what do you expect then?), most versions after 2.5 is fine
+- **[Chrome][]** v63 or later, or literally any web browser
 
 > IMPORTANT: Follow the installation instructions for each of the tools
 carefully. In particular, configure your shell/environment so
@@ -69,7 +74,7 @@ if you already have the required packages installed.
 1. `nvm` or `rvm` not installed.
    
    Solution: if you're sure you've installed both of them, run `source $HOME/.bashrc`
-2. `dart pub get` getting stuck for hours.
+2. `dart pub get` getting stuck for hours, usually on `dart_style`.
    
    Solution: before running all the steps above, run the following in the project root:
    ```
@@ -77,7 +82,7 @@ if you already have the required packages installed.
    pub global activate dartdoc
    pub get
    ```
-3. Something like:
+3. Something like :
    ```
    Error: ENOENT: no such file or directory, open '/home/runner/tmp/.v8flags-1-6.8.275.32-node.59.4bad0b8dd3074cd43f641c2ac22a3571.json'
    ```
@@ -125,7 +130,7 @@ If you'd like to separately build and then serve, the commands are:
 
 - `npx gulp build --no-dartdoc` &nbsp;&nbsp;# build site without regenerating
    API docs
-- `npx superstatic --port 4001` &nbsp;&nbsp;# serve site under `publish`
+- `npx superstatic --port 4002` &nbsp;&nbsp;# serve site under `publish`
 
 Some `npx gulp build` options include:
 
@@ -167,9 +172,10 @@ command:
 
 ## Other useful Gulp tasks
 
-```
+```bash
 npx gulp test --filter=template  # unit test only the template-syntax example
 npx gulp e2e --filter=template   # end-to-end test only the template-syntax example
+npx gulp clean # clean temporary directories and build artifacts
 npx gulp clean && npx gulp build --dartdoc  # do a full build from a clean slate
 npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src`,
                         # so you'll lose uncommitted work under `src`!

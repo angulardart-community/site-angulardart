@@ -29,7 +29,12 @@ module.exports = function (gulp, plugins, config) {
   });
 
   ['get', 'upgrade'].forEach(cmd => {
-    gulp_task(`examples-pub-${cmd}`, () => examplesExec(`pub ${cmd}`));
+    // IMPORTANT: if we don't need to upgrade to a major version (e.g. 5 -> 6), remove --major-versions
+    if (cmd == 'upgrade') {
+      gulp_task(`examples-pub-${cmd}`, () => examplesExec(`pub ${cmd} --major-versions`));
+    } else {
+      gulp_task(`examples-pub-${cmd}`, () => examplesExec(`pub ${cmd}`));
+    }
   });
 
   // General exec task. Args: --cmd='some-cmd with args'
@@ -53,10 +58,10 @@ module.exports = function (gulp, plugins, config) {
   });
 
   gulp_task('dartfmt', () => examplesExec(p => {
-      let dirs = ['lib', 'web', 'test'].filter(dir => fs.existsSync(path.join(p, dir)));
-      let cmd = ['dartfmt -w --set-exit-if-changed'].concat(dirs);
-      return cmd.join(' ');
-    }));
+    let dirs = ['lib', 'web', 'test'].filter(dir => fs.existsSync(path.join(p, dir)));
+    let cmd = ['dartfmt -w --set-exit-if-changed'].concat(dirs);
+    return cmd.join(' ');
+  }));
 
   // ==========================================================================
   // Boilerplate management
@@ -85,7 +90,7 @@ module.exports = function (gulp, plugins, config) {
     let stream = gulp.src([
       `${baseDir}/.gitignore`,
       `${baseDir}/**`,
-    ], { allowEmpty: true , base: baseDir })
+    ], { allowEmpty: true, base: baseDir })
       .pipe(plugins.chmod(readOnlyPerms));
 
     examplePaths.forEach(exPath => {

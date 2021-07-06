@@ -1,5 +1,7 @@
 # Updating Angular docs
 
+**IGNORE THIS, WE'RE CHANGING IT! Simply updating the files in examples/ is enough!**
+
 This page describes how to update the Angular docs ([angulardart.dev](https://angulardart.dev)).
 
 ## New release of the Dart SDK

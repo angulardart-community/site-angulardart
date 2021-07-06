@@ -451,6 +451,9 @@ function execSyncAndLog(cmd, optional_options) {
   myLog(`> ${cmd}${cwd}`);
   let output;
   try {
+    // if (cmd == 'upgrade') {
+    //   cmd = 'upgrade --major-versions'
+    // }
     const output = child_process.execSync(cmd, optional_options) + '';
     myLog(output);
     return output;
