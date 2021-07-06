@@ -63,22 +63,46 @@ void updateCodeExcerpts() {
 @Task('Build site')
 @Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts')
 void build() {
-	// Run `bundle install`, similar to `pub get` in Dart
-	run('bundle', arguments: ['install']);
+  // Run `bundle install`, similar to `pub get` in Dart
+  run('bundle', arguments: ['install']);
 
-	// The site is built with [Jekyll](https://jekyllrb.com)
+  // Build site using [Jekyll](https://jekyllrb.com)
   run(
     'bundle',
     arguments: [
       'exec',
-			'jekyll',
-			'build',
+      'jekyll',
+      'build',
     ],
   );
 }
 
 @DefaultTask()
 void usage() => print('Run `grind --help` to list available tasks.');
+
+@Task('Check and activate required global packages')
+void activatePkgs() {
+  PubApp webdev = PubApp.global('webdev');
+  PubApp dartdoc = PubApp.global('dartdoc');
+
+  if (!webdev.isActivated) {
+    webdev.activate();
+  }
+  if (!webdev.isGlobal) {
+    throw GrinderException(
+        'Can\'t find webdev! Did you add \"~/.pub-cache\" to your environment variables?');
+  }
+  log('webdev is activated');
+
+  if (!dartdoc.isActivated) {
+    dartdoc.activate();
+  }
+  if (!dartdoc.isGlobal) {
+    throw GrinderException(
+        'Can\'t find dartdoc! Did you add \"~/.pub-cache\" to your environment variables?');
+  }
+  log('dartdoc is activated');
+}
 
 @Task('Get the list of examples')
 void getExampleList() {
@@ -99,15 +123,34 @@ void getExampleList() {
 
     examples.sort();
   }
+
+	log('bruh');
 }
 
+
 @Task('Get built examples')
-@Depends('get-example-list')
-void getBuiltExamples() {
+// @Depends('get-example-list')
+void getBuiltExamples() async {
+	
   Directory builtExamplesDir = Directory('tmp/deploy-repos/examples');
-  if (builtExamplesDir.existsSync()) {
-    // log();
-  } else {}
+	if (!builtExamplesDir.existsSync()) {
+		builtExamplesDir.create(recursive: true);
+	}
+  Future<void> pullRepo(String name) async => await runGit(
+        [
+          'clone',
+					'https://github.com/angulardart-community/$name',
+					'--branch',
+					'gh-pages',
+					'--single-branch',
+					builtExamplesDir.path,
+					'--depth',
+					'1'
+        ],
+				processWorkingDir: builtExamplesDir.path,
+      );
+
+	await pullRepo('architecture');
 }
 
 /// By default this cleans every temporary directory and build artifacts
@@ -115,7 +158,7 @@ void getBuiltExamples() {
 /// want to delete something, **PASS THAT THING** as a flag
 ///
 /// For example, if you **DON'T** want to delete the "publish" folder,
-/// run `grind clean --publish`. It will clean everything else.
+/// run `grind clean --publish`. It will delete everything else.
 @Task('Clean temporary directories and build artifacts')
 clean() {
   // Ask grinder to add an negtable option
