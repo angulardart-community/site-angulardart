@@ -12,19 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
-      - run: pub global activate webdev && pub global activate dartdoc && pub get
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.4
+          bundler-cache: true
       - run: git submodule update --init --recursive
-      - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-      - run: command curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
-      - run: command curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
-      - run: \curl -sSL https://get.rvm.io | bash -s stable
-      - run: echo "export PATH=\"$PATH:$HOME/.rvm/bin\"" >> $HOME/.bashrc
-      - run: echo "export PATH=\"$PATH:$HOME/.pub-cache/bin\"" >> $HOME/.bashrc
-      - run: source $HOME/.bashrc
-      - run: gem install bundler:2.2.18
-      - run: mkdir $HOME/tmp
-      - run: /usr/bin/bash -l -c "source ./tool/env-set.sh && ./tool/before-install.sh && ./tool/install.sh && ./tool/build.sh"
-      # - run: ./tool/shared/deploy.sh
+      - run: dart run grinder build --refresh=all
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
