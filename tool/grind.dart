@@ -2,13 +2,26 @@ import 'dart:io';
 import 'package:git/git.dart';
 import 'package:grinder/grinder.dart';
 import 'package:path/path.dart' as p;
+import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'package:shelf_static/shelf_static.dart';
 
 import 'constants.dart';
 
 main(args) => grind(args);
 
 List<String> examples = [];
-String homeDir = Platform.isWindows ? Platform.environment['UserProfile'] : Platform.environment['HOME'];
+String homeDir = Platform.isWindows
+    ? Platform.environment['UserProfile']
+    : Platform.environment['HOME'];
+
+/// Every log here will be foldable in Github Actions logs.
+/// See the [docs](https://github.com/actions/toolkit/blob/main/docs/commands.md#group-and-ungroup-log-lines)
+/// for more info.
+void groupLogs(String name, Function task) {
+  print('::group::$name');
+  task.call();
+  print('::endgroup::');
+}
 
 @Task('Insert and update code excerpts in Markdown files')
 @Depends('clean-frags')
@@ -46,11 +59,11 @@ void createCodeExcerpts() {
 
 @Task('Update code excerpts in Markdown files')
 void updateCodeExcerpts() {
-	// Check and create the $HOME/tmp directory.
-	// code_excerpt_updater uses it
-	if (!Directory(p.join(homeDir, 'tmp')).existsSync()) {
-		Directory(p.join(homeDir, 'tmp')).createSync();
-	}
+  // Check and create the $HOME/tmp directory.
+  // code_excerpt_updater uses it
+  if (!Directory(p.join(homeDir, 'tmp')).existsSync()) {
+    Directory(p.join(homeDir, 'tmp')).createSync();
+  }
 
   Pub.run(
     'code_excerpt_updater',
@@ -65,28 +78,59 @@ void updateCodeExcerpts() {
       '--escape-ng-interpolation',
       '--yaml',
       File('tool/regex.txt')
-          .readAsStringSync(), // A work around because for whatever reason Dart just doesn't recognize it
+          .readAsStringSync(), // A temporary work around because for whatever reason Dart just doesn't recognize it
     ],
   );
 }
 
+/// Use --refresh=all to delete everything and execute a clean new build;
+/// --refresh=excerpts to only delete excerpts
+/// --refresh=examples to delete code examples
+/// 
+/// If no arguments is appended, this program will only attempt to build 
+/// the site with `bundle exec jekyll build`
 @Task('Build site')
-@Depends('clean', 'activate-pkgs', 'add-live-examples')
+// @Depends('clean', 'add-live-examples') // Do we actually use webdev???
 void build() {
-	createCodeExcerpts();
-	updateCodeExcerpts();
+  TaskArgs args = context.invocation.arguments;
+
+  if (args.hasOption('refresh')) {
+    if (args.getOption('refresh') == 'excerpts') {
+			groupLogs('Clean code excerpts', cleanFrags);
+      groupLogs('Create code excerpts', createCodeExcerpts);
+      groupLogs('Update code excerpts in Markdown files', updateCodeExcerpts);
+    } else if (args.getOption('refresh') == 'examples') {
+			groupLogs('Clean built examples', deleteExamples);
+			getExampleList();
+			groupLogs('Get built examples', getBuiltExamples);
+			groupLogs('Copy built examples to site folder', cpBuiltExamples);
+		} else if (args.getOption('refresh') == 'all') {
+			clean();
+
+      groupLogs('Create code excerpts', createCodeExcerpts);
+      groupLogs('Update code excerpts in Markdown files', updateCodeExcerpts);
+			getExampleList();
+			groupLogs('Get built examples', getBuiltExamples);
+			groupLogs('Copy built examples to site folder', cpBuiltExamples);
+		} else {
+			throw Exception('Can\'t find the option: ' + args.getOption('refresh'));
+		}
+  }
 
   // Run `bundle install`, similar to `pub get` in Dart
-  run('bundle', arguments: ['install']);
+  groupLogs('bundle install', () => run('bundle', arguments: ['install']));
 
   // Build site using [Jekyll](https://jekyllrb.com)
-  run(
-    'bundle',
-    arguments: [
-      'exec',
-      'jekyll',
-      'build',
-    ],
+  groupLogs(
+    'bundle exec jekyll build',
+    () => run(
+      'bundle',
+      arguments: [
+        'exec',
+        'jekyll',
+        'build',
+      ],
+    ),
   );
 }
 
@@ -119,12 +163,6 @@ void activatePkgs() {
 
 //----------------------------Example Repos Related----------------------------//
 
-@Task('All-in-one workflow for adding live examples to the site')
-@Depends('get-built-examples', 'cp-built-examples')
-/// This is literally a placeholder, for
-/// the sole purpose of organizing tasks
-void addLiveExamples() => null;
-
 @Task('Get the list of examples')
 void getExampleList() {
   if (examples.isEmpty) {
@@ -144,8 +182,6 @@ void getExampleList() {
 
     examples.sort();
   }
-
-  log('bruh');
 }
 
 /// Every example has a corresponding live example.
@@ -180,7 +216,6 @@ void getBuiltExamples() async {
   }
 }
 
-// TODO: change href to add /examples/
 @Task('Copy built examples to the site folder')
 void cpBuiltExamples() {
   builtExamplesDir.listSync().forEach((example) {
@@ -191,7 +226,7 @@ void cpBuiltExamples() {
           Directory('publish/examples/$exampleName'));
 
       // Modify <base href=...> to point to the correct directory
-			// The example "lottery" needs to be special treated
+      // The example "lottery" needs to be special treated
       if (exampleName != 'lottery') {
         String href = p.join('/examples', exampleName);
         File index = File('publish/examples/$exampleName/index.html');
@@ -203,27 +238,32 @@ void cpBuiltExamples() {
   });
 }
 
+@Task('Delete built examples')
+void deleteExamples() {
+  if (builtExamplesDir.existsSync()) {
+    delete(builtExamplesDir);
+  }
+}
+
 //----------------------------Utility----------------------------//
 
 /// By default this cleans every temporary directory and build artifacts
-/// Because `grinder` doesn't have negatable falgs yet, if you don't
-/// want to delete something, **PASS THAT THING** as a flag
-///
+/// If you don't want to delete something, pass that thing with a "no-"
+/// flag.
 /// For example, if you **DON'T** want to delete the "publish" folder,
-/// run `grind clean --publish`. It will delete everything else.
+/// run `grind clean --no-publish`. It will delete everything else.
 @Task('Clean temporary directories and build artifacts')
 void clean() {
-  // Ask grinder to add an negtable option
   TaskArgs args = context.invocation.arguments;
 
   // Cleans the "publish" directory
-  bool cleanSite = !args.getFlag('publish');
+  bool cleanSite = args.hasFlag('publish') ? args.getFlag('publish') : true;
   if (cleanSite && Directory('publish').existsSync()) {
     delete(Directory('publish'));
   }
 
   // Cleans the "$HOME/tmp" directory, used by some git stuffs
-  bool cleanTmp = !args.getFlag('tmp');
+  bool cleanTmp = args.hasFlag('tmp') ? args.getFlag('tmp') : true;
   if (cleanTmp) {
     String path = p.join(
       // Please don't tell me you're on Android or iOS
@@ -238,14 +278,21 @@ void clean() {
   }
 
   // Cleans the "src./asset-cache" directory
-  bool cleanAssetCache = !args.getFlag('assetcache');
+  bool cleanAssetCache =
+      args.hasFlag('asset-cache') ? args.getFlag('asset-cache') : true;
   if (cleanAssetCache && Directory('src/.asset-cache').existsSync()) {
     delete(Directory('src/.asset-cache'));
   }
 
-  // TODO: also cleans the local tmp directory
-  bool cleanLocalTmp = !args.getFlag('localtmp');
-  if (cleanLocalTmp && Directory('tmp').existsSync()) {
-    delete(Directory('tmp'));
+  bool cleanLocalTmp =
+      args.hasFlag('code-frags') ? args.getFlag('code-frags') : true;
+  if (cleanLocalTmp) {
+    cleanFrags();
+  }
+
+  bool cleanExamples =
+      args.hasFlag('examples') ? args.getFlag('examples') : true;
+  if (cleanExamples) {
+    deleteExamples();
   }
 }
