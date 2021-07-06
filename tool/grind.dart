@@ -4,11 +4,14 @@ import 'package:grinder/grinder.dart';
 import 'package:path/path.dart' as p;
 
 import 'constants.dart';
-import 'build.dart';
 
 main(args) => grind(args);
 
 List<String> examples = [];
+
+@Task('Insert and update code excerpts in Markdown files')
+@Depends('clean-frags')
+void codeExcerpts() {}
 
 @Task('Clean fragments (code excerpts)')
 void cleanFrags() {
@@ -61,11 +64,9 @@ void updateCodeExcerpts() {
 }
 
 @Task('Build site')
-@Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts',
-    'cp-built-examples')
+// @Depends('clean-frags', 'create-code-excerpts', 'update-code-excerpts',
+//     'add-live-examples')
 void build() {
-  TaskArgs args = context.invocation.arguments;
-
   // Run `bundle install`, similar to `pub get` in Dart
   run('bundle', arguments: ['install']);
 
@@ -106,6 +107,14 @@ void activatePkgs() {
   }
   log('dartdoc is activated');
 }
+
+//----------------------------Example Repos Related----------------------------//
+
+@Task('All-in-one workflow for adding live examples to the site')
+@Depends('get-built-examples', 'cp-built-examples')
+/// This is literally a placeholder, for
+/// the sole purpose of organizing tasks
+void addLiveExamples() => null;
 
 @Task('Get the list of examples')
 void getExampleList() {
@@ -157,12 +166,13 @@ void getBuiltExamples() async {
       );
 
   for (String example in examples) {
+		log('Fetching example $example');
     await pullRepo(example);
   }
 }
 
+// TODO: change href to add /examples/
 @Task('Copy built examples to the site folder')
-@Depends('get-built-examples')
 void cpBuiltExamples() {
   builtExamplesDir.listSync().forEach((example) {
     if (example is Directory) {
@@ -171,6 +181,8 @@ void cpBuiltExamples() {
     }
   });
 }
+
+//----------------------------Utility----------------------------//
 
 /// By default this cleans every temporary directory and build artifacts
 /// Because `grinder` doesn't have negatable falgs yet, if you don't
