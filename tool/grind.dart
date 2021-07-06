@@ -71,7 +71,7 @@ void updateCodeExcerpts() {
 }
 
 @Task('Build site')
-@Depends('clean', 'activate-pkgs', 'add-live-examples')
+@Depends('clean', 'add-live-examples') // Do we actually use webdev???
 void build() {
 	createCodeExcerpts();
 	updateCodeExcerpts();
@@ -123,7 +123,7 @@ void activatePkgs() {
 @Depends('get-built-examples', 'cp-built-examples')
 /// This is literally a placeholder, for
 /// the sole purpose of organizing tasks
-void addLiveExamples() => null;
+void addLiveExamples() => log('added live examples');
 
 @Task('Get the list of examples')
 void getExampleList() {
@@ -145,7 +145,7 @@ void getExampleList() {
     examples.sort();
   }
 
-  log('bruh');
+  log('finished');
 }
 
 /// Every example has a corresponding live example.
