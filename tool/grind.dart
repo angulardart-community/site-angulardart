@@ -86,8 +86,8 @@ void updateCodeExcerpts() {
 /// Use --refresh=all to delete everything and execute a clean new build;
 /// --refresh=excerpts to only delete excerpts
 /// --refresh=examples to delete code examples
-/// 
-/// If no arguments is appended, this program will only attempt to build 
+///
+/// If no arguments is appended, this program will only attempt to build
 /// the site with `bundle exec jekyll build`
 @Task('Build site')
 // @Depends('clean', 'add-live-examples') // Do we actually use webdev???
@@ -96,25 +96,24 @@ void build() {
 
   if (args.hasOption('refresh')) {
     if (args.getOption('refresh') == 'excerpts') {
-			groupLogs('Clean code excerpts', cleanFrags);
+      groupLogs('Clean code excerpts', cleanFrags);
       groupLogs('Create code excerpts', createCodeExcerpts);
       groupLogs('Update code excerpts in Markdown files', updateCodeExcerpts);
     } else if (args.getOption('refresh') == 'examples') {
-			groupLogs('Clean built examples', deleteExamples);
-			getExampleList();
-			groupLogs('Get built examples', getBuiltExamples);
-			groupLogs('Copy built examples to site folder', cpBuiltExamples);
-		} else if (args.getOption('refresh') == 'all') {
-			clean();
-
+      groupLogs('Clean built examples', deleteExamples);
+      getExampleList();
+      groupLogs('Get built examples', getBuiltExamples);
+      groupLogs('Copy built examples to site folder', cpBuiltExamples);
+    } else if (args.getOption('refresh') == 'all') {
+      groupLogs('Clean build artifacts and temporary directories', clean);
       groupLogs('Create code excerpts', createCodeExcerpts);
       groupLogs('Update code excerpts in Markdown files', updateCodeExcerpts);
-			getExampleList();
-			groupLogs('Get built examples', getBuiltExamples);
-			groupLogs('Copy built examples to site folder', cpBuiltExamples);
-		} else {
-			throw Exception('Can\'t find the option: ' + args.getOption('refresh'));
-		}
+      getExampleList();
+      groupLogs('Get built examples', getBuiltExamples);
+      groupLogs('Copy built examples to site folder', cpBuiltExamples);
+    } else {
+      throw Exception('Can\'t find the option: ' + args.getOption('refresh'));
+    }
   }
 
   // Run `bundle install`, similar to `pub get` in Dart
@@ -196,8 +195,9 @@ void getBuiltExamples() async {
   }
 
   // We only need gh-pages branch
-  Future<void> pullRepo(String name) async => await runGit(
-        [
+  void pullRepo(String name) => run(
+        'git',
+        arguments: [
           'clone',
           'https://github.com/angulardart-community/$name',
           '--branch',
@@ -205,14 +205,14 @@ void getBuiltExamples() async {
           '--single-branch',
           name,
           '--depth',
-          '1'
+          '1',
         ],
-        processWorkingDir: builtExamplesDir.path,
+        workingDirectory: builtExamplesDir.path,
       );
 
   for (String example in examples) {
     log('Fetching example $example');
-    await pullRepo(example);
+    pullRepo(example);
   }
 }
 
