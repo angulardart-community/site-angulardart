@@ -64,11 +64,6 @@ submodule-cloning techniques:
    pub get
    ```
 
-> IMPORTANT:
-> - Any time you create a **new terminal/command window** to work on
->   this repo, **repeat steps 1 and 2** above.
-> - If you upgrade Dart then rerun all of the steps above.
-
 ### 3. Create a folder at your **HOME** directory
 
 Create a folder at your home directory called `tmp`. This is used for some logging. Our scripts can automatically create that folder for you if it doesn't exists.
