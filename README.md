@@ -17,17 +17,17 @@ If you want/need to build, read on.
 
 ## Before you build this site
 
-Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)
+~~Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)~~ We just migrated (most) workflows to Dart, so Windows users should be able to build the site now. But seriously, considering switching to Linux?
 
-Also, if you do a full-site build, it takes up about 2 ~ 5GB of space, not counting `rvm` and `nvm`. Hard Drive Lives Matter!
+Also, if you do a full-site build, it takes up about 2 ~ 5GB of space. Hard Drive Lives Matter!
 
 ### 1. Get the prerequisites
 
 Install the following tools if you don't have them already.
 
-- **[nvm][]**, the Node Version Manager.
-- **[rvm][]**, the Ruby Version Manager.
-- **[Dart][]** (what do you expect then?), most versions after 2.5 is fine
+- **nodejs and npm** nodejs should be v12.x, other versions have not been tested
+- **[Ruby][]** >=2.4; 2.4 is the recommended version; other versions, like 2.7, will throw a bunch of warnings but are definitely usable
+- **[Dart][]** (what do you expect then?) all versions after 2.5 is fine
 - **[Chrome][]** v63 or later, or literally any web browser
 
 > IMPORTANT: Follow the installation instructions for each of the tools
@@ -53,28 +53,9 @@ submodule-cloning techniques:
 > Whenever you update your repo, update the submodule as well:<br>
 > `git pull; git submodule update --init --remote`
 
-### 3. Run installation scripts
+#### Some common problems that might occur during this process (Linux/Mac only; for Windows please open an issue):
 
-> NOTE: It is safe to (re-)run all of the commands and scripts given below even
-if you already have the required packages installed.
-
-**Open a terminal/command window** and execute the following commands:
-
-1. <code>cd <i>\<path-to-webdev-repo></i></code> &nbsp;&nbsp;# change to
-   **root of this repo**, e.g.: `~/git/site-angulardart`
-2. `source ./tool/env-set.sh` &nbsp;&nbsp;#
-   initialize environment variables; install/use required Node & Ruby version
-3. `./tool/before-install.sh` &nbsp;&nbsp;#
-   install core set of required tools
-4. `./tool/install.sh` &nbsp;&nbsp;#
-   install everything else needed to build this site
-
-#### Some common problems that might occur during this process (Linux/Mac only; for Windows please do some research on yourself or open an issue):
-
-1. `nvm` or `rvm` not installed.
-   
-   Solution: if you're sure you've installed both of them, run `source $HOME/.bashrc`
-2. `dart pub get` getting stuck for hours, usually on `dart_style`.
+1. `dart pub get` getting stuck for hours, usually on `dart_style`.
    
    Solution: before running all the steps above, run the following in the project root:
    ```
@@ -82,42 +63,42 @@ if you already have the required packages installed.
    pub global activate dartdoc
    pub get
    ```
-3. Something like :
-   ```
-   Error: ENOENT: no such file or directory, open '/home/runner/tmp/.v8flags-1-6.8.275.32-node.59.4bad0b8dd3074cd43f641c2ac22a3571.json'
-   ```
-   Solution: create a folder at your `$HOME` directory called `tmp`. This folder will be used during the build process.
-   ```
-   mkdir $HOME/tmp
-   ```
 
 > IMPORTANT:
 > - Any time you create a **new terminal/command window** to work on
 >   this repo, **repeat steps 1 and 2** above.
 > - If you upgrade Dart then rerun all of the steps above.
 
+### 3. Create a folder at your **HOME** directory
+
+Create a folder at your home directory called `tmp`. This is used for some logging. Our scripts can automatically create that folder for you if it doesn't exists.
+
 ## Building this site
 
-Once everything is installed, you need to do a full site build at least once:
+```bash
+npm install
+bundle install
+pub global activate grinder # Not required but highly recommended
+```
+If this is your first time building this site, run a full build:
+```bash
+dart run grinder build --refresh=all
+```
+Alternatively run the following if you have activated `grinder`:
+```bash
+grind build --refresh=all
+```
+The generated site is in the `publish` folder. Run the following to view the site in your browser:
+```bash
+npx superstatic --port 5000
+```
+Open [localhost:5000](http://localhost:5000/), and there it is!
 
-- `npx gulp build --dartdoc` &nbsp;&nbsp;# full site build including API docs
-
-The generated site is placed in the `publish` folder. To serve this folder use:
-
-- `npx superstatic --port 5000`
-
-Or, if you aren't testing redirects, use this command (which has the bonus of
-autorefreshing your browser after edits):
-
-- `jekyll serve --livereload`
-
-To view the generated site open [localhost:5000](http://localhost:5000/)
-in a browser.
-
-You can build, serve, and have a watcher for changes by running the
-following command:
-
-- `./tool/serve.sh`
+Once you've built the site once, you can run the following to build, serve, and have a watcher at the same time:
+```bash
+jekyll serve --livereload
+```
+For more advance usage, see below
 
 > NOTE: Getting `jekyll | Error:  Too many open files` under MacOS or Linux?
 >   One way to resolve this is to add the following to your `.bashrc`:
@@ -126,59 +107,11 @@ following command:
 >
 >   and then reboot your machine.
 
-If you'd like to separately build and then serve, the commands are:
+## Other useful `grinder` tasks
 
-- `npx gulp build --no-dartdoc` &nbsp;&nbsp;# build site without regenerating
-   API docs
-- `npx superstatic --port 5000` &nbsp;&nbsp;# serve site under `publish`
-
-Some `npx gulp build` options include:
-
-- `--clean` &nbsp;&nbsp;# deletes `publish` and file fragments (nothing else)
-- `--[no-]dartdoc[=all|acx|ng|forms|router|test]` &nbsp;&nbsp;#
-  generates API docs for named packages (default `all`)
-- `--use-cached-api-doc` &nbsp;&nbsp;# will use cached API docs rather
-   than regenerate them; without this option API docs are regenerated
-   afresh each time
-- `--fast` &nbsp;&nbsp;# skips some one-time setup tasks (can spead
-   up repeated builds)
-- `--log=x` &nbsp;&nbsp;# logging level: `debug`, `info`, `warn` (default),
-   `error`
-
-## Rebuilding this site from scratch
-
-If you encounter build problems, or if you haven't build this site in a while,
-you might want to rebuild it from scratch, doing all of the following steps
-(in order):
-
-```
-source ./tool/env-set.sh  # reset environment vars and (re-)install Node & Ruby
-npx gulp clean            # clean out all temporary site folders
-npx gulp build --dartdoc  # full site regeneration
-./tool/serve.sh
-```
-
-If you are still having build problems, you might need to once again step
-through the installation instructions.
-
-## Deploying
-
-Deploy to the `default` firebase project (hosting the official site) using this
-command:
-
-```
-./tool/shared/deploy.sh --robots ok default
-```
-
-## Other useful Gulp tasks
-
+To see the full list of workflow commands available, run `grind --help`. Below are a few handy ones that you'll likely use to make your life easier. (More coming soon!)
 ```bash
-npx gulp test --filter=template  # unit test only the template-syntax example
-npx gulp e2e --filter=template   # end-to-end test only the template-syntax example
-npx gulp clean # clean temporary directories and build artifacts
-npx gulp clean && npx gulp build --dartdoc  # do a full build from a clean slate
-npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src`,
-                        # so you'll lose uncommitted work under `src`!
+grind clean # Clean build artifacts
 ```
 
 [Chrome]: https://www.google.ca/chrome
@@ -191,6 +124,7 @@ npx gulp git-clean-src  # WARNING WARNING WARNING: this runs `git clean -xdf src
 [Jekyll]: https://jekyllrb.com/
 [nvm]: https://github.com/creationix/nvm#installation
 [rvm]: https://rvm.io/rvm/install#installation
+[Ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [site-angulardart]: https://github.com/dart-lang/site-angulardart
 [site-www]: https://github.com/dart-lang/site-www
 [angulardart.dev]: https://angulardart.dev
