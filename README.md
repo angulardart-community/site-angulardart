@@ -1,5 +1,7 @@
 # AngularDart Community Website/Documentation
 
+![Firebase Hosting](https://github.com/angulardart-community/site-angulardart/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=ready-for-publish)
+
 > The official [repo](https://github.com/angulardart/angular) has been archived and doesn't allow any changes, hence I created this fork so that we, the AngularDart community, can work on improvements by ourselves (and perhaps have our own documentation site?).
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
