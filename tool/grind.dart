@@ -208,6 +208,7 @@ void getBuiltExamples() async {
           '1',
         ],
         workingDirectory: builtExamplesDir.path,
+				quiet: true,
       );
 
   for (String example in examples) {
