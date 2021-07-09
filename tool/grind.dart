@@ -208,6 +208,7 @@ void getBuiltExamples() async {
           '1',
         ],
         workingDirectory: builtExamplesDir.path,
+				quiet: true,
       );
 
   for (String example in examples) {
@@ -284,9 +285,9 @@ void clean() {
     delete(Directory('src/.asset-cache'));
   }
 
-  bool cleanLocalTmp =
+  bool cleanCodeFrags =
       args.hasFlag('code-frags') ? args.getFlag('code-frags') : true;
-  if (cleanLocalTmp) {
+  if (cleanCodeFrags) {
     cleanFrags();
   }
 
@@ -295,4 +296,8 @@ void clean() {
   if (cleanExamples) {
     deleteExamples();
   }
+
+	if (cleanCodeFrags && cleanExamples) {
+		delete(Directory('tmp'));
+	}
 }
