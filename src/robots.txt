@@ -1,1 +1,8 @@
-_shared/robots.txt
+User-agent: linkcheck
+Disallow:
+
+User-agent: *
+Allow: /
+
+Sitemap: https://angulardart.xyz/sitemap.xml
+Sitemap: http://cn.angulardart.xyz/sitemap.xml
