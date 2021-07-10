@@ -17,79 +17,67 @@ that's featured in this guide and tutorial.
 <a id="sdk"></a>
 ## Get prerequisites
 
-For information on how to get these prerequisite tools,
-see [the Dart site]({{site.dartlang}}/guides/get-started):
+For information on how to get the Dart SDK,
+see [the Dart site]({{site.dartlang}}/get-dart):
 
-- **Dart SDK** {{site.data.pkg-vers.SDK.vers}} or a compatible version
-- Your favorite IDE, or **WebStorm** (recommended).
+- **Dart SDK** {{site.data.pkg-vers.SDK.vers}} or a compatible version.
+- Your favorite IDE & code editor, such as WebStorm, Eclipse, or **Visual Studio Code** (recommended).
 
-{% include webstorm-status.md %}
+## Install Command-line Tools
+
+### webdev
+
+[`webdev`]({{pub-pkg}}/webdev) is an official command-line tool for developing and deploying Dart web applications. You **must** install `webdev` to run AngularDart apps. To install it, open a terminal window and run the following command:
+
+```terminal
+dart pub global activate webdev
+```
+
+If this is your first time interacting with Pub global packages, Dart will tell you (in the terminal) to add the system cache `bin` directory to your `PATH` environment variable (see [this guide]({{site.dartlang}}/tools/pub/cmd/pub-global#running-a-script-from-your-path)). For more info on using global packages, see Dart's [official docs]({{site.dartlang}}/tools/pub/cmd/pub-global) about Pub.
+
+### ngdart (recommended)
+
+[`ngdart`]({{pub-pkg}}/ngdart) is a community-maintained command-line tool for creating and managing AngularDart applications. AngularDart can still run without it, but `ngdart` makes your life much easier by providing some handy commands such as `ngdart create <project_name>` to create a new project and `ngdart clean` to clean all build artifacts and cache, similar to `flutter clean` if you come from Flutter. For more info on `ngdart`, see [`ngdart`'s Pub page]({{pub-pkg}}/ngdart).
+
+Similar to `webdev`, run the following to install `ngdart`:
+```terminal
+dart pub global activate ngdart
+```
+
+### Note for Flutter developers
+
+Occasionally, you might get some errors similar to the following when running `webdev` or `ngdart`:
+```terminal
+Unhandled exception:
+   ProcessException: 'pub' command not found
+```
+This is because additional Dart tools don't exist in Flutter SDK's `bin` directory. You'll have to add the Dart SDK's `bin` directory to your `PATH` environment variable. The Dart SDK is located at `YOUR_FLUTTER_SDK_LOCATION/bin/cache/dart-sdk/bin/`.
 
 ## Create a starter project
 
-The examples in this guide and tutorial are based on the
-[angular-examples/quickstart]({{site.ghNgEx}}/quickstart/tree/{{site.branch}})
-GitHub project.
-You can get the project's files by the following methods:
+For generic purposes, use `ngdart create <app_name>` to create a new AngularDart application.
+
+If you want to follow the examples in this guide and tutorial, they are based on the [angular-examples/quickstart]({{site.ghNgEx}}/quickstart/tree/{{site.branch}}) GitHub project. You can get the project's files by the following methods:
 * [Downloading them.]({{site.ghNgEx}}/quickstart/archive/{{site.branch}}.zip)
-* Cloning the repo.
-* Using WebStorm's Git support.
-
-### Use WebStorm's Git support ###
-
-1. Launch WebStorm.
-1. If you haven't already done so,
-   [configure Dart support in WebStorm]({{site.webdev}}/tools/webstorm#configuring-dart-support).
-1. From the welcome screen, choose **Check out from Version Control > Git**.<br>
-   Alternatively, from the menu, choose **VCS > Git > Clone...**<br>
-   A **Clone Repository** dialog appears.
-1. Fill out the following fields:<a id="directory-name"></a>
-   * **Git Repository URL:** `{{site.ghNgEx}}/quickstart`
-   * **Parent Directory:** _(wherever you like to keep your practice code)_
-   * **Directory Name:** `angular_tour_of_heroes` _(or any other
-   [valid package name]({{site.dartlang}}/tools/pub/pubspec#name))_
-1. Click **Clone**.
-{%- if site.branch != 'master' %}
-1. After the project opens, from the menu, choose **VCS > Git > Branches...**<br>
-   A **Git Branches** popup appears.
-1. From the popup, under **Remote Branches** choose<br>
-   **origin/{{site.branch}} > Checkout as new local branch**.
-{% endif %}
+* Cloning the repo: `git clone https://github.com/angulardart-community/quickstart.git`
+* Using VS Code's [Git support](https://code.visualstudio.com/Docs/editor/versioncontrol#_cloning-a-repository).
 
 ## Get dependencies  {#get}
 
-In WebStorm:
-
-1. Open the new project.
-1. In the project view, double-click `pubspec.yaml`.
-1. At the upper right of the editor view of `pubspec.yaml`:
-   1. Click **Enable Dart support**.
-   1. Click **Get dependencies**.
-
-WebStorm takes several seconds to analyze the sources and
-do other housekeeping. This only happens once.
-After that, you'll be able to use WebStorm for the usual IDE tasks,
-including running the app.
-
-If you aren't using WebStorm,
-you can use the following command in a terminal window:
-
 ```terminal
-$ pub get
+dart pub get
 ```
 
 ## Customize the project
-
-Using WebStorm, or your favorite editor:
 
 1. Open **`web/index.html`**, and replace the text of the **`<title>`** element
    with a title suitable for your app. For example: `<title>Angular Tour
    of Heroes</title>`.
 
-1. Open **`pubspec.yaml`**, and update the **description** to suit your project.
+2. Open **`pubspec.yaml`**, and update the **description** to suit your project.
    For example: `description: Tour of Heroes`.
 
-1. _Optional_. If you'd like to change your project's name, then do a
+3. _Optional_. If you'd like to change your project's name, then do a
    project-wide _search-and-replace_ of the current value of the **pubspec
    `name`** entry (**`angular_app`**) with a name suitable for your app
    &mdash; usually it will be the same as the [directory name](#directory-name)
@@ -102,10 +90,60 @@ Using WebStorm, or your favorite editor:
 
 ## Run the app
 
-In WebStorm:
+### Visual Studio Code
+
+Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code). If you already have the Fluttr VSCode extension installed, this is not necessary.
+1. Start VS Code.
+2. Press **Ctrl+Shift+X** (Windows/Linux) or **Cmd+Shift+X** (Mac) to open the Extensions side panel.
+3. Type `Dart` in the extensions search field, and select **Dart** in the list, and click **Install**.
+
+<!-- ngdart will change this -->
+After that, usually you will do a one-time configuration **for each project** to set things up:
+1. Press **F5**
+2. VSCode will prompt you to select an environment. Choose **Dart & Flutter** or simply **Dart**. <!-- Does the Dart option even exists? It is here just in case. -->
+3. After that, VSCode will create a `launch.json` file in the `.vscode` folder that contains something like this:
+```json
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "quickstart",
+			"request": "launch",
+			"type": "dart"
+		}
+	]
+}
+```
+Add the `"program": "web"` value in "configurations":
+```json
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "quickstart",
+			"request": "launch",
+			"type": "dart",
+         "program": "web" // ADD THIS LINE
+		}
+	]
+}
+```
+You're now all set! You can close this file, and press **F5** to start running your app!
+
+The first build usually takes a few minutes, so sit back and grab a coffee while your app is building. Builds after that are much quicker because assets are cached on disk and Dart will execute incremental builds.
+
+<!-- Address the "Google Chrome File Not Found Issue" issue -->
+
+### Webstorm
 
 1. In the project view, right-click `web/index.html`.
-1. Choose **Run ‘index.html’.**
+2. Choose **Run ‘index.html’.**
 
 You should see the following app in a browser window:
 
@@ -114,7 +152,7 @@ You should see the following app in a browser window:
 To run the app from the command line, use [webdev][] to build and serve the app:
 
 ```terminal
-$ webdev serve
+webdev serve
 ```
 
 Then, to view your app, use the Chrome browser to visit
@@ -124,9 +162,7 @@ Then, to view your app, use the Chrome browser to visit
 
 ## Reload the app
 
-Whenever you change the app, reload the browser window.
-As you save updates to the code, the `pub` tool detects changes and
-serves the new app.
+Whenever you change the app, reload the browser window. As you save updates to the code, the `webdev` tool automatically detects changes and serves the new app.
 
 ## Next step
 
