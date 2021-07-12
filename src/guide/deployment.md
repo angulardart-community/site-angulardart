@@ -47,7 +47,7 @@ Google's apps often use the following [dart2js options]({{site.dartlang}}/tools/
 - `--fast-startup`
 - `--minify`
 - `--trust-primitives`
-- `--trust-type-annotations`
+- `--omit-implicit-checks`
 
 **Test your apps before deploying with these options!**
 
@@ -61,7 +61,7 @@ For more information, see the [documentation for dart2js][dart2js].
 <aside class="alert alert-warning" markdown="1">
   **Important:**
   Make sure your app has good [test coverage](/guide/testing)
-  before you use either of the `--trust-*` options.
+  before you use either of the `--trust-*` or `--omit-*` options.
   If some code paths aren't tested,
   your app might run in dartdevc but
   misbehave when compiled using dart2js.
@@ -75,10 +75,18 @@ as described in the [build_web_compilers README.][build_web_compilers]
 The following steps are optional,
 but they can help make your app more reliable and responsive.
 
-* [Use the pwa package to make your app work offline](#use-the-pwa-package-to-make-your-app-work-offline)
-* [Use deferred loading to reduce your app's initial size](#use-deferred-loading-to-reduce-your-apps-initial-size)
-* [Follow best practices for web apps](#follow-best-practices-for-web-apps)
-* [Remove unneeded build files](#remove-unneeded-build-files)
+- [Building your app {#compiling-to-javascript}](#building-your-app-compiling-to-javascript)
+  - [Compile using webdev](#compile-using-webdev)
+  - [Use dart2js flags to produce better JavaScript](#use-dart2js-flags-to-produce-better-javascript)
+  - [Make your app smaller, faster, and more reliable](#make-your-app-smaller-faster-and-more-reliable)
+    - [Use the pwa package to make your app work offline](#use-the-pwa-package-to-make-your-app-work-offline)
+    - [Use deferred loading to reduce your app's initial size](#use-deferred-loading-to-reduce-your-apps-initial-size)
+    - [Follow best practices for web apps](#follow-best-practices-for-web-apps)
+    - [Remove unneeded build files](#remove-unneeded-build-files)
+- [Serving your app](#serving-your-app)
+  - [Angular-specific tips](#angular-specific-tips)
+  - [GitHub Pages](#github-pages)
+  - [Firebase](#firebase)
 
 
 #### Use the pwa package to make your app work offline

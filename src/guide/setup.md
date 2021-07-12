@@ -30,7 +30,7 @@ see [the Dart site]({{site.dartlang}}/get-dart):
 [`webdev`]({{pub-pkg}}/webdev) is an official command-line tool for developing and deploying Dart web applications. You **must** install `webdev` to run AngularDart apps. To install it, open a terminal window and run the following command:
 
 ```terminal
-dart pub global activate webdev
+$ dart pub global activate webdev
 ```
 
 If this is your first time interacting with Pub global packages, Dart will tell you (in the terminal) to add the system cache `bin` directory to your `PATH` environment variable (see [this guide]({{site.dartlang}}/tools/pub/cmd/pub-global#running-a-script-from-your-path)). For more info on using global packages, see Dart's [official docs]({{site.dartlang}}/tools/pub/cmd/pub-global) about Pub.
@@ -41,15 +41,15 @@ If this is your first time interacting with Pub global packages, Dart will tell 
 
 Similar to `webdev`, run the following to install `ngdart`:
 ```terminal
-dart pub global activate ngdart
+$ dart pub global activate ngdart
 ```
 
 ### Note for Flutter developers
 
 Occasionally, you might get some errors similar to the following when running `webdev` or `ngdart`:
 ```terminal
-Unhandled exception:
-   ProcessException: 'pub' command not found
+$ Unhandled exception:
+     ProcessException: 'pub' command not found
 ```
 This is because additional Dart tools don't exist in Flutter SDK's `bin` directory. You'll have to add the Dart SDK's `bin` directory to your `PATH` environment variable. The Dart SDK is located at `YOUR_FLUTTER_SDK_LOCATION/bin/cache/dart-sdk/bin/`.
 
@@ -65,7 +65,7 @@ If you want to follow the examples in this guide and tutorial, they are based on
 ## Get dependencies  {#get}
 
 ```terminal
-dart pub get
+$ dart pub get
 ```
 
 ## Customize the project
@@ -99,7 +99,7 @@ Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?i
 
 <!-- ngdart will change this -->
 After that, usually you will do a one-time configuration **for each project** to set things up:
-1. Press **F5**
+1. Press **F5** or choose **Run > Start Debugging**.
 2. VSCode will prompt you to select an environment. Choose **Dart & Flutter** or simply **Dart**. <!-- Does the Dart option even exists? It is here just in case. -->
 3. After that, VSCode will create a `launch.json` file in the `.vscode` folder that contains something like this:
 ```json
@@ -129,7 +129,7 @@ Add the `"program": "web"` value in "configurations":
 			"name": "quickstart",
 			"request": "launch",
 			"type": "dart",
-         "program": "web" // ADD THIS LINE
+			"program": "web" // ADD THIS LINE
 		}
 	]
 }
@@ -140,25 +140,35 @@ The first build usually takes a few minutes, so sit back and grab a coffee while
 
 <!-- Address the "Google Chrome File Not Found Issue" issue -->
 
-### Webstorm
+### WebStorm
 
-1. In the project view, right-click `web/index.html`.
-2. Choose **Run ‘index.html’.**
+1. In WebStorm, the Dart plugin comes in pre-installed. If you find yourself having no syntax highlighting for Dart files or if you're using another IntelliJ-based IDE, installed the [Dart plugin](https://plugins.jetbrains.com/plugin/6351-dart/) for IntelliJ.
+2. Open the project folder. On the top right of the screen, click the button **Add Configuration...** This will open up the "Run/Debug Configurations" window.
+![WebStorm Run/Debug Configuration Window](/guide/images/webstorm-run-configuration.png)
+3. Click on the plus sign on the top left or the **Add new configuration...** on the middle right. In the drop-down list, choose **Dart Web**.
+4. WebStorm will tell you that "Path to HTML file is not specified". In the "HTML File" field, choose the file `web/index.html`.
+5. You can also store the configuration file if you want by checking the **Store as project file** checkbox. WebStorm will remember your setup regardless.
 
-You should see the following app in a browser window:
+You're now all set! Close the configuration window, and press **Shift + F10** or click on the green run button to run. The first build usually takes a few minutes, so sit back and grab a coffee while your app is building. Builds after that are much quicker because assets are cached on disk and Dart will execute incremental builds.
 
-![A web page with the header: Hello Angular](/guide/images/starter-app.png)
+### Command-Line
 
 To run the app from the command line, use [webdev][] to build and serve the app:
 
 ```terminal
-webdev serve
+$ webdev serve
 ```
 
 Then, to view your app, use the Chrome browser to visit
 [localhost:8080](localhost:8080).
 (Details about Dart's browser support are
 [in the FAQ](/faq#q-what-browsers-do-you-support-as-javascript-compilation-targets).)
+
+### Result
+
+Regardless of your method, you should see the following app in a browser window:
+
+![A web page with the header: Hello Angular](/guide/images/starter-app.png)
 
 ## Reload the app
 

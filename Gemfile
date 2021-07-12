@@ -11,7 +11,7 @@ gem 'kramdown-parser-gfm'
 gem 'liquid-tag-parser'
 gem 'nokogiri'
 gem 'sassc'
-gem 'sprockets'
+gem "sprockets", "~> 3.7"
 # Sprockets > 4.0.beta8 breaks jekyll-assets
 # https://github.com/envygeeks/jekyll-assets/issues/589
 # So pin the version until the issue is fixed.
