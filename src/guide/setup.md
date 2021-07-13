@@ -48,8 +48,8 @@ $ dart pub global activate ngdart
 
 Occasionally, you might get some errors similar to the following when running `webdev` or `ngdart`:
 ```terminal
-$ Unhandled exception:
-     ProcessException: 'pub' command not found
+Unhandled exception:
+  ProcessException: 'pub' command not found
 ```
 This is because additional Dart tools don't exist in Flutter SDK's `bin` directory. You'll have to add the Dart SDK's `bin` directory to your `PATH` environment variable. The Dart SDK is located at `YOUR_FLUTTER_SDK_LOCATION/bin/cache/dart-sdk/bin/`.
 
@@ -90,6 +90,28 @@ $ dart pub get
 
 ## Run the app
 
+**Note:** if you get errors like this below when building:
+```
+[SEVERE] Failed to precompile build_runner:build_runner:
+[SEVERE] ../../../.pub-cache/hosted/pub.dartlang.org/analyzer-0.40.6/lib/src/error/best_practices_verifier.dart:258:50: Error: The property 'displayString' is defined in multiple extensions for 'TargetKind' and neither is more specific.
+[SEVERE]  - 'TargetKind' is from 'package:meta/meta_meta.dart' ('../../../.pub-cache/hosted/pub.dartlang.org/meta-1.7.0/lib/meta_meta.dart').
+[SEVERE] Try using an explicit extension application of the wanted extension or hiding unwanted extensions from scope.
+[SEVERE]         var kindNames = kinds.map((kind) => kind.displayString).toList()
+[SEVERE]                                                  ^^^^^^^^^^^^^
+[SEVERE] ../../../.pub-cache/hosted/pub.dartlang.org/analyzer-0.40.6/lib/src/error/best_practices_verifier.dart:1917:14: Context: This is one of the extension members.
+[SEVERE]   String get displayString {
+[SEVERE]              ^^^^^^^^^^^^^
+[SEVERE] ../../../.pub-cache/hosted/pub.dartlang.org/meta-1.7.0/lib/meta_meta.dart:91:14: Context: This is one of the extension members.
+[SEVERE]   String get displayString {
+[SEVERE]              ^^^^^^^^^^^^^
+[SEVERE] ../../../.pub-cache/hosted/pub.dartlang.org/analyzer-0.40.6/lib/src/error/best_practices_verifier.dart:260:36: Error: The getter 'commaSeparatedWithOr' isn't defined for the class 'List<dynamic>'.
+[SEVERE]  - 'List' is from 'dart:core'.
+[SEVERE] Try correcting the name to the name of an existing getter, or defining a getter or field named 'commaSeparatedWithOr'.
+[SEVERE]         var validKinds = kindNames.commaSeparatedWithOr;
+[SEVERE]                                    ^^^^^^^^^^^^^^^^^^^^
+```
+Try adding `meta: <1.7.0` to your `dev_dependencies`. This is caused by the package `meta` (specifically version 1.7.0), not AngularDart itself.
+
 ### Visual Studio Code
 
 Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code). If you already have the Fluttr VSCode extension installed, this is not necessary.
@@ -98,7 +120,7 @@ Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?i
 3. Type `Dart` in the extensions search field, and select **Dart** in the list, and click **Install**.
 
 <!-- ngdart will change this -->
-After that, usually you will do a one-time configuration **for each project** to set things up:
+After that, usually you will do a one-time configuration **for each project** to set things up (you won't need to do this if you use `ngdart` to create a new project):
 1. Press **F5** or choose **Run > Start Debugging**.
 2. VSCode will prompt you to select an environment. Choose **Dart & Flutter** or simply **Dart**. <!-- Does the Dart option even exists? It is here just in case. -->
 3. After that, VSCode will create a `launch.json` file in the `.vscode` folder that contains something like this:
@@ -145,7 +167,7 @@ The first build usually takes a few minutes, so sit back and grab a coffee while
 1. In WebStorm, the Dart plugin comes in pre-installed. If you find yourself having no syntax highlighting for Dart files or if you're using another IntelliJ-based IDE, installed the [Dart plugin](https://plugins.jetbrains.com/plugin/6351-dart/) for IntelliJ.
 2. Open the project folder. On the top right of the screen, click the button **Add Configuration...** This will open up the "Run/Debug Configurations" window.
 ![WebStorm Run/Debug Configuration Window](/guide/images/webstorm-run-configuration.png)
-3. Click on the plus sign on the top left or the **Add new configuration...** on the middle right. In the drop-down list, choose **Dart Web**.
+3. Click on the plus sign on the top left or the **Add new run configuration...** on the middle right. In the drop-down list, choose **Dart Web**.
 4. WebStorm will tell you that "Path to HTML file is not specified". In the "HTML File" field, choose the file `web/index.html`.
 5. You can also store the configuration file if you want by checking the **Store as project file** checkbox. WebStorm will remember your setup regardless.
 
