@@ -12,7 +12,7 @@
 
 <hr>
 
-- <?code-excerpt "quickstart/web/main.dart" remove="/angular.dart|^$/" replace="/runApp/[!$&!]/g"?>
+- 
   {% prettify dart tag="code+br" %}
     import 'package:angular_app/app_component.template.dart' as ng;
     void main() {
@@ -27,7 +27,7 @@
 
 <hr>
 
-- <?code-excerpt "toh-5/web/main.dart" remove="/angular\.dart/" replace="/@?[\.\w]+Injector/[!$&!]/g; /Hash,.*/,/g"?>
+- 
   {% prettify dart tag="code+br" %}
     import 'package:angular_router/angular_router.dart';
     import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
