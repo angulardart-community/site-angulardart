@@ -48,3 +48,7 @@ Then feel free to skip around among the other pages on this site.
 Try the [tutorial](../tutorial "Tour of Heroes") if you're ready to start
 coding, or visit the [architecture overview](architecture.html "Basic Concepts")
 if you prefer to learn the basic concepts first.
+
+### Extra note
+
+Sometimes if you can't find documentation about something for AngularDart, you can try to look for the same thing for [Angular TS]({{angular}}) as the two frameworks are architecturally similar (and both developed at Google!).
