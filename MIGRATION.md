@@ -18,7 +18,7 @@ As always, if you're confused about the little procedure here, ignore everything
 - Guide
   - [ ] Overview
   - [ ] Setup [@GZGavinZhao]
-  - [ ] Learning Angular
+  - [x] Learning Angular
   - [ ] Architecture
   - [ ] Displaying Data
   - [ ] User Input
@@ -26,7 +26,7 @@ As always, if you're confused about the little procedure here, ignore everything
   - [ ] Dependency Injection
   - [ ] Template Syntax
 - Tutorial
-  - [ ] Introduction (toh-0)
+  - [ ] Introduction (toh-0) [@GZGavinZhao]
   - [ ] toh-1
   - [ ] toh-2
   - [ ] toh-3
