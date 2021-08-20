@@ -330,7 +330,7 @@ void syncExamples() async {
       );
       copy(Directory('examples/ng/doc/$example'), exampleDir);
 			await runGit(['add', '-u'], processWorkingDir: syncDir.path);
-			await runGit(['commit', '-s', '-m', 'Auto-commit: update to Angular Version 6'], processWorkingDir: syncDir.path);
+			await runGit(['commit', '-s', '-m', '"Auto-commit: update to Angular Version 6"'], processWorkingDir: syncDir.path);
 			await runGit(['push'], processWorkingDir: syncDir.path);
     }
   }
