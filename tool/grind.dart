@@ -312,7 +312,7 @@ void syncExamples() async {
   final syncDir = Directory('tmp/sync')..createSync(recursive: true);
 	print(examples);
 
-  for (String example in examples.sublist(2, 3)) {
+  for (String example in examples) {
     if (!example.contains('lottery')) {
       final exampleDir = Directory('tmp/sync/$example');
 
@@ -333,17 +333,17 @@ void syncExamples() async {
       );
       copy(Directory('examples/ng/doc/$example'), exampleDir);
 			log('Saving changes...');
-			await runGit(['add', '-u'], processWorkingDir: syncDir.path);
+			await runGit(['add', '-u'], processWorkingDir: exampleDir.path);
 			log('Commit changes...');
-			await runGit(['commit', '-s', '-m', '"Auto-commit: update to Angular Version 6"'], processWorkingDir: syncDir.path);
+			await runGit(['commit', '-s', '-m', '"Auto-commit: update to Angular Version 6"'], processWorkingDir: exampleDir.path);
 			log('Push to remote...');
-			await runGit(['push'], processWorkingDir: syncDir.path);
+			await runGit(['push'], processWorkingDir: exampleDir.path);
 			log('Done!\n');
     }
   }
 
   log('Cleaning up...');
-  // for (String example in examples) {
-  //   delete(Directory('tmp/sync/$example'));
-  // }
+  for (String example in examples) {
+    delete(Directory('tmp/sync/$example'));
+  }
 }
