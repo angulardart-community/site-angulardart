@@ -310,11 +310,13 @@ void deleteSync() {
 @Depends('get-example-list', 'delete-sync')
 void syncExamples() async {
   final syncDir = Directory('tmp/sync')..createSync(recursive: true);
+	print(examples);
 
-  for (String example in examples.sublist(0, 1)) {
+  for (String example in examples.sublist(2, 3)) {
     if (!example.contains('lottery')) {
       final exampleDir = Directory('tmp/sync/$example');
 
+			log('Cloning example $example');
       await runGit(
         [
           'clone',
@@ -326,12 +328,17 @@ void syncExamples() async {
 					'--single-branch',
 					'$example',
         ],
+				throwOnError: true,
         processWorkingDir: syncDir.path,
       );
       copy(Directory('examples/ng/doc/$example'), exampleDir);
+			log('Saving changes...');
 			await runGit(['add', '-u'], processWorkingDir: syncDir.path);
+			log('Commit changes...');
 			await runGit(['commit', '-s', '-m', '"Auto-commit: update to Angular Version 6"'], processWorkingDir: syncDir.path);
+			log('Push to remote...');
 			await runGit(['push'], processWorkingDir: syncDir.path);
+			log('Done!\n');
     }
   }
 
