@@ -1,5 +1,7 @@
 # AngularDart Community Website/Documentation
 
+[![AngularDart Chat](https://img.shields.io/gitter/room/angulardart/community?color=blue&label=angulardart%2Fcommunity&logo=matrix)](https://gitter.im/angulardart/community)
+
 > The official [repo](https://github.com/angulardart/angular) has been archived and doesn't allow any changes, hence I created this fork so that we, the AngularDart community, can work on improvements by ourselves (and perhaps have our own documentation site?).
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
