@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:git/git.dart';
 import 'package:grinder/grinder.dart';
 import 'package:path/path.dart' as p;
-import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:shelf_static/shelf_static.dart';
 
 import 'constants.dart';
 
@@ -15,7 +13,7 @@ String homeDir = Platform.isWindows
     : Platform.environment['HOME'];
 
 /// Every log here will be foldable in Github Actions logs.
-/// See the [docs](https://github.com/actions/toolkit/blob/main/docs/commands.md#group-and-ungroup-log-lines)
+/// See the [docs](https://github.com/actions/toolkit/blob/main/docs/citemsommands.md#group-and-ungroup-log-lines)
 /// for more info.
 void groupLogs(String name, Function task) {
   print('::group::$name');
@@ -77,8 +75,7 @@ void updateCodeExcerpts() {
       'tmp/code-excerpt-log.txt',
       '--escape-ng-interpolation',
       '--yaml',
-      File('tool/regex.txt')
-          .readAsStringSync(), // A temporary work around because for whatever reason Dart just doesn't recognize it
+      r'--replace=/\s*\/\/!<br>//g;/ellipsis(<\w+>)?(\(\))?;?/.../g;/\/\*(\s*\.\.\.\s*)\*\//$1/g;/\{\/\*-(\s*\.\.\.\s*)-\*\/\}/$1/g;',
     ],
   );
 }
@@ -208,7 +205,7 @@ void getBuiltExamples() async {
           '1',
         ],
         workingDirectory: builtExamplesDir.path,
-				quiet: true,
+        quiet: true,
       );
 
   for (String example in examples) {
@@ -297,7 +294,86 @@ void clean() {
     deleteExamples();
   }
 
-	if (cleanCodeFrags && cleanExamples) {
-		delete(Directory('tmp'));
-	}
+  if (cleanCodeFrags && cleanExamples) {
+    delete(Directory('tmp'));
+  }
+}
+
+@Task('Clean temporary directories created when syncing examples to GitHub')
+void deleteSync() {
+  delete(Directory('tmp/sync'));
+}
+
+@Task('Sync changes made on the local example to the GitHub examples repo')
+@Depends('get-example-list', 'delete-sync')
+void syncExamples() async {
+  final syncDir = Directory('tmp/sync')..createSync(recursive: true);
+	final commitMsg = 'Auto-commit: update to Angular Version 6';
+  print(examples);
+
+  for (String example in examples) {
+    if (!example.contains('lottery')) {
+      final exampleDir = Directory('tmp/sync/$example');
+
+      log('Cloning example $example');
+      await runGit(
+        [
+          'clone',
+          'https://github.com/angulardart-community/$example',
+          '--depth',
+          '1',
+          '--branch',
+          'master',
+          '--single-branch',
+          '$example',
+        ],
+        throwOnError: true,
+        processWorkingDir: syncDir.path,
+      );
+
+      copy(Directory('examples/ng/doc/$example'), exampleDir);
+
+      log('Saving changes...');
+      await runGit(['add', '-u'], processWorkingDir: exampleDir.path);
+
+      log('Commit changes...');
+      await runGit([
+        'commit',
+        '-s',
+        '-m',
+        '"$commitMsg"',
+      ], processWorkingDir: exampleDir.path);
+
+      log('Push to remote...');
+      await runGit(['push'], processWorkingDir: exampleDir.path);
+      log('Done!\n');
+    }
+  }
+
+  log('Cleaning up...');
+  for (String example in examples) {
+    delete(Directory('tmp/sync/$example'));
+  }
+}
+
+@Task('A one-time command for executing repetitive tasks for each example')
+@Depends('get-example-list')
+void forEachExample() {
+  for (var example in examples) {
+    // Do something for each example
+
+    // The following updates the default branch for each repo using GitHub API
+    // final uri = Uri.https(
+    //   'api.github.com',
+    //   'repos/angulardart-community/$example',
+    // );
+    // await http.patch(
+    //   uri,
+    // 	headers: {
+    // 		'Authorization': 'token <my token>',
+    // 		'Accept': 'application/vnd.github.v3+json',
+    // 	},
+    // 	body: '{"default_branch": "master"}',
+    // );
+  }
 }
