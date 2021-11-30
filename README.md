@@ -1,7 +1,8 @@
 # AngularDart Community Website/Documentation
 
 [![AngularDart Chat](https://img.shields.io/gitter/room/angulardart/community?color=blue&label=angulardart%2Fcommunity&logo=matrix)](https://gitter.im/angulardart/community)
-![Firebase Hosting](https://github.com/angulardart-community/site-angulardart/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=ready-for-publish)
+[![Jekyll CI](https://img.shields.io/github/workflow/status/angulardart-community/site-angulardart/Jekyll%20CI)](https://github.com/angulardart-community/site-angulardart/actions/workflows/ci.yml)
+![Firebase Hosting](https://img.shields.io/github/workflow/status/angulardart-community/site-angulardart/Publish%20Website?label=release)
 
 > The official [repo](https://github.com/angulardart/angular) has been archived and doesn't allow any changes, hence I created this fork so that we, the AngularDart community, can work on improvements by ourselves (and perhaps have our own documentation site?).
 > 

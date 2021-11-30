@@ -8,9 +8,10 @@ import 'constants.dart';
 main(args) => grind(args);
 
 List<String> examples = [];
-String homeDir = Platform.isWindows
-    ? Platform.environment['UserProfile']
-    : Platform.environment['HOME'];
+String homeDir = (Platform.isWindows
+        ? Platform.environment['UserProfile']
+        : Platform.environment['HOME']) ??
+    '';
 
 /// Every log here will be foldable in Github Actions logs.
 /// See the [docs](https://github.com/actions/toolkit/blob/main/docs/citemsommands.md#group-and-ungroup-log-lines)
@@ -109,7 +110,7 @@ void build() {
       groupLogs('Get built examples', getBuiltExamples);
       groupLogs('Copy built examples to site folder', cpBuiltExamples);
     } else {
-      throw Exception('Can\'t find the option: ' + args.getOption('refresh'));
+      throw Exception('Can\'t find the option: ' + args.getOption('refresh')!);
     }
   }
 
@@ -265,9 +266,7 @@ void clean() {
   if (cleanTmp) {
     String path = p.join(
       // Please don't tell me you're on Android or iOS
-      Platform.isWindows
-          ? Platform.environment['UserProfile']
-          : Platform.environment['HOME'],
+      homeDir,
       'tmp',
     );
     if (Directory(path).existsSync()) {
@@ -308,7 +307,7 @@ void deleteSync() {
 @Depends('get-example-list', 'delete-sync')
 void syncExamples() async {
   final syncDir = Directory('tmp/sync')..createSync(recursive: true);
-	final commitMsg = 'Auto-commit: update to Angular Version 6';
+  final commitMsg = 'Auto-commit: update to Angular Version 6';
   print(examples);
 
   for (String example in examples) {
