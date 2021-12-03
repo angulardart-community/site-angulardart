@@ -8,7 +8,7 @@
     "url": "https://github.com/dart-lang/site-angulardart.git"
   },
   "devDependencies": {
-    "diff2html-cli": "^2.7.0",
-    "superstatic": "^6.0.4"
+    "diff2html-cli": "^5.1.11",
+    "superstatic": "^7.1.0"
   }
 }
