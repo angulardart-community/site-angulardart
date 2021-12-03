@@ -10,7 +10,7 @@ https://pub.dev/documentation/angular_components
 
 # Some ACX API links are being redirected to the gallery, but the gallery often
 # doesn't have the corresponding anchors, so ignore those:
-https://dart-lang.github.io/angular_components/#
+https://gallery.angulardart.xyz/#
 
 # angular.io is now an Angular app; the link checker has difficulty seeing anchors
 # (probably because the page hasn't been fully generated yet), so skip such links:
