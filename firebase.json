@@ -121,7 +121,7 @@
       },
       {
         "source": "/api/angular_components{,/**}",
-        "destination": "https://dart-lang.github.io/angular_components",
+        "destination": "https://gallery.angulardart.xyz",
         "type": 301
       },
       {
