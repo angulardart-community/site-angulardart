@@ -88,7 +88,7 @@ void updateCodeExcerpts() {
 /// If no arguments is appended, this program will only attempt to build
 /// the site with `bundle exec jekyll build`
 @Task('Build site')
-// @Depends('clean', 'add-live-examples') // Do we actually use webdev???
+@Depends('activate-pkgs')
 void build() {
   TaskArgs args = context.invocation.arguments;
 
@@ -138,6 +138,7 @@ void usage() => print('Run `grind --help` to list available tasks.');
 void activatePkgs() {
   PubApp webdev = PubApp.global('webdev');
   PubApp dartdoc = PubApp.global('dartdoc');
+	PubApp sass = PubApp.global('sass');
 
   if (!webdev.isActivated) {
     webdev.activate();
@@ -156,6 +157,15 @@ void activatePkgs() {
         'Can\'t find dartdoc! Did you add \"~/.pub-cache\" to your environment variables?');
   }
   log('dartdoc is activated');
+
+  if (!sass.isActivated) {
+    dartdoc.activate();
+  }
+  if (!sass.isGlobal) {
+    throw GrinderException(
+        'Can\'t find sass! Did you add \"~/.pub-cache\" to your environment variables?');
+  }
+  log('sass is activated');
 }
 
 //----------------------------Example Repos Related----------------------------//
