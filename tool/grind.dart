@@ -88,7 +88,7 @@ void updateCodeExcerpts() {
 /// If no arguments is appended, this program will only attempt to build
 /// the site with `bundle exec jekyll build`
 @Task('Build site')
-@Depends('activate-pkgs')
+// @Depends('activate-pkgs')
 void build() {
   TaskArgs args = context.invocation.arguments;
 

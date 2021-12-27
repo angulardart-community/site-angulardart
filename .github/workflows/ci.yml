@@ -11,8 +11,10 @@ jobs:
       NODE_ENV: production
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v2
         with:
           cache: yarn
       - run: yarn install
@@ -23,5 +25,4 @@ jobs:
         with:
           ruby-version: 2.6
           bundler-cache: true
-      - run: git submodule update --init --recursive
       - run: dart run grinder build --refresh=all
