@@ -18,7 +18,7 @@ jobs:
       - name: Setup Ruby and cache gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 2.6
           bundler-cache: true
       - run: git submodule update --init --recursive
       - run: dart run grinder build --refresh=all
