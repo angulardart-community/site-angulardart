@@ -14,8 +14,8 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.2.0
         with:
-          cache: npm
-      - run: npm install
+          cache: yarn
+      - run: yarn install
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
       - name: Setup Ruby and cache gems
