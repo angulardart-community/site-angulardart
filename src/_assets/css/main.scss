@@ -1,3 +1,7 @@
+@import "tailwindcss/base.css";
+@import "tailwindcss/components.css";
+@import "tailwindcss/utilities.css";
+
 @import '_variables';
 @import 'ng/ngio/base/_colors';
 @import "bootstrap-sprockets"; // TODO: remove for BS 4

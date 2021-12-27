@@ -9,6 +9,12 @@
   },
   "devDependencies": {
     "diff2html-cli": "^2.7.0",
-    "superstatic": "^6.0.4"
+    "postcss-import": "^14.0.2",
+    "superstatic": "^6.0.4",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.7"
+  },
+  "dependencies": {
   }
 }

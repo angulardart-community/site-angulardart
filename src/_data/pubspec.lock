@@ -252,7 +252,7 @@ packages:
       name: dart_internal
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.3"
   dart_style:
     dependency: transitive
     description:
@@ -653,4 +653,4 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.12.0 <2.15.0"
+  dart: ">=2.12.0 <2.17.0"

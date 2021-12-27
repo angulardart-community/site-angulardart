@@ -135,7 +135,14 @@ keep_files:
   - angular/api
   - components/api
 
-plugins: [jekyll-toc]
+sass:
+  load_paths:
+    - ../node_modules/
+      #    - /home/gavinzhao/CS/AngularDart/site-angulardart/node_modules/
+
+plugins:
+  - jekyll-toc
+  - jekyll-postcss
 
 # Increment this global og:image URL version number query parameter when you update any og:image file.
 # (Also increment the corresponding number in the `firebase.json` redirect rule.)
