@@ -115,7 +115,8 @@ void build() {
   }
 
   // Run `bundle install`, similar to `pub get` in Dart
-  groupLogs('bundle install', () => run('bundle', arguments: ['install']));
+  groupLogs('sudo bundle install',
+      () => run('sudo', arguments: ['bundle', 'install']));
 
   // Build site using [Jekyll](https://jekyllrb.com)
   groupLogs(
