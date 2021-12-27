@@ -138,10 +138,20 @@ void usage() => print('Run `grind --help` to list available tasks.');
 void activatePkgs() {
   PubApp webdev = PubApp.global('webdev');
   PubApp dartdoc = PubApp.global('dartdoc');
-	PubApp sass = PubApp.global('sass');
+  PubApp sass = PubApp.global('sass');
 
   if (!webdev.isActivated) {
-    webdev.activate();
+    // webdev.activate();
+    run(
+      'dart',
+      arguments: [
+        'pub',
+        'global',
+        'activate',
+        'webdev',
+        '2.7.4',
+      ],
+    );
   }
   if (!webdev.isGlobal) {
     throw GrinderException(
