@@ -97,7 +97,8 @@ dependencies:
 +++ forms/pubspec.yaml
 @@ -8,2 +8,3 @@
  dependencies:
-   angular: ^6.0.1
+-  angular: ^7.0.2
++  angular: ^6.0.1
 +  angular_forms: ^3.0.0
 ```
 
