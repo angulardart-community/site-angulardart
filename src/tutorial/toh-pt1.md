@@ -16,8 +16,7 @@ When you're done, the app should look like this {% example_ref %}.
 
 ## Where you left off
 
-Before you start writing code, let's verify that you have the following structure.
-If not, you'll need to go back and follow the [setup](toh-pt0) instructions
+Before you start writing code, let's verify that you have the following structure. If not, you'll need to go back and follow the [setup](toh-pt0) instructions
 on the previous page.
 
 <div class="ul-filetree" markdown="1">
@@ -198,7 +197,8 @@ The `angular_forms` library comes in its own package. Add the package to the pub
 +++ toh-1/pubspec.yaml
 @@ -8,2 +8,3 @@
  dependencies:
-   angular: ^6.0.0
+-  angular: ^7.0.2
++  angular: ^6.0.0
 +  angular_forms: ^3.0.0
 ```
 

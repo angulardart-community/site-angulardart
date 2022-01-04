@@ -38,16 +38,13 @@ Add the package to the pubspec dependencies:
 ```diff
 --- toh-0/pubspec.yaml
 +++ toh-1/pubspec.yaml
-@@ -11,6 +12,7 @@
+@@ -11,6 +12 @@
  dev_dependencies:
-   angular_test: ^3.0.0
--  build_runner: ^1.3.0
--  build_test: ^1.3.6
-+  build_runner: ^1.7.0
-+  build_test: ^1.3.1
-   build_web_compilers: ^2.4.0
-+  pageloader: ^3.2.0
-   test: ^1.6.0
+-  angular_test: ^4.0.1
+-  build_runner: ^2.1.7
+-  build_test: ^2.1.5
+-  build_web_compilers: ^3.2.2
+-  test: ^1.20.1
 ```
 
 ## Imports
