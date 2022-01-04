@@ -13,3 +13,8 @@
 	url = https://github.com/angulardart-community/quickstart.git
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/toh-0"]
+	path = examples/ng/doc/toh-0
+	url = https://github.com/angulardart-community/toh-0
+	branch = master
+	shallow = true
