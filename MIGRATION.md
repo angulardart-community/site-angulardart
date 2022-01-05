@@ -1,6 +1,6 @@
 # Migration :heart:
 
-Thank you for considering helping us migrating to AngularDart version 6!
+Thank you for considering helping us migrating to AngularDart version 7!
 
 Below is the complete checklist. Since we're unsure about what pages are not up-to-date, the best way is to simply to go through each one and mark that off after we verify that it is indeed up-to-date.
 
@@ -25,8 +25,8 @@ As always, if you're confused about the little procedure here, ignore everything
   - [ ] Forms
   - [ ] Dependency Injection
   - [ ] Template Syntax
-- Tutorial
-  - [x] Introduction (toh-0) [@GZGavinZhao]
+- Tutorial [@GZGavinZhao]
+  - [x] Introduction (toh-0)
   - [ ] toh-1
   - [ ] toh-2
   - [ ] toh-3
