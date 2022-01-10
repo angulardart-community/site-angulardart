@@ -5,8 +5,7 @@
 {:.md-thead}
 - Bootstrapping
 
-- <?code-excerpt "quickstart/web/main.dart" retain="angular.dart"?>
-  {% prettify dart tag="code" %}
+- {% prettify dart tag="code" %}
     import 'package:angular/angular.dart';
   {% endprettify %}
 
