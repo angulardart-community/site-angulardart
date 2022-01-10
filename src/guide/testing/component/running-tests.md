@@ -34,8 +34,7 @@ includes a few basic tests for its `AppComponent` in the following test file:
   import 'package:test/test.dart';
 
   void main() {
-    final testBed =
-        NgTestBed.forComponent<AppComponent>(ng.AppComponentNgFactory);
+    final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
     NgTestFixture<AppComponent> fixture;
 
     setUp(() async {
