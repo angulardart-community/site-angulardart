@@ -31,7 +31,7 @@ Here are a couple of ways that you can contribute:
 To avoid wasting your time, talk with us before you make any nontrivial
 pull request. The [issue tracker](https://github.com/angulardart-community/site-angulardart/issues)
 is a good way to track your progress publicly, but we can also communicate
-other ways such as [email](mailto:gavinzhaojw@protonmail.com) and [Gitter](https://gitter.im/dart-lang/home).
+other ways such as [Gitter](https://gitter.im/angulardart/community).
 
 <!-- Put link to dart-lang/site-www and other receptive repos here?-->
 
