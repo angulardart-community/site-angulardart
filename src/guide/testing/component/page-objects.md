@@ -262,11 +262,12 @@ The app from [part 2][toh-pt2] of the [tutorial][] displays a list of heros, gen
   <h2>Heroes</h2>
   <ul class="heroes">
     <li *ngFor="let hero of heroes"
-        [class.selected]="hero === selected"
+        [class.selected]="hero == selected"
         (click)="onSelect(hero)">
       <span class="badge">{!{hero.id}!}</span> {!{hero.name}!}
     </li>
   </ul>
+    <h2>{!{selected!.name}!}</h2>
 ```
 
 To define a PO field that collects all generated `<li>` elements, use the annotations introduced [earlier](#po-annotations), but declare the field to be of type `List<PageLoaderElement>`:
@@ -290,7 +291,7 @@ You might render hero data (as a map) from the text of the `<li>` elements like 
   // ···
   Map<String, dynamic> _heroDataFromLi(String liText) {
     final matches = RegExp((r'^(\d+) (.*)$')).firstMatch(liText);
-    return _heroData(matches[1], matches[2]);
+    return _heroData(matches?[1], matches?[2]);
   }
 ```
 
@@ -301,11 +302,11 @@ Only once a hero is selected from the [Heroes List][toh-pt2], are the selected h
 <?code-excerpt "toh-2/lib/app_component.html" remove="/h1|[Hh]ero|li|ul\x3E/" title?>
 ```
   <div *ngIf="selected != null">
-    <h2>{!{selected.name}!}</h2>
-    <div><label>id: </label>{!{selected.id}!}</div>
+    <h2>{!{selected!.name}!}</h2>
+    <div><label>id: </label>{!{selected!.id}!}</div>
     <div>
       <label>name: </label>
-      <input [(ngModel)]="selected.name" placeholder="name">
+      <input [(ngModel)]="selected!.name" placeholder="name">
     </div>
   </div>
 ```
@@ -323,7 +324,7 @@ To determine whether an optionally displayed page element is present, test its
 
 <?code-excerpt "toh-2/test/app_po.dart (heroFromDetails)" title replace="/\w+\.exists/[!$&!]/g"?>
 ```
-  Map get heroFromDetails {
+  Map<String, dynamic>? get heroFromDetails {
     if (![!_heroDetailId.exists!]) return null;
     // ···
   }
@@ -354,7 +355,7 @@ setup method, which selects the hero and gets a new PO.
 
 <?code-excerpt "toh-2/test/app_test.dart (show hero details)" title?>
 ```
-  const targetHero = {'id': 16, 'name': 'RubberMan'};
+  const Map<String, dynamic> targetHero = {'id': 16, 'name': 'RubberMan'};
 
   setUp(() async {
     await appPO.selectHero(5);

@@ -304,7 +304,7 @@ So replace the `hero` property with this simple `selected` property:
 
 <?code-excerpt "lib/app_component.dart (selected)" title?>
 ```
-  Hero selected;
+  Hero? selected;
 ```
 
 The hero names should all be unselected before the user picks a hero, so
@@ -322,11 +322,11 @@ Bind to the new `selected` property instead as follows:
 
 <?code-excerpt "lib/app_component.html" remove="/^[^\s]|hero|li/" title?>
 ```
-  <h2>{!{selected.name}!}</h2>
-  <div><label>id: </label>{!{selected.id}!}</div>
+  <h2>{!{selected!.name}!}</h2>
+  <div><label>id: </label>{!{selected!.id}!}</div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="selected.name" placeholder="name">
+    <input [(ngModel)]="selected!.name" placeholder="name">
   </div>
 ```
 
@@ -350,11 +350,11 @@ Then add the `ngIf` core directive and set it to `selected != null`.
 <?code-excerpt "lib/app_component.html" remove="/\b(h1|[Hh]ero|li|ul)/" title?>
 ```
   <div *ngIf="selected != null">
-    <h2>{!{selected.name}!}</h2>
-    <div><label>id: </label>{!{selected.id}!}</div>
+    <h2>{!{selected!.name}!}</h2>
+    <div><label>id: </label>{!{selected!.id}!}</div>
     <div>
       <label>name: </label>
-      <input [(ngModel)]="selected.name" placeholder="name">
+      <input [(ngModel)]="selected!.name" placeholder="name">
     </div>
   </div>
 ```
@@ -395,7 +395,7 @@ In the template, add the following binding to  the `<li>` tag:
 
 <?code-excerpt "lib/app_component.html" retain="class.selected"?>
 ```
-  [class.selected]="hero === selected"
+  [class.selected]="hero == selected"
 ```
 
 When the expression (`hero === selected`) is `true`, Angular adds the `selected` CSS class.
@@ -413,7 +413,7 @@ The final version of the `<li>` looks like this:
 <?code-excerpt "lib/app_component.html" retain="/li|span|hero\b/" title?>
 ```
   <li *ngFor="let hero of heroes"
-      [class.selected]="hero === selected"
+      [class.selected]="hero == selected"
       (click)="onSelect(hero)">
     <span class="badge">{!{hero.id}!}</span> {!{hero.name}!}
   </li>

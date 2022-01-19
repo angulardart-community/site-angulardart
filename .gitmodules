@@ -23,3 +23,8 @@
 	url = https://github.com/angulardart-community/toh-1
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/toh-2"]
+	path = examples/ng/doc/toh-2
+	url = https://github.com/angulardart-community/toh-2
+	branch = master
+	shallow = true
