@@ -38,12 +38,13 @@ Add the package to the pubspec dependencies:
 ```diff
 --- toh-0/pubspec.yaml
 +++ toh-1/pubspec.yaml
-@@ -11,6 +12 @@
+@@ -11,6 +12,5 @@
  dev_dependencies:
--  angular_test: ^4.0.1
+   angular_test: ^4.0.1
 -  build_runner: ^2.1.7
--  build_test: ^2.1.5
--  build_web_compilers: ^3.2.2
++  build_runner: ^2.1.8
+   build_test: ^2.1.5
+   build_web_compilers: ^3.2.2
 -  test: ^1.20.1
 ```
 
@@ -55,7 +56,7 @@ Include these imports at the top of your page object file:
 ```
   import 'dart:async';
 
-  import 'package:pageloader/pageloader.dart';
+  import 'package:ngpageloader/pageloader.dart';
 ```
 
 Update the imports at the top of your test file:
@@ -68,7 +69,7 @@ Update the imports at the top of your test file:
  import 'package:angular_test/angular_test.dart';
  import 'package:angular_tour_of_heroes/app_component.dart';
  import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
-+import 'package:pageloader/html.dart';
++import 'package:ngpageloader/html.dart';
  import 'package:test/test.dart';
 
 +import 'app_po.dart';
@@ -191,8 +192,7 @@ objects are shared across tests, they are generally initialized during setup:
 
 <?code-excerpt "toh-1/test/app_test.dart (appPO setup)" title replace="/(final context |appPO |HtmlPageLoaderElement\.).*/[!$&!]/g"?>
 ```
-  final testBed =
-      NgTestBed.forComponent<AppComponent>(ng.AppComponentNgFactory);
+  final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
   NgTestFixture<AppComponent> fixture;
   AppPO appPO;
 
