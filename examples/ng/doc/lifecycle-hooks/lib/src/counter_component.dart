@@ -16,12 +16,12 @@ import 'spy_directive.dart';
   styles: ['.counter {background: LightYellow; padding: 8px; margin-top: 8px}'],
   directives: [coreDirectives, SpyDirective],
 )
-class MyCounterComponent implements OnChanges {
+class MyCounterComponent implements AfterChanges {
   @Input()
   num counter;
   List<String> changeLog = [];
 
-  ngOnChanges(Map<String, SimpleChange> changes) {
+  ngAfterChanges() {
     // Empty the changeLog whenever counter goes to zero
     // hint: this is a way to respond programmatically to external value changes.
     if (this.counter == 0) {
@@ -29,10 +29,11 @@ class MyCounterComponent implements OnChanges {
     }
 
     // A change to `counter` is the only change we care about
-    SimpleChange chng = changes['counter'];
-    var cur = chng.currentValue;
-    var prev = chng.previousValue == null ? "{}" : chng.previousValue;
-    changeLog.add('counter: currentValue = $cur, previousValue = $prev');
+    // TODO: migrate
+    // SimpleChange chng = changes['counter'];
+    // var cur = chng.currentValue;
+    // var prev = chng.previousValue == null ? "{}" : chng.previousValue;
+    // changeLog.add('counter: currentValue = $cur, previousValue = $prev');
   }
 }
 
