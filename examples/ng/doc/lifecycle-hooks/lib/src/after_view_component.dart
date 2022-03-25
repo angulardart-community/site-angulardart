@@ -29,11 +29,11 @@ class ChildViewComponent {
 )
 // #docregion hooks
 class AfterViewComponent implements AfterViewChecked, AfterViewInit {
-  var _prevHero = '';
+  String? _prevHero = '';
 
   // Query for a VIEW child of type `ChildViewComponent`
   @ViewChild(ChildViewComponent)
-  ChildViewComponent viewChild;
+  ChildViewComponent? viewChild;
 
   // #enddocregion hooks
   final LoggerService _logger;
@@ -51,10 +51,10 @@ class AfterViewComponent implements AfterViewChecked, AfterViewInit {
 
   ngAfterViewChecked() {
     // viewChild is updated after the view has been checked
-    if (_prevHero == viewChild.hero) {
+    if (_prevHero == viewChild?.hero) {
       _logIt('AfterViewChecked (no change)');
     } else {
-      _prevHero = viewChild.hero;
+      _prevHero = viewChild?.hero;
       _logIt('AfterViewChecked');
       _doSomething();
     }
@@ -66,7 +66,8 @@ class AfterViewComponent implements AfterViewChecked, AfterViewInit {
   // #docregion do-something
   // This surrogate for real business logic sets the `comment`
   void _doSomething() {
-    var c = viewChild.hero.length > 10 ? "That's a long name" : '';
+    var length = viewChild?.hero.length ?? 0;
+    var c = length > 10 ? "That's a long name" : '';
     if (c != comment) {
       // Wait a tick because the component's view has already been checked
       _logger.tick().then((_) {

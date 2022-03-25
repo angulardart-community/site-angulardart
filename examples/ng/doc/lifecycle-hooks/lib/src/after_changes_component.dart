@@ -26,9 +26,9 @@ class Hero {
 class AfterChangesComponent implements AfterChanges {
   // #docregion inputs
   @Input()
-  Hero hero;
+  late Hero hero;
   @Input()
-  String power;
+  late String power;
   // #enddocregion inputs
 
   List<String> changeLog = [];
@@ -51,11 +51,11 @@ class AfterChangesComponent implements AfterChanges {
   directives: [coreDirectives, formDirectives, AfterChangesComponent],
 )
 class AfterChangesParentComponent {
-  Hero hero;
-  String power;
+  late Hero hero;
+  late String power;
   String title = 'AfterChanges';
   @ViewChild(AfterChangesComponent)
-  AfterChangesComponent childView;
+  AfterChangesComponent? childView;
 
   AfterChangesParentComponent() {
     reset();

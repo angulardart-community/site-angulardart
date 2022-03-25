@@ -42,7 +42,7 @@ class PeekABooComponent extends PeekABoo
         AfterViewChecked,
         OnDestroy {
   @Input()
-  String name;
+  String? name;
 
   int _afterContentCheckedCounter = 1;
   int _afterViewCheckedCounter = 1;

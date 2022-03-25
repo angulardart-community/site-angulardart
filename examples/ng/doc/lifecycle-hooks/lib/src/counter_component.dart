@@ -18,7 +18,7 @@ import 'spy_directive.dart';
 )
 class MyCounterComponent implements AfterChanges {
   @Input()
-  num counter;
+  num counter = 0;
   List<String> changeLog = [];
 
   ngAfterChanges() {
@@ -28,12 +28,8 @@ class MyCounterComponent implements AfterChanges {
       changeLog.clear();
     }
 
-    // A change to `counter` is the only change we care about
-    // TODO: migrate
-    // SimpleChange chng = changes['counter'];
-    // var cur = chng.currentValue;
-    // var prev = chng.previousValue == null ? "{}" : chng.previousValue;
-    // changeLog.add('counter: currentValue = $cur, previousValue = $prev');
+    // A change to `counter` is the only change we can get.
+    changeLog.add('counter changed to $counter');
   }
 }
 
@@ -58,7 +54,7 @@ class MyCounterComponent implements AfterChanges {
 )
 class CounterParentComponent {
   final LoggerService _logger;
-  num value;
+  num value = 0;
 
   CounterParentComponent(this._logger) {
     reset();
