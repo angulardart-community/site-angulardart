@@ -407,9 +407,9 @@ The example component, `AfterChangesComponent`, has two input properties: `hero`
 <?code-excerpt "lib/src/after_changes_component.dart" region="inputs"?>
 ```
   @Input()
-  Hero hero;
+  late Hero hero;
   @Input()
-  String power;
+  late String power;
 ```
 
 The host `AfterChangesParentComponent` binds to them like this:
@@ -530,11 +530,11 @@ which can only be reached by querying for the child view via the property decora
 <?code-excerpt "lib/src/after_view_component.dart (class excerpts)" region="hooks" plaster="none" title?>
 ```
   class AfterViewComponent implements AfterViewChecked, AfterViewInit {
-    var _prevHero = '';
+    String? _prevHero = '';
 
     // Query for a VIEW child of type `ChildViewComponent`
     @ViewChild(ChildViewComponent)
-    ChildViewComponent viewChild;
+    ChildViewComponent? viewChild;
 
     ngAfterViewInit() {
       // viewChild is set after the view has been initialized
@@ -544,10 +544,10 @@ which can only be reached by querying for the child view via the property decora
 
     ngAfterViewChecked() {
       // viewChild is updated after the view has been checked
-      if (_prevHero == viewChild.hero) {
+      if (_prevHero == viewChild?.hero) {
         _logIt('AfterViewChecked (no change)');
       } else {
-        _prevHero = viewChild.hero;
+        _prevHero = viewChild?.hero;
         _logIt('AfterViewChecked');
         _doSomething();
       }
@@ -564,7 +564,8 @@ The `doSomething` method updates the screen when the hero name exceeds 10 charac
 ```
   // This surrogate for real business logic sets the `comment`
   void _doSomething() {
-    var c = viewChild.hero.length > 10 ? "That's a long name" : '';
+    var length = viewChild?.hero.length ?? 0;
+    var c = length > 10 ? "That's a long name" : '';
     if (c != comment) {
       // Wait a tick because the component's view has already been checked
       _logger.tick().then((_) {
@@ -673,12 +674,12 @@ which can only be reached by querying for it via the property decorated with
 <?code-excerpt "lib/src/after_content_component.dart (class excerpts)" region="hooks" plaster="none" title?>
 ```
   class AfterContentComponent implements AfterContentChecked, AfterContentInit {
-    String _prevHero = '';
+    String? _prevHero = '';
     String comment = '';
 
     // Query for a CONTENT child of type `ChildComponent`
     @ContentChild(ChildComponent)
-    ChildComponent contentChild;
+    ChildComponent? contentChild;
 
     ngAfterContentInit() {
       // contentChild is set after the content has been initialized
