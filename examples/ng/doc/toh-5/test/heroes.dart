@@ -11,7 +11,7 @@ import 'package:angular_tour_of_heroes/src/hero_list_component.template.dart'
 import 'package:angular_tour_of_heroes/src/hero_service.dart';
 import 'package:angular_tour_of_heroes/src/route_paths.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pageloader/html.dart';
+import 'package:ngpageloader/html.dart';
 import 'package:test/test.dart';
 
 // #docregion rootInjector
@@ -32,8 +32,7 @@ final InjectorFactory rootInjector = self.rootInjector$Injector;
 
 void main() {
   final injector = InjectorProbe(rootInjector);
-  final testBed = NgTestBed.forComponent<HeroListComponent>(
-      ng.HeroListComponentNgFactory,
+  final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
       rootInjector: injector.factory);
   // #enddocregion rootInjector
 

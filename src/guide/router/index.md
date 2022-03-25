@@ -177,6 +177,8 @@ Define [route definitions]({{pageUrl}}/1#route-definitions):
     static final all = <RouteDefinition>[
       heroes,
     ];
+
+    static final heroRoute = <RouteDefinition>[hero];
   }
 ```
 </li><li markdown="1">

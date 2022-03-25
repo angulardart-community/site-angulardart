@@ -45,7 +45,7 @@ list of the generated root injector, as described in the section on
   import 'package:angular_tour_of_heroes/src/hero_service.dart';
   import 'package:angular_tour_of_heroes/src/route_paths.dart';
   import 'package:mockito/mockito.dart';
-  import 'package:pageloader/html.dart';
+  import 'package:ngpageloader/html.dart';
   import 'package:test/test.dart';
 
   import 'heroes.template.dart' as self;
@@ -63,8 +63,7 @@ list of the generated root injector, as described in the section on
 
   void main() {
     final injector = InjectorProbe(rootInjector);
-    final testBed = NgTestBed.forComponent<HeroListComponent>(
-        ng.HeroListComponentNgFactory,
+    final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
         rootInjector: injector.factory);
 
     setUp(() async {
@@ -162,8 +161,7 @@ need to provide a value for [appBaseHref][]:
 
 <?code-excerpt "toh-5/test/dashboard.dart (providers)" title replace="/.addInjector[^;]+//g"?>
 ```
-  final testBed = NgTestBed.forComponent<DashboardComponent>(
-      ng.DashboardComponentNgFactory,
+  final testBed = NgTestBed<DashboardComponent>(ng.DashboardComponentNgFactory,
       rootInjector: injector.factory);
 ```
 
@@ -190,7 +188,7 @@ seen already:
 <?code-excerpt "toh-5/test/app.dart (provisioning and setup)" title?>
 ```
   final injector = InjectorProbe(rootInjector);
-  final testBed = NgTestBed.forComponent<AppComponent>(ng.AppComponentNgFactory,
+  final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory,
       rootInjector: injector.factory);
 
   setUp(() async {
@@ -273,7 +271,7 @@ like this:
     selector: 'test',
     template: '''
       <my-dashboard></my-dashboard>
-      <router-outlet [routes]="[Routes.hero]"></router-outlet>
+      <router-outlet [routes]="Routes.heroRoute"></router-outlet>
     ''',
     directives: [RouterOutlet, DashboardComponent],
     exports: [Routes],
@@ -302,8 +300,7 @@ rather than `DashboardComponent`:
 
   void main() {
     final injector = InjectorProbe(rootInjector);
-    final testBed = NgTestBed.forComponent<TestComponent>(
-        self.TestComponentNgFactory,
+    final testBed = NgTestBed<TestComponent>(self.TestComponentNgFactory,
         rootInjector: injector.factory);
     // ···
   }

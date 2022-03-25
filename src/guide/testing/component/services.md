@@ -64,8 +64,7 @@ injector factory can contain both real and mock services, as shown here:
   final InjectorFactory [!rootInjector!] = self.rootInjector$Injector;
 
   void main() {
-    final testBed = NgTestBed.forComponent<HeroListComponent>(
-        ng.HeroListComponentNgFactory,
+    final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
         [!rootInjector!]: [!rootInjector!]);
     // ···
   }

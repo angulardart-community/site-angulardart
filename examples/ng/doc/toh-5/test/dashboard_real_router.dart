@@ -6,7 +6,7 @@ import 'package:angular_test/angular_test.dart';
 import 'package:angular_tour_of_heroes/src/routes.dart';
 import 'package:angular_tour_of_heroes/src/dashboard_component.dart';
 import 'package:angular_tour_of_heroes/src/hero_service.dart';
-import 'package:pageloader/html.dart';
+import 'package:ngpageloader/html.dart';
 import 'package:test/test.dart';
 
 import 'dashboard_po.dart';
@@ -27,8 +27,7 @@ final InjectorFactory rootInjector = self.rootInjector$Injector;
 
 void main() {
   final injector = InjectorProbe(rootInjector);
-  final testBed = NgTestBed.forComponent<TestComponent>(
-      self.TestComponentNgFactory,
+  final testBed = NgTestBed<TestComponent>(self.TestComponentNgFactory,
       rootInjector: injector.factory);
   // #enddocregion providers-with-context
 
@@ -85,7 +84,7 @@ void main() {
   selector: 'test',
   template: '''
     <my-dashboard></my-dashboard>
-    <router-outlet [routes]="[Routes.hero]"></router-outlet>
+    <router-outlet [routes]="Routes.heroRoute"></router-outlet>
   ''',
   directives: [RouterOutlet, DashboardComponent],
   exports: [Routes],

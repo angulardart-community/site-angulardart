@@ -2,7 +2,7 @@
 <h2>Heroes</h2>
 <ul class="heroes">
   <li *ngFor="let hero of heroes"
-      [class.selected]="hero === selected"
+      [class.selected]="hero == selected"
       (click)="onSelect(hero)">
     <span class="badge">{{hero.id}}</span> {{hero.name}}
   </li>
@@ -11,7 +11,7 @@
 <div *ngIf="selected != null">
   <h2>
     <!-- #docregion pipe -->
-    {{selected.name | uppercase}} is my hero
+    {{$pipe.uppercase(selected.name)}} is my hero
     <!-- #enddocregion pipe -->
   </h2>
   <button (click)="gotoDetail()">View Details</button>

@@ -66,11 +66,11 @@ Update package dependencies by adding the Dart [http][] and
 --- toh-5/pubspec.yaml
 +++ toh-6/pubspec.yaml
 @@ -9,3 +9,5 @@
-   angular: ^6.0.0
-   angular_forms: ^3.0.0
-   angular_router: ^2.0.0-alpha
-+  http: ^0.12.0
-+  stream_transform: ^1.2.0
+   angular: ^7.0.2
+   angular_forms: ^4.0.1
+   angular_router: ^3.0.1
++  http: ^0.13.4
++  stream_transform: ^2.0.0
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-6"?>
@@ -276,7 +276,7 @@ Now convert `getAll()` to use HTTP.
 
   Future<List<Hero>> getAll() async {
     try {
-      final response = await _http.get(_heroesUrl);
+      final response = await _http.get(Uri.parse(_heroesUrl));
       final heroes = (_extractData(response) as List)
           .map((json) => Hero.fromJson(json))
           .toList();
@@ -368,7 +368,7 @@ Update the `HeroService.get()` method to make a _get-by-id_ request:
 ```
   Future<Hero> get(int id) async {
     try {
-      final response = await _http.get('$_heroesUrl/$id');
+      final response = await _http.get(Uri.parse('$_heroesUrl/$id'));
       return Hero.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
@@ -437,7 +437,7 @@ The overall structure of the `update()` method is similar to that of
     try {
       final url = '$_heroesUrl/${hero.id}';
       final response =
-          await _http.put(url, headers: _headers, body: json.encode(hero));
+          await _http.put(Uri.parse(url), headers: _headers, body: json.encode(hero));
       return Hero.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
@@ -465,7 +465,7 @@ the heading:
 ```
   <div>
     <label>Hero name:</label> <input #heroName />
-    <button (click)="add(heroName.value); heroName.value=''">
+    <button (click)="add(heroName.value)">
       Add
     </button>
   </div>
@@ -478,9 +478,10 @@ clear the input field so that it's ready for another name.
 ```
   Future<void> add(String name) async {
     name = name.trim();
-    if (name.isEmpty) return null;
+    if (name.isEmpty) return;
     heroes.add(await _heroService.create(name));
     selected = null;
+  name = '';
   }
 ```
 
@@ -493,7 +494,7 @@ Implement the `create()` method in the `HeroService` class.
 ```
   Future<Hero> create(String name) async {
     try {
-      final response = await _http.post(_heroesUrl,
+      final response = await _http.post(Uri.parse(_heroesUrl),
           headers: _headers, body: json.encode({'name': name}));
       return Hero.fromJson(_extractData(response));
     } catch (e) {
@@ -514,7 +515,7 @@ name in the repeated `<li>` element.
 <?code-excerpt "lib/src/hero_list_component.html (delete)"?>
 ```
   <button class="delete"
-    (click)="delete(hero); $event.stopPropagation()">x</button>
+    (click)="delete(hero, $event)">x</button>
 ```
 
 The `<li>` element should now look like this:
@@ -522,12 +523,12 @@ The `<li>` element should now look like this:
 <?code-excerpt "lib/src/hero_list_component.html (li element)" title?>
 ```
   <li *ngFor="let hero of heroes"
-      [class.selected]="hero === selected"
+      [class.selected]="hero == selected"
       (click)="onSelect(hero)">
     <span class="badge">{!{hero.id}!}</span>
     <span>{!{hero.name}!}</span>
     <button class="delete"
-      (click)="delete(hero); $event.stopPropagation()">x</button>
+      (click)="delete(hero, $event)">x</button>
   </li>
 ```
 
@@ -540,10 +541,13 @@ The logic of the `delete()` handler is a bit trickier:
 
 <?code-excerpt "lib/src/hero_list_component.dart (delete)" title?>
 ```
-  Future<void> delete(Hero hero) async {
+  Future<void> delete(Hero hero, Event event) async {
     await _heroService.delete(hero.id);
     heroes.remove(hero);
     if (selected == hero) selected = null;
+
+  // This makes any component **above** <my-hero>
+  event.stopPropagation();
   }
 ```
 
@@ -574,7 +578,7 @@ Add the hero service's `delete()` method, which uses the `delete()` HTTP method 
   Future<void> delete(int id) async {
     try {
       final url = '$_heroesUrl/$id';
-      await _http.delete(url, headers: _headers);
+      await _http.delete(Uri.parse(url), headers: _headers);
     } catch (e) {
       throw _handleError(e);
     }
@@ -618,7 +622,7 @@ Start by creating `HeroSearchService` that sends search queries to the server's 
 
     Future<List<Hero>> search(String term) async {
       try {
-        final response = await _http.get('app/heroes/?name=$term');
+        final response = await _http.get(Uri.parse('app/heroes/?name=$term'));
         return (_extractData(response) as List)
             .map((json) => Hero.fromJson(json))
             .toList();
@@ -653,7 +657,7 @@ The component template is simple&mdash;just a text box and a list of matching se
            (change)="search(searchBox.value)"
            (keyup)="search(searchBox.value)" />
     <div>
-      <div *ngFor="let hero of heroes | async"
+      <div *ngFor="let hero of $pipe.async(heroes)"
            (click)="gotoDetail(hero)" class="search-result" >
         {!{hero.name}!}
       </div>

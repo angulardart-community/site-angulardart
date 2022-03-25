@@ -8,7 +8,7 @@ import 'package:angular_tour_of_heroes/src/hero_component.dart';
 import 'package:angular_tour_of_heroes/src/hero_component.template.dart' as ng;
 import 'package:angular_tour_of_heroes/src/hero_service.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pageloader/html.dart';
+import 'package:ngpageloader/html.dart';
 import 'package:test/test.dart';
 
 import 'hero.template.dart' as self;
@@ -28,8 +28,7 @@ final InjectorFactory rootInjector = self.rootInjector$Injector;
 /// Instead we only mock Location.
 void main() {
   final injector = InjectorProbe(rootInjector);
-  final testBed = NgTestBed.forComponent<HeroComponent>(
-      ng.HeroComponentNgFactory,
+  final testBed = NgTestBed<HeroComponent>(ng.HeroComponentNgFactory,
       rootInjector: injector.factory);
 
   setUp(() async {

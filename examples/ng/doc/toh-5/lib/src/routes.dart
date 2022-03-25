@@ -56,4 +56,6 @@ class Routes {
     // #docregion a-first-route, dashboard, hero
   ];
   // #enddocregion dashboard, hero, redirect-route
+
+  static final heroRoute = <RouteDefinition>[hero];
 }

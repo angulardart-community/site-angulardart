@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:pageloader/pageloader.dart';
+import 'package:ngpageloader/pageloader.dart';
 import 'utils.dart';
 
 part 'hero_po.g.dart';

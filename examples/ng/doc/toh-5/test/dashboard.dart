@@ -8,7 +8,7 @@ import 'package:angular_tour_of_heroes/src/dashboard_component.template.dart'
     as ng;
 import 'package:angular_tour_of_heroes/src/hero_service.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pageloader/html.dart';
+import 'package:ngpageloader/html.dart';
 import 'package:test/test.dart';
 
 import 'dashboard.template.dart' as self;
@@ -31,8 +31,7 @@ final InjectorFactory rootInjector = self.rootInjector$Injector;
 void main() {
   final injector = InjectorProbe(rootInjector);
   // #docregion providers
-  final testBed = NgTestBed.forComponent<DashboardComponent>(
-      ng.DashboardComponentNgFactory,
+  final testBed = NgTestBed<DashboardComponent>(ng.DashboardComponentNgFactory,
       rootInjector: injector.factory);
   // #enddocregion providers, providers-with-context
 

@@ -171,15 +171,11 @@ router is in its own package, first add the package to the app's pubspec:
 ```diff
 --- toh-4/pubspec.yaml
 +++ toh-5/pubspec.yaml
-@@ -6,5 +6,6 @@
-   sdk: '>=2.5.0 <3.0.0'
-
+@@ -8,3 +8,4 @@
  dependencies:
--  angular: ^7.0.2
--  angular_forms: ^4.0.1
-+  angular: ^6.0.0
-+  angular_forms: ^3.0.0
-+  angular_router: ^2.0.0-alpha
+   angular: ^7.0.2
+   angular_forms: ^4.0.1
++  angular_router: ^3.0.1
 ```
 
 Not all apps need routing, which is why the Angular router is
@@ -284,6 +280,8 @@ As a first route, define a route to the heroes component:
     static final all = <RouteDefinition>[
       heroes,
     ];
+
+    static final heroRoute = <RouteDefinition>[hero];
   }
 ```
 
@@ -975,7 +973,7 @@ at the top and details of the selected hero below.
   <h2>Heroes</h2>
   <ul class="heroes">
     <li *ngFor="let hero of heroes"
-        [class.selected]="hero === selected"
+        [class.selected]="hero == selected"
         (click)="onSelect(hero)">
       <span class="badge">{!{hero.id}!}</span> {!{hero.name}!}
     </li>
@@ -1002,7 +1000,7 @@ Add the following HTML fragment at the bottom of the template where the `<my-her
 ```
   <div *ngIf="selected != null">
     <h2>
-      {!{selected.name | uppercase}!} is my hero
+      {!{$pipe.uppercase(selected.name)}!} is my hero
     </h2>
     <button (click)="gotoDetail()">View Details</button>
   </div>
@@ -1029,7 +1027,7 @@ that's included in the interpolation binding, right after the pipe operator ( | 
 
 <?code-excerpt "lib/src/hero_list_component.html (pipe)"?>
 ```
-  {!{selected.name | uppercase}!} is my hero
+  {!{$pipe.uppercase(selected.name)}!} is my hero
 ```
 
 Pipes are a good way to format strings, currency amounts, dates and other display data.

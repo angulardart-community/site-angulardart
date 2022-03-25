@@ -27,10 +27,10 @@ As always, if you're confused about the little procedure here, ignore everything
   - [ ] Template Syntax
 - Tutorial [@GZGavinZhao]
   - [x] Introduction (toh-0)
-  - [ ] toh-1
-  - [ ] toh-2
-  - [ ] toh-3
-  - [ ] toh-4
+  - [x] toh-1
+  - [x] toh-2
+  - [x] toh-3
+  - [x] toh-4
   - [ ] toh-5
   - [ ] toh-6
 - Advanced
