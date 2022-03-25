@@ -404,7 +404,7 @@ This example monitors the `AfterChanges` hook.
 
 The example component, `AfterChangesComponent`, has two input properties: `hero` and `power`.
 
-<?code-excerpt "lib/src/on_changes_component.dart" region="inputs"?>
+<?code-excerpt "lib/src/after_changes_component.dart" region="inputs"?>
 ```
   @Input()
   Hero hero;
@@ -422,10 +422,9 @@ The host `AfterChangesParentComponent` binds to them like this:
 <!-- TODO: migrate -->
 <!-- Here's the sample in action as the user makes changes. -->
 <!-- <img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/on-changes-anim.gif @path %}" alt="AfterChanges"> -->
-
-The log entry appear as the string value of the *power* property changes.
-But the `ngAfterChanges` does not catch changes to `hero.name`
-That's surprising at first.
+<!-- The log entry appear as the string value of the *power* property changes. -->
+<!-- But the `ngAfterChanges` does not catch changes to `hero.name` -->
+<!-- That's surprising at first. -->
 
 Angular only calls the hook when the value of the input property changes.
 The value of the `hero` property is the *reference to the hero object*.

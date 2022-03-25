@@ -47,7 +47,6 @@ class PeekABooComponent extends PeekABoo
   int _afterContentCheckedCounter = 1;
   int _afterViewCheckedCounter = 1;
   int _afterChangesCounter = 1;
-  String _verb = 'initialized';
 
   PeekABooComponent(LoggerService logger) : super(logger) {
     var _is = name != null ? 'is' : 'is not';
@@ -56,18 +55,7 @@ class PeekABooComponent extends PeekABoo
 
   // Only called if there is an @input variable set by parent.
   void ngAfterChanges() {
-    List<String> messages = [];
-    // TODO: migrate
-    // changes.forEach((String propName, SimpleChange change) {
-    //   if (propName == 'name') {
-    //     var name = changes['name'].currentValue;
-    //     messages.add('name $_verb to "$name"');
-    //   } else {
-    //     messages.add('$propName $_verb');
-    //   }
-    // });
-    _logIt('AfterChanges (${_afterChangesCounter++}): ${messages.join('; ')}');
-    _verb = 'changed'; // Next time it will be a change
+    _logIt('AfterChanges (${_afterChangesCounter++})');
   }
 
   // Beware! Called frequently!

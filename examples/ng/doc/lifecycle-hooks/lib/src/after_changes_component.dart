@@ -35,14 +35,7 @@ class AfterChangesComponent implements AfterChanges {
 
   // #docregion ng-after-changes
   ngAfterChanges() {
-    // TODO: migrate
-    // changes.forEach((String propName, SimpleChange change) {
-    //   String cur = json.encode(change.currentValue);
-    //   String prev = change.previousValue == null
-    //       ? "{}"
-    //       : json.encode(change.previousValue);
-    //   changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
-    // });
+    changeLog.add('Input property has changed.');
   }
   // #enddocregion ng-after-changes
 
