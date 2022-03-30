@@ -88,3 +88,8 @@
 	url = https://github.com/angulardart-community/pipes
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/router"]
+	path = examples/ng/doc/router
+	url = https://github.com/angulardart-community/router
+	branch = master
+	shallow = true
