@@ -73,3 +73,8 @@
 	url = https://github.com/angulardart-community/displaying-data
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/forms"]
+	path = examples/ng/doc/forms
+	url = https://github.com/angulardart-community/forms
+	branch = master
+	shallow = true
