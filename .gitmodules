@@ -68,3 +68,8 @@
 	url = https://github.com/angulardart-community/dependency-injection
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/displaying-data"]
+	path = examples/ng/doc/displaying-data
+	url = https://github.com/angulardart-community/displaying-data
+	branch = master
+	shallow = true

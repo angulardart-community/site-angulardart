@@ -18,7 +18,7 @@ fn main() {
 			exit(1)
 		}
 
-		http.download_file(os.join_path(url_base, target_example, os.args[1]), file) ?
+		http.download_file(os.join_path(url_base, target_example, file), file) ?
 
 		println('Downloaded $file')
 	}
