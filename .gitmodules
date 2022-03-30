@@ -83,3 +83,8 @@
 	url = https://github.com/angulardart-community/hierarchical-dependency-injection
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/pipes"]
+	path = examples/ng/doc/pipes
+	url = https://github.com/angulardart-community/pipes
+	branch = master
+	shallow = true
