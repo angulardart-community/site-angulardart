@@ -78,3 +78,8 @@
 	url = https://github.com/angulardart-community/forms
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/hierarchical-dependency-injection"]
+	path = examples/ng/doc/hierarchical-dependency-injection
+	url = https://github.com/angulardart-community/hierarchical-dependency-injection
+	branch = master
+	shallow = true
