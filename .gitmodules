@@ -53,3 +53,8 @@
 	url = https://github.com/angulardart-community/architecture
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/attribute-directives"]
+	path = examples/ng/doc/attribute-directives
+	url = https://github.com/angulardart-community/attribute-directives
+	branch = master
+	shallow = true
