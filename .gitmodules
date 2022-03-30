@@ -58,3 +58,8 @@
 	url = https://github.com/angulardart-community/attribute-directives
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/component-styles"]
+	path = examples/ng/doc/component-styles
+	url = https://github.com/angulardart-community/component-styles
+	branch = master
+	shallow = true
