@@ -63,3 +63,8 @@
 	url = https://github.com/angulardart-community/component-styles
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/dependency-injection"]
+	path = examples/ng/doc/dependency-injection
+	url = https://github.com/angulardart-community/dependency-injection
+	branch = master
+	shallow = true
