@@ -97,3 +97,9 @@
 	path = examples/ng/doc/security
 	url = https://github.com/angulardart-community/security
 	branch = master
+	shallow = true
+[submodule "examples/ng/doc/server-communication"]
+	path = examples/ng/doc/server-communication
+	url = https://github.com/angulardart-community/server-communication
+	branch = master
+	shallow = true
