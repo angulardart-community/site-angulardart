@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
@@ -10,7 +8,7 @@ class Hero {
 }
 
 @Component(
-  selector: 'on-changes',
+  selector: 'after-changes',
   template: '''
     <div class="hero">
       <p>{{hero.name}} can {{power}}</p>
@@ -25,27 +23,21 @@ class Hero {
   ],
   directives: [coreDirectives],
 )
-class OnChangesComponent implements OnChanges {
+class AfterChangesComponent implements AfterChanges {
   // #docregion inputs
   @Input()
-  Hero hero;
+  late Hero hero;
   @Input()
-  String power;
+  late String power;
   // #enddocregion inputs
 
   List<String> changeLog = [];
 
-  // #docregion ng-on-changes
-  ngOnChanges(Map<String, SimpleChange> changes) {
-    changes.forEach((String propName, SimpleChange change) {
-      String cur = json.encode(change.currentValue);
-      String prev = change.previousValue == null
-          ? "{}"
-          : json.encode(change.previousValue);
-      changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
-    });
+  // #docregion ng-after-changes
+  ngAfterChanges() {
+    changeLog.add('Input property has changed.');
   }
-  // #enddocregion ng-on-changes
+  // #enddocregion ng-after-changes
 
   void reset() {
     changeLog.clear();
@@ -53,19 +45,19 @@ class OnChangesComponent implements OnChanges {
 }
 
 @Component(
-  selector: 'on-changes-parent',
-  templateUrl: 'on_changes_parent_component.html',
+  selector: 'after-changes-parent',
+  templateUrl: 'after_changes_parent_component.html',
   styles: ['.parent {background: Lavender}'],
-  directives: [coreDirectives, formDirectives, OnChangesComponent],
+  directives: [coreDirectives, formDirectives, AfterChangesComponent],
 )
-class OnChangesParentComponent {
-  Hero hero;
-  String power;
-  String title = 'OnChanges';
-  @ViewChild(OnChangesComponent)
-  OnChangesComponent childView;
+class AfterChangesParentComponent {
+  late Hero hero;
+  late String power;
+  String title = 'AfterChanges';
+  @ViewChild(AfterChangesComponent)
+  AfterChangesComponent? childView;
 
-  OnChangesParentComponent() {
+  AfterChangesParentComponent() {
     reset();
   }
 

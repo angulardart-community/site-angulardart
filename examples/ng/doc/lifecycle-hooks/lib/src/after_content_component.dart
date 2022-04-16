@@ -28,12 +28,12 @@ class ChildComponent {
 )
 // #docregion hooks
 class AfterContentComponent implements AfterContentChecked, AfterContentInit {
-  String _prevHero = '';
+  String? _prevHero = '';
   String comment = '';
 
   // Query for a CONTENT child of type `ChildComponent`
   @ContentChild(ChildComponent)
-  ChildComponent contentChild;
+  ChildComponent? contentChild;
 
   // #enddocregion hooks
   final LoggerService _logger;
@@ -64,7 +64,8 @@ class AfterContentComponent implements AfterContentChecked, AfterContentInit {
   // #docregion do-something
   /// This surrogate for real business logic; sets the `comment`
   void _doSomething() {
-    comment = contentChild.hero.length > 10 ? "That's a long name" : '';
+    final length = contentChild?.hero.length ?? 0;
+    comment = length > 10 ? "That's a long name" : '';
   }
   // #enddocregion do-something
 

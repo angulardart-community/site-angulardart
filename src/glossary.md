@@ -294,8 +294,8 @@ Each interface has a single hook method whose name is the interface name prefixe
 For example, the `OnInit` interface has a hook method named `ngOnInit`.
 
 Angular calls these hook methods in the following order:
-* `ngOnChanges`: when an [input](#input)/[output](#output) binding value changes.
-* `ngOnInit`: after the first `ngOnChanges`.
+* `ngAfterChanges`: when an [input](#input)/[output](#output) binding value changes.
+* `ngOnInit`: after the first `ngAfterChanges`.
 * `ngDoCheck`: developer's custom change detection.
 * `ngAfterContentInit`: after component content initialized.
 * `ngAfterContentChecked`: after every check of component content.

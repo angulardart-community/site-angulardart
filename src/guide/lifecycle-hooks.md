@@ -76,10 +76,9 @@ calls the lifecycle hook methods in the following sequence at specific moments:
   <th>Purpose and Timing</th>
 </tr>
 <tr style="vertical-align:top">
-  <td>ngOnChanges</td>
+  <td>ngAfterChanges</td>
   <td markdown="1">
   Respond when Angular (re)sets data-bound input properties.
-  The method receives a `SimpleChanges` object of current and previous property values.
 
   Called before `ngOnInit` and whenever one or more data-bound input properties change.
   </td>
@@ -90,7 +89,7 @@ calls the lifecycle hook methods in the following sequence at specific moments:
   Initialize the directive/component after Angular first displays the data-bound properties
   and sets the directive/component's input properties.
 
-  Called _once_, after the _first_ `ngOnChanges`.
+  Called _once_, after the _first_ `ngAfterChanges`.
   </td>
 </tr>
 <tr style="vertical-align:top">
@@ -98,7 +97,7 @@ calls the lifecycle hook methods in the following sequence at specific moments:
   <td markdown="1">
   Detect and act upon changes that Angular can't or won't detect on its own.
 
-  Called during every change detection run, immediately after `ngOnChanges` and `ngOnInit`.
+  Called during every change detection run, immediately after `ngAfterChanges` and `ngOnInit`.
   </td>
 </tr>
 <tr style="vertical-align:top">
@@ -205,9 +204,9 @@ Here's a brief description of each exercise:
   </td>
 </tr>
 <tr style="vertical-align:top">
-  <td><a href="#onchanges">OnChanges</a></td>
+  <td><a href="#afterchanges">AfterChanges</a></td>
   <td markdown="1">
-  See how Angular calls the `ngOnChanges` hook with a `changes` object
+  See how Angular calls the `ngAfterChanges` hook with a `changes` object
   every time one of the component input properties changes.
   Shows how to interpret the `changes` object.
   </td>
@@ -240,7 +239,7 @@ Here's a brief description of each exercise:
   Demonstrates a combination of a component and a directive
   each with its own hooks.
 
-  In this example, a `CounterComponent` logs a change (via `ngOnChanges`)
+  In this example, a `CounterComponent` logs a change (via `ngAfterChanges`)
   every time the parent component increments its input counter property.
   Meanwhile, the `SpyDirective` from the previous example is applied
   to the `CounterComponent` log where it watches log entries being created and destroyed.
@@ -263,7 +262,7 @@ This snapshot reflects the state of the log after the user clicked the *Create..
 <img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/peek-a-boo.png @path %}" alt="Peek-a-boo">
 
 The sequence of log messages follows the prescribed hook calling order:
-`OnChanges`, `OnInit`, `DoCheck`&nbsp;(3x), `AfterContentInit`, `AfterContentChecked`&nbsp;(3x),
+`AfterChanges`, `OnInit`, `DoCheck`&nbsp;(3x), `AfterContentInit`, `AfterContentChecked`&nbsp;(3x),
 `AfterViewInit`, `AfterViewChecked`&nbsp;(3x), and `OnDestroy`.
 
 <div class="l-sub-section" markdown="1">
@@ -271,7 +270,7 @@ The sequence of log messages follows the prescribed hook calling order:
   The log confirms that input properties (the `name` property in this case) have no assigned values at construction.
 </div>
 
-Had the user clicked the *Update Hero* button, the log would show another `OnChanges` and two more triplets of
+Had the user clicked the *Update Hero* button, the log would show another `AfterChanges` and two more triplets of
 `DoCheck`, `AfterContentChecked` and `AfterViewChecked`.
 Clearly these three hooks fire a *often*. Keep the logic in these hooks as lean as possible!
 
@@ -372,8 +371,8 @@ That's a problem if you need to initialize the directive based on those properti
 They'll have been set when `ngOninit` runs.
 
 <div class="l-sub-section" markdown="1">
-  The `ngOnChanges` method is your first opportunity to access those properties.
-  Angular calls `ngOnChanges` before `ngOnInit` ... and many times after that.
+  The `ngAfterChanges` method is your first opportunity to access those properties.
+  Angular calls `ngAfterChanges` before `ngOnInit` ... and many times after that.
   It only calls `ngOnInit` once.
 </div>
 
@@ -391,52 +390,41 @@ Unsubscribe from observables and DOM events. Stop interval timers.
 Unregister all callbacks that this directive registered with global or app services.
 You risk memory leaks if you neglect to do so.
 
-## OnChanges
+## AfterChanges
 
-Angular calls its `ngOnChanges` method whenever it detects changes to ***input properties*** of the component (or directive).
-This example monitors the `OnChanges` hook.
+Angular calls its `ngAfterChanges` method whenever it detects changes to ***input properties*** of the component (or directive).
+This example monitors the `AfterChanges` hook.
 
-<?code-excerpt "lib/src/on_changes_component.dart (ngOnChanges)" region="ng-on-changes" title?>
+<?code-excerpt "lib/src/after_changes_component.dart (ngAfterChanges)" region="ng-after-changes" title?>
 ```
-  ngOnChanges(Map<String, SimpleChange> changes) {
-    changes.forEach((String propName, SimpleChange change) {
-      String cur = json.encode(change.currentValue);
-      String prev = change.previousValue == null
-          ? "{}"
-          : json.encode(change.previousValue);
-      changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
-    });
+  ngAfterChanges() {
+    changeLog.add('Input property has changed.');
   }
 ```
 
-The `ngOnChanges` method takes an object that maps each changed property name to a
-[SimpleChange]({{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/SimpleChange-class.html) object holding the current and previous property values.
-This hook iterates over the changed properties and logs them.
+The example component, `AfterChangesComponent`, has two input properties: `hero` and `power`.
 
-The example component, `OnChangesComponent`, has two input properties: `hero` and `power`.
-
-<?code-excerpt "lib/src/on_changes_component.dart" region="inputs"?>
+<?code-excerpt "lib/src/after_changes_component.dart" region="inputs"?>
 ```
   @Input()
-  Hero hero;
+  late Hero hero;
   @Input()
-  String power;
+  late String power;
 ```
 
-The host `OnChangesParentComponent` binds to them like this:
+The host `AfterChangesParentComponent` binds to them like this:
 
-<?code-excerpt "lib/src/on_changes_parent_component.html" region="on-changes"?>
+<?code-excerpt "lib/src/after_changes_parent_component.html" region="after-changes"?>
 ```
-  <on-changes [hero]="hero" [power]="power"></on-changes>
+  <after-changes [hero]="hero" [power]="power"></after-changes>
 ```
 
-Here's the sample in action as the user makes changes.
-
-<img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/on-changes-anim.gif @path %}" alt="OnChanges">
-
-The log entries appear as the string value of the *power* property changes.
-But the `ngOnChanges` does not catch changes to `hero.name`
-That's surprising at first.
+<!-- TODO: migrate -->
+<!-- Here's the sample in action as the user makes changes. -->
+<!-- <img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/on-changes-anim.gif @path %}" alt="AfterChanges"> -->
+<!-- The log entry appear as the string value of the *power* property changes. -->
+<!-- But the `ngAfterChanges` does not catch changes to `hero.name` -->
+<!-- That's surprising at first. -->
 
 Angular only calls the hook when the value of the input property changes.
 The value of the `hero` property is the *reference to the hero object*.
@@ -451,7 +439,7 @@ Use the `DoCheck` hook to detect and act upon changes that Angular doesn't catch
   Use this method to detect a change that Angular overlooked.
 </div>
 
-The *DoCheck* sample extends the *OnChanges* sample with the following `ngDoCheck` hook:
+The *DoCheck* sample extends the *AfterChanges* sample with the following `ngDoCheck` hook:
 
 <?code-excerpt "lib/src/do_check_component.dart (ngDoCheck)" region="ng-do-check" title?>
 ```
@@ -542,11 +530,11 @@ which can only be reached by querying for the child view via the property decora
 <?code-excerpt "lib/src/after_view_component.dart (class excerpts)" region="hooks" plaster="none" title?>
 ```
   class AfterViewComponent implements AfterViewChecked, AfterViewInit {
-    var _prevHero = '';
+    String? _prevHero = '';
 
     // Query for a VIEW child of type `ChildViewComponent`
     @ViewChild(ChildViewComponent)
-    ChildViewComponent viewChild;
+    ChildViewComponent? viewChild;
 
     ngAfterViewInit() {
       // viewChild is set after the view has been initialized
@@ -556,10 +544,10 @@ which can only be reached by querying for the child view via the property decora
 
     ngAfterViewChecked() {
       // viewChild is updated after the view has been checked
-      if (_prevHero == viewChild.hero) {
+      if (_prevHero == viewChild?.hero) {
         _logIt('AfterViewChecked (no change)');
       } else {
-        _prevHero = viewChild.hero;
+        _prevHero = viewChild?.hero;
         _logIt('AfterViewChecked');
         _doSomething();
       }
@@ -576,7 +564,8 @@ The `doSomething` method updates the screen when the hero name exceeds 10 charac
 ```
   // This surrogate for real business logic sets the `comment`
   void _doSomething() {
-    var c = viewChild.hero.length > 10 ? "That's a long name" : '';
+    var length = viewChild?.hero.length ?? 0;
+    var c = length > 10 ? "That's a long name" : '';
     if (c != comment) {
       // Wait a tick because the component's view has already been checked
       _logger.tick().then((_) {
@@ -685,12 +674,12 @@ which can only be reached by querying for it via the property decorated with
 <?code-excerpt "lib/src/after_content_component.dart (class excerpts)" region="hooks" plaster="none" title?>
 ```
   class AfterContentComponent implements AfterContentChecked, AfterContentInit {
-    String _prevHero = '';
+    String? _prevHero = '';
     String comment = '';
 
     // Query for a CONTENT child of type `ChildComponent`
     @ContentChild(ChildComponent)
-    ChildComponent contentChild;
+    ChildComponent? contentChild;
 
     ngAfterContentInit() {
       // contentChild is set after the content has been initialized

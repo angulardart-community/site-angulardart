@@ -33,7 +33,7 @@ class PeekABoo implements OnInit {
 // unless we want typing and tool support.
 class PeekABooComponent extends PeekABoo
     implements
-        OnChanges,
+        AfterChanges,
         OnInit,
         DoCheck,
         AfterContentInit,
@@ -42,12 +42,11 @@ class PeekABooComponent extends PeekABoo
         AfterViewChecked,
         OnDestroy {
   @Input()
-  String name;
+  String? name;
 
   int _afterContentCheckedCounter = 1;
   int _afterViewCheckedCounter = 1;
-  int _onChangesCounter = 1;
-  String _verb = 'initialized';
+  int _afterChangesCounter = 1;
 
   PeekABooComponent(LoggerService logger) : super(logger) {
     var _is = name != null ? 'is' : 'is not';
@@ -55,18 +54,8 @@ class PeekABooComponent extends PeekABoo
   }
 
   // Only called if there is an @input variable set by parent.
-  void ngOnChanges(Map<String, SimpleChange> changes) {
-    List<String> messages = [];
-    changes.forEach((String propName, SimpleChange change) {
-      if (propName == 'name') {
-        var name = changes['name'].currentValue;
-        messages.add('name $_verb to "$name"');
-      } else {
-        messages.add('$propName $_verb');
-      }
-    });
-    _logIt('OnChanges (${_onChangesCounter++}): ${messages.join('; ')}');
-    _verb = 'changed'; // Next time it will be a change
+  void ngAfterChanges() {
+    _logIt('AfterChanges (${_afterChangesCounter++})');
   }
 
   // Beware! Called frequently!

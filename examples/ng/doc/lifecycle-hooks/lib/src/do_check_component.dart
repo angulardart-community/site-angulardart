@@ -25,9 +25,9 @@ class Hero {
 )
 class DoCheckComponent implements DoCheck {
   @Input()
-  Hero hero;
+  late Hero hero;
   @Input()
-  String power;
+  late String power;
 
   bool changeDetected = false;
   List<String> changeLog = [];
@@ -87,11 +87,11 @@ class DoCheckComponent implements DoCheck {
   directives: [coreDirectives, formDirectives, DoCheckComponent],
 )
 class DoCheckParentComponent {
-  Hero hero;
-  String power;
+  late Hero hero;
+  late String power;
   String title = 'DoCheck';
   @ViewChild(DoCheckComponent)
-  DoCheckComponent childView;
+  DoCheckComponent? childView;
 
   DoCheckParentComponent() {
     reset();

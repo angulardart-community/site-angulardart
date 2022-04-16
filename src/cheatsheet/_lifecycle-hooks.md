@@ -21,7 +21,7 @@ See: [Lifecycle Hooks](/guide/lifecycle-hooks)
 
 <tr>
   <td class="nowrap"><code class="prettyprint lang-dart">
-    <b>ngOnChanges(changeRecord)</b> { ... }
+    <b>ngAfterChanges()</b> { ... }
   </code></td>
   <td markdown="1">
 Called after every change to input properties and before processing content or child views.
@@ -37,7 +37,7 @@ See: [Lifecycle Hooks](/guide/lifecycle-hooks),
     <b>ngOnInit()</b> { ... }
   </code></td>
   <td markdown="1">
-Called after the constructor, initializing input properties, and the first call to `ngOnChanges`.
+Called after the constructor, initializing input properties, and the first call to `ngAfterChanges`.
 
 See: [Lifecycle Hooks](/guide/lifecycle-hooks),
 [OnInit class]({{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/OnInit-class.html)
@@ -119,6 +119,7 @@ Called once, before the instance is destroyed.
 
 See: [Lifecycle Hooks](/guide/lifecycle-hooks),
 [OnDestroy class]({{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/OnDestroy-class.html)
+
   </td>
 </tr>
 
