@@ -419,12 +419,11 @@ The host `AfterChangesParentComponent` binds to them like this:
   <after-changes [hero]="hero" [power]="power"></after-changes>
 ```
 
-<!-- TODO: migrate -->
-<!-- Here's the sample in action as the user makes changes. -->
-<!-- <img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/on-changes-anim.gif @path %}" alt="AfterChanges"> -->
-<!-- The log entry appear as the string value of the *power* property changes. -->
-<!-- But the `ngAfterChanges` does not catch changes to `hero.name` -->
-<!-- That's surprising at first. -->
+Here's the sample in action as the user makes changes.
+<img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/after-changes-anim.gif @path %}" alt="AfterChanges">
+The log entry appear as the string value of the *power* property changes.
+But the `ngAfterChanges` does not catch changes to `hero.name`
+That's surprising at first.
 
 Angular only calls the hook when the value of the input property changes.
 The value of the `hero` property is the *reference to the hero object*.

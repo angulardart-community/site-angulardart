@@ -35,7 +35,7 @@ class AfterChangesComponent implements AfterChanges {
 
   // #docregion ng-after-changes
   ngAfterChanges() {
-    changeLog.add('Input property has changed.');
+    changeLog.add('Input property has changed. ($power)');
   }
   // #enddocregion ng-after-changes
 
