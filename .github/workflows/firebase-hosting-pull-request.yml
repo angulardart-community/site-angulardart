@@ -2,11 +2,8 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on PR
-on:
-  pull_request:
-    branches:
-      - master
-      - ready-for-publish
+on: [pull_request]
+
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -25,6 +22,8 @@ jobs:
       - run: yarn install
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.16.2
       - name: Setup Ruby and cache gems
         uses: ruby/setup-ruby@v1
         with:
