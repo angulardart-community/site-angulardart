@@ -420,7 +420,9 @@ The host `AfterChangesParentComponent` binds to them like this:
 ```
 
 Here's the sample in action as the user makes changes.
+
 <img class="image-display" src="{% asset ng/devguide/lifecycle-hooks/after-changes-anim.gif @path %}" alt="AfterChanges">
+
 The log entry appear as the string value of the *power* property changes.
 But the `ngAfterChanges` does not catch changes to `hero.name`
 That's surprising at first.
