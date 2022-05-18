@@ -20,6 +20,8 @@ jobs:
       - run: yarn install
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.16.2
       - name: Setup Ruby and cache gems
         uses: ruby/setup-ruby@v1
         with:
