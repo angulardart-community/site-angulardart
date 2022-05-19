@@ -12,10 +12,5 @@ gem 'liquid-tag-parser'
 gem 'nokogiri'
 gem 'sassc'
 gem 'jekyll-postcss'
-gem "sprockets", "~> 3.7"
-# Sprockets > 4.0.beta8 breaks jekyll-assets
-# https://github.com/envygeeks/jekyll-assets/issues/589
-# So pin the version until the issue is fixed.
-# Track progress at https://github.com/envygeeks/jekyll-assets/pull/620
-# gem 'sprockets', '4.0.beta8'
+gem "sprockets"
 gem 'uglifier'
