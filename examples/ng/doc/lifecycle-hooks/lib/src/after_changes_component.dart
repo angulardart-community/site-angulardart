@@ -10,8 +10,8 @@ class Hero {
 @Component(
   selector: 'after-changes',
   template: '''
-    <div class="hero">
-      <p>{{hero.name}} can {{power}}</p>
+    <div *ngIf="hero != null" class="hero">
+      <p>{{hero!.name}} can {{power}}</p>
 
       <h4>-- Change Log --</h4>
       <div *ngFor="let chg of changeLog">{{chg}}</div>
@@ -26,9 +26,9 @@ class Hero {
 class AfterChangesComponent implements AfterChanges {
   // #docregion inputs
   @Input()
-  late Hero hero;
+  Hero? hero;
   @Input()
-  late String power;
+  String power = '';
   // #enddocregion inputs
 
   List<String> changeLog = [];
