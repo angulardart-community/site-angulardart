@@ -398,7 +398,7 @@ This example monitors the `AfterChanges` hook.
 <?code-excerpt "lib/src/after_changes_component.dart (ngAfterChanges)" region="ng-after-changes" title?>
 ```
   ngAfterChanges() {
-    changeLog.add('Input property has changed.');
+    changeLog.add('Input property has changed. ($power)');
   }
 ```
 
@@ -407,9 +407,9 @@ The example component, `AfterChangesComponent`, has two input properties: `hero`
 <?code-excerpt "lib/src/after_changes_component.dart" region="inputs"?>
 ```
   @Input()
-  late Hero hero;
+  Hero? hero;
   @Input()
-  late String power;
+  String power = '';
 ```
 
 The host `AfterChangesParentComponent` binds to them like this:
@@ -445,11 +445,12 @@ The *DoCheck* sample extends the *AfterChanges* sample with the following `ngDoC
 <?code-excerpt "lib/src/do_check_component.dart (ngDoCheck)" region="ng-do-check" title?>
 ```
   ngDoCheck() {
-    if (hero.name != oldHeroName) {
+    final heroName = hero?.name ?? '';
+    if (heroName != oldHeroName) {
       changeDetected = true;
       changeLog.add(
-          'DoCheck: Hero name changed to "${hero.name}" from "$oldHeroName"');
-      oldHeroName = hero.name;
+          'DoCheck: Hero name changed to "${heroName}" from "$oldHeroName"');
+      oldHeroName = heroName;
     }
 
     if (power != oldPower) {

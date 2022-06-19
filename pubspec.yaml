@@ -17,7 +17,7 @@ dev_dependencies:
     path: site-shared/packages/code_excerpt_updater
   code_excerpter:
     path: site-shared/packages/code_excerpter
-  grinder: ^0.9.0
+  grinder: ^0.9.1
   linkcheck: ^2.0.0+1
   shelf_static: ^1.0.0
   shelf: ^1.1.4
