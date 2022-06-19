@@ -103,3 +103,7 @@
 	url = https://github.com/angulardart-community/server-communication
 	branch = master
 	shallow = true
+[submodule "examples/ng/doc/lifecycle-hooks"]
+	path = examples/ng/doc/lifecycle-hooks
+	url = https://github.com/angulardart-community/lifecycle-hooks
+	branch = master
