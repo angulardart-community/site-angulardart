@@ -105,14 +105,25 @@ When you're done, the new template should look like this:
 ```
   template: '''
     <div *ngIf="hero != null">
-      <h2>{!{hero.name}!}</h2>
-      <div><label>id: </label>{!{hero.id}!}</div>
+      <h2>{!{hero!.name}!}</h2>
+      <div><label>id: </label>{!{hero!.id}!}</div>
       <div>
         <label>name: </label>
-        <input [(ngModel)]="hero.name" placeholder="name">
+        <input [(ngModel)]="hero!.name" placeholder="name">
       </div>
     </div>''',
 ```
+
+In case you're wondering, the  `!` symbol after `hero` is a null-check operator
+for Dart, one of the language features that help you write more error-proof
+code. For details, checkout the [null-safety introduction page](https://dart.dev/null-safety).
+
+You also might be confused as to why we still need to declare `hero` as non-null
+even though it's already wrapped inside the `ngIf` condition that checks whether
+it's null or not (try removing one of the `!` and recompile!). The answer is
+that `hero` might be changed outside of the `ngIf` condition. This is very
+unlikely to occur (and definitely impossible to occur in this situation), but
+when it does, the little `!` will save you a ton of time debugging.
 
 ### Add the *hero* property
 
@@ -125,7 +136,7 @@ to the `HeroComponent` class.
   import 'hero.dart';
 
   class HeroComponent {
-    Hero hero;
+    Hero? hero;
   }
 ```
 
@@ -151,7 +162,7 @@ Declare that `hero` is an *input* property by annotating it with `@Input()`:
 <?code-excerpt "lib/src/hero_component.dart (Input annotation)" title?>
 ```
   @Input()
-  Hero hero;
+  Hero? hero;
 ```
 
 <div class="l-sub-section" markdown="1">
@@ -174,18 +185,18 @@ Here's the complete `HeroComponent`.
     selector: 'my-hero',
     template: '''
       <div *ngIf="hero != null">
-        <h2>{!{hero.name}!}</h2>
-        <div><label>id: </label>{!{hero.id}!}</div>
+        <h2>{!{hero!.name}!}</h2>
+        <div><label>id: </label>{!{hero!.id}!}</div>
         <div>
           <label>name: </label>
-          <input [(ngModel)]="hero.name" placeholder="name">
+          <input [(ngModel)]="hero!.name" placeholder="name">
         </div>
       </div>''',
     directives: [coreDirectives, formDirectives],
   )
   class HeroComponent {
     @Input()
-    Hero hero;
+    Hero? hero;
   }
 ```
 

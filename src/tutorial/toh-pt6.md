@@ -436,8 +436,8 @@ The overall structure of the `update()` method is similar to that of
   Future<Hero> update(Hero hero) async {
     try {
       final url = '$_heroesUrl/${hero.id}';
-      final response =
-          await _http.put(Uri.parse(url), headers: _headers, body: json.encode(hero));
+      final response = await _http.put(Uri.parse(url),
+          headers: _headers, body: json.encode(hero));
       return Hero.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
@@ -465,7 +465,7 @@ the heading:
 ```
   <div>
     <label>Hero name:</label> <input #heroName />
-    <button (click)="add(heroName.value)">
+    <button (click)="add(heroName)">
       Add
     </button>
   </div>
@@ -476,12 +476,12 @@ clear the input field so that it's ready for another name.
 
 <?code-excerpt "lib/src/hero_list_component.dart (add)" title?>
 ```
-  Future<void> add(String name) async {
-    name = name.trim();
+  Future<void> add(InputElement event) async {
+    final String name = event.value.trim();
     if (name.isEmpty) return;
     heroes.add(await _heroService.create(name));
     selected = null;
-  name = '';
+    event.value = "";
   }
 ```
 
@@ -546,8 +546,8 @@ The logic of the `delete()` handler is a bit trickier:
     heroes.remove(hero);
     if (selected == hero) selected = null;
 
-  // This makes any component **above** <my-hero>
-  event.stopPropagation();
+    // This makes any component **above** <my-hero>
+    event.stopPropagation();
   }
 ```
 

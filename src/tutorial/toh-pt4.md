@@ -184,7 +184,7 @@ and **remove** the `heroes` initializer:
 
 <?code-excerpt "lib/app_component_1.dart (heroes and getHeroes)" title?>
 ```
-  List<Hero> heroes;
+  List<Hero> heroes = <Hero>[];
   // ···
   void _getHeroes() {
     heroes = _heroService.getAll();

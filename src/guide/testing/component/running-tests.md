@@ -35,7 +35,7 @@ includes a few basic tests for its `AppComponent` in the following test file:
 
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
 
     setUp(() async {
       fixture = await testBed.create();
