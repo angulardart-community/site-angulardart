@@ -30,7 +30,8 @@ Also, if you do a full-site build, it takes up about 2 ~ 5GB of space. Hard Driv
 Install the following tools if you don't have them already.
 
 - **nodejs and npm** nodejs should be v12.x, other versions have not been tested
-- **[Ruby][]** 2.6 is the recommended version; other versions, like 2.7, will throw a bunch of warnings but are definitely usable
+- **[Ruby][]** Any version less than 3.0 is fine. 2.6 is recommended.
+  (`jekyll-assets` yes I'm talking about you)
 - **[Dart][]** (what do you expect then?) all versions after 2.5 is fine
 - **[Chrome][]** v63 or later, or literally any web browser
 
