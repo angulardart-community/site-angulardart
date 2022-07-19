@@ -114,7 +114,7 @@ Try adding `meta: <1.7.0` to your `dev_dependencies`. This is caused by the pack
 
 ### Visual Studio Code
 
-Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code). If you already have the Fluttr VSCode extension installed, this is not necessary.
+Install the [Dart VSCode extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code). If you already have the Flutter VSCode extension installed, this is not necessary.
 1. Start VS Code.
 2. Press **Ctrl+Shift+X** (Windows/Linux) or **Cmd+Shift+X** (Mac) to open the Extensions side panel.
 3. Type `Dart` in the extensions search field, and select **Dart** in the list, and click **Install**.
