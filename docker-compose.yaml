@@ -1,0 +1,38 @@
+version: "3"
+services:
+
+  site:
+    image: ghcr.io/angulardart-community/site:latest
+    build:
+      context: .
+      target: site
+    command: ["make", "serve"]
+    env_file: .env
+    environment:
+      - JEKYLL_ENV=development
+      - JEKYLL_SITE_HOST=0.0.0.0
+      - JEKYLL_SITE_PORT=5000
+      - NODE_ENV=development
+    ports:
+      - "5000:5000"
+      - "35729:35729"
+      # - "5500:5500"
+    volumes:
+      - ./_config.yml:/app/_config.yml
+      - ./tmp:/app/tmp
+      - ./.firebaserc:/app/.firebaserc
+      - ./analysis_options.yaml:/app/analysis_options.yaml
+      - ./build.excerpt.yaml:/app/build.excerpt.yaml
+        # - ./diagrams:/app/diagrams
+      - ./examples:/app/examples
+      - ./firebase.json:/app/firebase.json
+      - ./Gemfile:/app/Gemfile
+      - ./Gemfile.lock:/app/Gemfile.lock
+      - ./Makefile:/app/Makefile
+      - ./package-lock.json:/app/package-lock.json
+      - ./package.json:/app/package.json
+      - ./pubspec.yaml:/app/pubspec.yaml
+      - ./site-shared:/app/site-shared
+      - ./site-angular:/app/site-angular
+      - ./src:/app/src
+      - ./tool:/app/tool

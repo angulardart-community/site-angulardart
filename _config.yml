@@ -124,6 +124,9 @@ source: src
 symlinked-sources: [site-shared/src]
 destination: publish
 
+postcss:
+  cache: false
+
 exclude:
   - _data/.pub
   - _data/.packages
@@ -142,7 +145,7 @@ sass:
 
 plugins:
   - jekyll-toc
-  - jekyll-postcss
+    # - jekyll-postcss
 
 # Increment this global og:image URL version number query parameter when you update any og:image file.
 # (Also increment the corresponding number in the `firebase.json` redirect rule.)

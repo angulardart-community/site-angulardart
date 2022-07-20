@@ -43,3 +43,6 @@ protractor-results.txt
 # Some utility tools
 tool/fetch-missing-files
 tool/fetch-missing-files.exe
+
+# Environment variables
+.env
