@@ -1,7 +1,7 @@
 .PHONY: clean setup build
 
 clean:
-	rm -rf _site **/.jekyll*  *.log tmp .dart_tool
+	rm -rf publish **/.jekyll* *.log tmp .dart_tool node_modules
  
 # setup: clean
 # 	dart pub get
@@ -14,6 +14,12 @@ setup: clean
 	docker compose down
 	docker rmi ghcr.io/angulardart-community/site:latest
 	docker compose build --no-cache site
+
+up:
+	docker compose up site
+
+down:
+	docker compose down
 
 run:
 	docker compose run --rm site bash

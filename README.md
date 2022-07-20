@@ -25,6 +25,8 @@ If you want/need to build, read on.
 
 Also, if you do a full-site build, it takes up about 2 ~ 5GB of space. Hard Drive Lives Matter!
 
+We're currently migrating to a Docker workflow so all you need to install is Docker. It should be up in a few days :) For now, please read below.
+
 ### 1. Get the prerequisites
 
 Install the following tools if you don't have them already.

@@ -1,4 +1,4 @@
-FROM ruby:2.7-slim-buster as base
+FROM ruby:2.7.6-slim-bullseye as base
 
 RUN apt update && apt install -yq --no-install-recommends \
       build-essential \
