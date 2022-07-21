@@ -17,29 +17,24 @@ Our main focus now is to keep the version of the website up-to-date with the lat
 
 For simple changes (such as to CSS and text), you probably don't need to build this site. Often you can make changes using the GitHub UI.
 
-If you want/need to build, read on.
+If your change involves code samples, adds/removes pages, or affects navigation, you'll need to build and test your work before submitting. If you want or need to build the site, follow the steps below.
 
 ## Before you build this site
 
-~~Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)~~ We just migrated (most) workflows to Dart, so Windows users should be able to build the site now. But seriously, considering switching to Linux?
+~~Windows users might find themselves having trouble building this site because they can't run `.sh` files. We're currently migrating the workflows from using [`gulpjs`]() to Dart's [`grinder`](https://pub.dev/packages/grinder), which will do everything in Dart and resolve this problem. Sorry Windows users! (and how about considering using linux in the meantime?)~~ We have migrated (most) workflows to Dart and Docker, so Windows users should be able to build the site now. But seriously, considering switching to Linux?
 
-Also, if you do a full-site build, it takes up about 2 ~ 5GB of space. Hard Drive Lives Matter!
-
-We're currently migrating to a Docker workflow so all you need to install is Docker. It should be up in a few days :) For now, please read below.
+Also, if you do a full-site build, it takes up about 2~3GB of space. Hard Drive Lives Matter!
 
 ### 1. Get the prerequisites
 
 Install the following tools if you don't have them already.
 
-- **nodejs and npm** nodejs should be v12.x, other versions have not been tested
-- **[Ruby][]** Any version less than 3.0 is fine. 2.6 is recommended.
-  (`jekyll-assets` yes I'm talking about you)
-- **[Dart][]** (what do you expect then?) all versions after 2.5 is fine
-- **[Chrome][]** v63 or later, or literally any web browser
+- **Docker**. We use Docker for local development and building the site. 
+  Install it from https://docs.docker.com/get-docker/.
+- **GNU Make**. On Windows the easiest way to install Make is `choco install make`
+  using command prompt or powershell as an admin. 
+  Other options include using a [subsystem][wsl].
 
-> IMPORTANT: Follow the installation instructions for each of the tools
-carefully. In particular, configure your shell/environment so
-that the tools are available in every terminal/command window you create.
 
 ### 2. Clone this repo _and_ its submodule
 
@@ -71,35 +66,35 @@ submodule-cloning techniques:
    pub get
    ```
 
-### 3. Create a folder at your **HOME** directory
-
-Create a folder at your home directory called `tmp`. This is used for some logging. Our scripts can automatically create that folder for you if it doesn't exists.
-
 ## Building this site
 
-```bash
-npm install
-bundle install
-pub global activate grinder # Not required but highly recommended
-```
-If this is your first time building this site, run a full build:
-```bash
-dart run grinder build --refresh=all
-```
-Alternatively run the following if you have activated `grinder`:
-```bash
-grind build --refresh=all
-```
-The generated site is in the `publish` folder. Run the following to view the site in your browser:
-```bash
-npx superstatic --port 5000
-```
-Open [localhost:5000](http://localhost:5000/), and there it is!
+1. (Optional) Build the container image from scratch. If you don't have the hard drive space to do so or you just want to quickly see how it looks, you can skip this step and use the image we provide on GitHub. However, if you're changing dependencies, you must run this step to update the dependencies in the image.
+   ```bash
+   make setup
+   ```
+2. Serve the site locally (via `docker compose`).
+   ```bash
+   make up
+   ```
+3. View your changes in the browser by navigating to `http://localhost:5000`.
+   > **Note:** Unless you're editing files under `site-shared`, 
+   > you can safely ignore `ERROR: directory is already being watched` messages. 
+   > For details, see [#1363](https://github.com/flutter/website/issues/1363).
+4. Make your changes to the local repo. 
 
-Once you've built the site once, you can run the following to build, serve, and have a watcher at the same time:
-```bash
-jekyll serve --livereload
-```
+   The site will rebuild and the browser will autoreload to reflect the changes. 
+
+   > **Tip:** If you aren't seeing the changes you expect (e.g. src/_data), 
+   > `ctrl-C` out of your running dev server and rebuild the site from scratch 
+   > using the following commands:
+   > ```bash
+   > $ make down && make clean && make up
+   > ```
+5. When you've finished developing, shut down the Docker container:
+   ```bash
+   $ make down
+   ```
+
 For more advance usage, see below
 
 > NOTE: Getting `jekyll | Error:  Too many open files` under MacOS or Linux?
