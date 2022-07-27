@@ -4,6 +4,7 @@ on:
     branches:
       - master
     paths:
+      - .github/workflows/docker.yml
       - Dockerfile
       - pubspec.yaml
       - Gemfile
@@ -27,7 +28,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
       - name: Build image
-        run: docker compose build
+        run: touch .env && docker compose build
 
       - name: Push image
         if: github.event_name != 'pull_request'
