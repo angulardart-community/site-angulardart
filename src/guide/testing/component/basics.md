@@ -59,7 +59,7 @@ Component tests must explicitly define the **component under test**. You define 
   // ···
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
     // ···
   }
 ```
@@ -80,7 +80,7 @@ before it moves on to the next test group, if any. Here is an example:
 
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
 
     setUp(() async {
       fixture = await testBed.create();

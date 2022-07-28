@@ -31,7 +31,7 @@ The `AppComponent` from [part 4][] of the [tutorial][] declares its need for a
     providers: [ClassProvider(HeroService)],
   )
   class AppComponent implements OnInit {
-    List<Hero> heroes;
+    List<Hero> heroes = <Hero>[];
     final HeroService _heroService;
 
     AppComponent(this._heroService);

@@ -171,7 +171,13 @@ router is in its own package, first add the package to the app's pubspec:
 ```diff
 --- toh-4/pubspec.yaml
 +++ toh-5/pubspec.yaml
-@@ -8,3 +8,4 @@
+@@ -3,8 +3,9 @@
+ version: 0.0.1
+
+ environment:
+-  sdk: '>=2.17.0 <3.0.0'
++  sdk: '>=2.5.0 <3.0.0'
+
  dependencies:
    angular: ^7.0.2
    angular_forms: ^4.0.1
@@ -740,11 +746,11 @@ Here's what the `HeroComponent` looks like now:
     selector: 'my-hero',
     template: '''
       <div *ngIf="hero != null">
-        <h2>{!{hero.name}!}</h2>
-        <div><label>id: </label>{!{hero.id}!}</div>
+        <h2>{!{hero!.name}!}</h2>
+        <div><label>id: </label>{!{hero!.id}!}</div>
         <div>
           <label>name: </label>
-          <input [(ngModel)]="hero.name" placeholder="name"/>
+          <input [(ngModel)]="hero!.name" placeholder="name"/>
         </div>
       </div>
     ''',
@@ -752,7 +758,13 @@ Here's what the `HeroComponent` looks like now:
   )
   class HeroComponent {
     @Input()
-    Hero hero;
+    Hero? hero;
+
+    void bruh(Hero? h) {
+      if (h != null) {
+        print(h.name);
+      }
+    }
   }
 ```
 

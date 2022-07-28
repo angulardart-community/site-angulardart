@@ -193,8 +193,8 @@ objects are shared across tests, they are generally initialized during setup:
 <?code-excerpt "toh-1/test/app_test.dart (appPO setup)" title replace="/(final context |appPO |HtmlPageLoaderElement\.).*/[!$&!]/g"?>
 ```
   final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-  NgTestFixture<AppComponent> fixture;
-  AppPO appPO;
+  late NgTestFixture<AppComponent> fixture;
+  late AppPO appPO;
 
   setUp(() async {
     fixture = await testBed.create();

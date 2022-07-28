@@ -33,18 +33,18 @@ the `HeroDetailComponent`:
     selector: 'my-hero',
     template: '''
       <div *ngIf="hero != null">
-        <h2>{!{hero.name}!}</h2>
-        <div><label>id: </label>{!{hero.id}!}</div>
+        <h2>{!{hero!.name}!}</h2>
+        <div><label>id: </label>{!{hero!.id}!}</div>
         <div>
           <label>name: </label>
-          <input [(ngModel)]="hero.name" placeholder="name">
+          <input [(ngModel)]="hero!.name" placeholder="name">
         </div>
       </div>''',
     directives: [coreDirectives, formDirectives],
   )
   class HeroComponent {
     @Input()
-    Hero hero;
+    Hero? hero;
   }
 ```
 
@@ -72,7 +72,7 @@ Here is the [page object][] for this component:
     @ByTagName('input')
     PageLoaderElement get _input;
 
-    Map get heroFromDetails {
+    Map? get heroFromDetails {
       if (!_id.exists) return null;
       final idAsString = _id.visibleText.split(':')[1];
       return _heroData(idAsString, _title.visibleText);
@@ -126,7 +126,7 @@ basic [page object][] setup is sufficient to test for this case:
     });
 
     test('has empty view', () {
-      expect(fixture.rootElement.text.trim(), '');
+      expect(fixture.rootElement.text!.trim(), '');
       expect(po.heroFromDetails, isNull);
     });
     // ···
@@ -145,8 +145,10 @@ named parameter `beforeChangeDetection` of the `NgTestBed.create()` method:
     // ···
     setUp(() async {
       fixture = await testBed.create(
-          beforeChangeDetection: (c) =>
-              c.hero = Hero(targetHero['id'], targetHero['name']));
+          beforeChangeDetection: (c) => c.hero = Hero(
+                targetHero['id'] as int,
+                targetHero['name'] as String,
+              ));
       final context =
           HtmlPageLoaderElement.createFromElement(fixture.rootElement);
       po = HeroDetailPO.create(context);
@@ -178,7 +180,10 @@ property was [explicitly initialized](#input-initialized):
 
     test('transition to ${targetHero['name']} hero', () async {
       await fixture.update((comp) {
-        comp.hero = Hero(targetHero['id'], targetHero['name']);
+        comp.hero = Hero(
+          targetHero['id'] as int,
+          targetHero['name'] as String,
+        );
       });
       expect(po.heroFromDetails, targetHero);
     });
