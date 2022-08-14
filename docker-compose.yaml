@@ -7,7 +7,6 @@ services:
       context: .
       target: site
     command: ["make", "serve"]
-    env_file: .env
     environment:
       - JEKYLL_ENV=development
       - JEKYLL_SITE_HOST=0.0.0.0
