@@ -17,21 +17,21 @@ services:
       - "35729:35729"
       # - "5500:5500"
     volumes:
-      - ./_config.yml:/app/_config.yml
-      - ./tmp:/app/tmp
-      - ./.firebaserc:/app/.firebaserc
-      - ./analysis_options.yaml:/app/analysis_options.yaml
-      - ./build.excerpt.yaml:/app/build.excerpt.yaml
-        # - ./diagrams:/app/diagrams
-      - ./examples:/app/examples
-      - ./firebase.json:/app/firebase.json
-      - ./Gemfile:/app/Gemfile
-      - ./Gemfile.lock:/app/Gemfile.lock
-      - ./Makefile:/app/Makefile
-      - ./package-lock.json:/app/package-lock.json
-      - ./package.json:/app/package.json
-      - ./pubspec.yaml:/app/pubspec.yaml
-      - ./site-shared:/app/site-shared
-      - ./site-angular:/app/site-angular
-      - ./src:/app/src
-      - ./tool:/app/tool
+      - ./_config.yml:/site/_config.yml
+      - ./tmp:/site/tmp
+      - ./.firebaserc:/site/.firebaserc
+      - ./analysis_options.yaml:/site/analysis_options.yaml
+      - ./build.excerpt.yaml:/site/build.excerpt.yaml
+        # - ./diagrams:/site/diagrams
+      - ./examples:/site/examples
+      - ./firebase.json:/site/firebase.json
+      - ./Gemfile:/site/Gemfile
+      - ./Gemfile.lock:/site/Gemfile.lock
+      - ./Makefile:/site/Makefile
+      - ./package-lock.json:/site/package-lock.json
+      - ./package.json:/site/package.json
+      - ./pubspec.yaml:/site/pubspec.yaml
+      - ./site-shared:/site/site-shared
+      - ./site-angular:/site/site-angular
+      - ./src:/site/src
+      - ./tool:/site/tool
