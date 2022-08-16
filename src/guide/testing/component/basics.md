@@ -27,7 +27,7 @@ under **`dev_dependencies`**, for example:
 <?code-excerpt "toh-0/pubspec.yaml (dev_dependencies)" title?>
 ```
   dev_dependencies:
-    angular_test: ^4.0.1
+    ngtest: ^4.0.1
     build_runner: ^2.1.7
     build_test: ^2.1.5
     build_web_compilers: ^3.2.2
@@ -73,7 +73,7 @@ before it moves on to the next test group, if any. Here is an example:
 ```
   @TestOn('browser')
 
-  import 'package:angular_test/angular_test.dart';
+  import 'package:ngtest/angular_test.dart';
   import 'package:angular_tour_of_heroes/app_component.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
   import 'package:test/test.dart';

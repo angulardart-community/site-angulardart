@@ -179,8 +179,10 @@ router is in its own package, first add the package to the app's pubspec:
 +  sdk: '>=2.5.0 <3.0.0'
 
  dependencies:
-   angular: ^7.0.2
-   angular_forms: ^4.0.1
+-  ngdart: ^7.0.2
+-  ngforms: ^4.0.1
++  angular: ^7.0.2
++  angular_forms: ^4.0.1
 +  angular_router: ^3.0.1
 ```
 
@@ -737,8 +739,8 @@ Here's what the `HeroComponent` looks like now:
 
 <?code-excerpt "../toh-4/lib/src/hero_component.dart" region="" title="lib/src/hero_component.dart (current)" linenums?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngforms/ngforms.dart';
 
   import 'hero.dart';
 

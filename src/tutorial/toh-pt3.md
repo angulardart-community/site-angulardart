@@ -71,8 +71,8 @@ Start writing the `HeroComponent` as follows:
 
 <?code-excerpt "lib/src/hero_component.dart (initial version)" region="v1" plaster="none" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngforms/ngforms.dart';
 
   @Component(
     selector: 'my-hero',
@@ -176,8 +176,8 @@ Here's the complete `HeroComponent`.
 
 <?code-excerpt "lib/src/hero_component.dart" title linenums?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngforms/ngforms.dart';
 
   import 'hero.dart';
 

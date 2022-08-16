@@ -195,10 +195,21 @@ The `angular_forms` library comes in its own package. Add the package to the pub
 ```diff
 --- toh-0/pubspec.yaml
 +++ toh-1/pubspec.yaml
-@@ -8,2 +8,3 @@
+@@ -7,10 +7,12 @@
+
  dependencies:
-   angular: ^7.0.2
-+  angular_forms: ^4.0.1
+   ngdart: ^7.0.2
++  ngforms: ^4.0.1
+
+ dev_dependencies:
+   ngtest: ^4.0.1
+-  build_runner: ^2.1.7
++  build_runner: ^2.1.8
+   build_test: ^2.1.5
+   build_web_compilers: ^3.2.2
+-  test: ^1.20.1
++  ngpageloader: ^5.0.0
++  test: ^1.6.0
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-1"?>
@@ -216,7 +227,7 @@ convenience you can add the [formDirectives][] list
 
 <?code-excerpt "lib/app_component.dart (directives)" replace="/directives:.*/[!$&!]/g" title?>
 ```
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngforms/ngforms.dart';
 
   import 'hero.dart';
 

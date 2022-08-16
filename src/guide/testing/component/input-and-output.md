@@ -24,8 +24,8 @@ the `HeroDetailComponent`:
 
 <?code-excerpt "toh-3/lib/src/hero_component.dart" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngforms/ngforms.dart';
 
   import 'hero.dart';
 
