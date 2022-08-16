@@ -150,7 +150,7 @@ Define [route paths]({{pageUrl}}/1#route-paths):
 
 <?code-excerpt "lib/src/route_paths.dart" region="v1" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   class RoutePaths {
     static final heroes = RoutePath(path: 'heroes');
@@ -161,7 +161,7 @@ Define [route definitions]({{pageUrl}}/1#route-definitions):
 
 <?code-excerpt "lib/src/routes.dart (a first route)" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   import 'route_paths.dart';
   import 'hero_list_component.template.dart' as hero_list_template;

@@ -133,7 +133,7 @@ The first draft looks like this:
 
 <?code-excerpt "lib/app_component_1.dart" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   import 'src/hero_service.dart';
   import 'src/hero_list_component.dart';
@@ -171,19 +171,21 @@ router is in its own package, first add the package to the app's pubspec:
 ```diff
 --- toh-4/pubspec.yaml
 +++ toh-5/pubspec.yaml
-@@ -3,8 +3,9 @@
- version: 0.0.1
-
- environment:
--  sdk: '>=2.17.0 <3.0.0'
-+  sdk: '>=2.5.0 <3.0.0'
-
+@@ -8,11 +8,13 @@
  dependencies:
--  ngdart: ^7.0.2
--  ngforms: ^4.0.1
-+  angular: ^7.0.2
-+  angular_forms: ^4.0.1
-+  angular_router: ^3.0.1
+   ngdart: ^7.0.2
+   ngforms: ^4.0.1
++  ngrouter: ^3.0.1
+
+ dev_dependencies:
+   ngtest: ^4.0.1
+   build_runner: ^2.1.8
+   build_test: ^2.1.5
+   build_web_compilers: ^3.2.2
++  mockito: ^5.1.0
+   ngpageloader: ^5.0.0
+-  test: ^1.6.3
++  test: ^1.6.0
 ```
 
 Not all apps need routing, which is why the Angular router is
@@ -201,7 +203,7 @@ the router library:
 
 <?code-excerpt "lib/app_component.dart (angular_router)" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 ```
 
 ### Make the router available
@@ -211,8 +213,8 @@ an injector seeded with [routerProvidersHash][]:
 
 <?code-excerpt "web/main.dart" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
 
   import 'main.template.dart' as self;
@@ -261,7 +263,7 @@ First create a file to hold route paths. Initialize it with this content:
 
 <?code-excerpt "lib/src/route_paths.dart" region="v1" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   class RoutePaths {
     static final heroes = RoutePath(path: 'heroes');
@@ -272,7 +274,7 @@ As a first route, define a route to the heroes component:
 
 <?code-excerpt "lib/src/routes.dart (a first route)" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   import 'route_paths.dart';
   import 'hero_list_component.template.dart' as hero_list_template;
@@ -427,8 +429,8 @@ and the list of heroes displays.
 
 <?code-excerpt "lib/app_component.dart" remove="/style|[Dd]ash/" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   import 'src/hero_service.dart';
   import 'src/routes.dart';
@@ -463,7 +465,7 @@ To add another view, create a placeholder `DashboardComponent`.
 
 <?code-excerpt "lib/src/dashboard_component_1.dart (v1)" region="" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   @Component(
     selector: 'my-dashboard',
@@ -614,7 +616,7 @@ In `dashboard_component.dart`, add the following `import` statements.
 
 <?code-excerpt "lib/src/dashboard_component_2.dart (imports)" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   import 'hero.dart';
   import 'hero_service.dart';
@@ -625,7 +627,7 @@ Now create the `DashboardComponent` class like this:
 <?code-excerpt "lib/src/dashboard_component_2.dart (class)" title?>
 ```
   class DashboardComponent implements OnInit {
-    List<Hero> heroes;
+    List<Hero> heroes = <Hero>[];
 
     final HeroService _heroService;
 
@@ -781,7 +783,7 @@ you can **remove the `@Input()` annotation** from the `hero` field:
 <?code-excerpt "lib/src/hero_component.dart (hero with @Input removed)" region="hero" replace="/implements \w+ //g" plaster="none" title?>
 ```
   class HeroComponent {
-    Hero hero;
+    Hero? hero;
   }
 ```
 
@@ -794,7 +796,7 @@ Add the following imports:
 
 <?code-excerpt "lib/src/hero_component.dart (added-imports)" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
   // ···
   import 'hero_service.dart';
   import 'route_paths.dart';
@@ -833,7 +835,7 @@ extracts the `id` from the [RouterState.parameters][] map.
 
 <?code-excerpt "lib/src/route_paths.dart (getId)" title?>
 ```
-  int getId(Map<String, String> parameters) {
+  int? getId(Map<String, String> parameters) {
     final id = parameters[idParam];
     return id == null ? null : int.tryParse(id);
   }
@@ -885,12 +887,12 @@ Migrate the template to its own file called `hero_component.html`:
 <?code-excerpt "lib/src/hero_component.html" title?>
 ```
   <div *ngIf="hero != null">
-    <h2>{!{hero.name}!}</h2>
+    <h2>{!{hero!.name}!}</h2>
     <div>
-      <label>id: </label>{!{hero.id}!}</div>
+      <label>id: </label>{!{hero!.id}!}</div>
     <div>
       <label>name: </label>
-      <input [(ngModel)]="hero.name" placeholder="name" />
+      <input [(ngModel)]="hero!.name" placeholder="name" />
     </div>
     <button (click)="goBack()">Back</button>
   </div>
@@ -1014,7 +1016,7 @@ Add the following HTML fragment at the bottom of the template where the `<my-her
 ```
   <div *ngIf="selected != null">
     <h2>
-      {!{$pipe.uppercase(selected.name)}!} is my hero
+      {!{$pipe.uppercase(selected!.name)}!} is my hero
     </h2>
     <button (click)="gotoDetail()">View Details</button>
   </div>
@@ -1024,7 +1026,7 @@ Add the following import and method stub to `HeroListComponent`:
 
 <?code-excerpt "lib/src/hero_list_component.dart (gotoDetail stub)" title retain="/^\s*($|[^_\s])/" replace="/(.*?=\x3E).*/$1 null;/g"?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
   // ···
   class HeroListComponent implements OnInit {
     // ···
@@ -1041,7 +1043,7 @@ that's included in the interpolation binding, right after the pipe operator ( | 
 
 <?code-excerpt "lib/src/hero_list_component.html (pipe)"?>
 ```
-  {!{$pipe.uppercase(selected.name)}!} is my hero
+  {!{$pipe.uppercase(selected!.name)}!} is my hero
 ```
 
 Pipes are a good way to format strings, currency amounts, dates and other display data.
@@ -1088,8 +1090,8 @@ Here's the revised `HeroListComponent` class:
   class HeroListComponent implements OnInit {
     final HeroService _heroService;
     final Router _router;
-    List<Hero> heroes;
-    Hero selected;
+    List<Hero> heroes = <Hero>[];
+    Hero? selected;
 
     HeroListComponent(this._heroService, this._router);
 
@@ -1105,7 +1107,7 @@ Here's the revised `HeroListComponent` class:
         RoutePaths.hero.toUrl(parameters: {idParam: '$id'});
 
     Future<NavigationResult> gotoDetail() =>
-        _router.navigate(_heroUrl(selected.id));
+        _router.navigate(_heroUrl(selected!.id));
   }
 ```
 

@@ -50,12 +50,12 @@ When testing a component that expects a service, you need to supply the
 `NgTestBed` with a root injector factory. The provider list of the generated
 injector factory can contain both real and mock services, as shown here:
 
-<?code-excerpt "toh-5/test/heroes.dart (rootInjector)" title remove="Probe" replace="/injector.factory/rootInjector/g; /rootInjector(?!\$)/[!$&!]/g"?>
+<?code-excerpt "toh-5/test/heroes_test.dart (rootInjector)" title remove="Probe" replace="/injector.factory/rootInjector/g; /rootInjector(?!\$)/[!$&!]/g"?>
 ```
   import 'package:angular_tour_of_heroes/src/hero_list_component.template.dart'
       as ng;
   // ···
-  import 'heroes.template.dart' as self;
+  import 'heroes_test.template.dart' as self;
   // ···
   @GenerateInjector([
     ClassProvider(HeroService),
@@ -64,8 +64,10 @@ injector factory can contain both real and mock services, as shown here:
   final InjectorFactory [!rootInjector!] = self.rootInjector$Injector;
 
   void main() {
-    final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
-        [!rootInjector!]: [!rootInjector!]);
+    final testBed = NgTestBed<HeroListComponent>(
+      ng.HeroListComponentNgFactory,
+      [!rootInjector!]: [!rootInjector!],
+    );
     // ···
   }
 ```

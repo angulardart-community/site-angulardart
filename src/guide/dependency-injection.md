@@ -352,8 +352,8 @@ as an argument to the [runApp()][] function. For example, the app from the
 <?code-excerpt path-base="examples/ng/doc"?>
 <?code-excerpt "toh-5/web/main.dart" title replace="/injector(?!\$)/[!$&!]/g; /\binjector\b/rootInjector/g"?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
 
   import 'main.template.dart' as self;
@@ -467,12 +467,12 @@ For example, the [tutorial (part 5)](../tutorial/toh-pt5) has a
 injector:
 
 <?code-excerpt path-base="examples/ng/doc"?>
-<?code-excerpt "toh-5/test/heroes.dart (rootInjector)" title remove="Probe" replace="/injector.factory/rootInjector/g; /rootInjector(?!\$)|MockRouter/[!$&!]/g"?>
+<?code-excerpt "toh-5/test/heroes_test.dart (rootInjector)" title remove="Probe" replace="/injector.factory/rootInjector/g; /rootInjector(?!\$)|MockRouter/[!$&!]/g"?>
 ```
   import 'package:angular_tour_of_heroes/src/hero_list_component.template.dart'
       as ng;
   // ···
-  import 'heroes.template.dart' as self;
+  import 'heroes_test.template.dart' as self;
   // ···
   @GenerateInjector([
     ClassProvider(HeroService),
@@ -481,8 +481,10 @@ injector:
   final InjectorFactory [!rootInjector!] = self.rootInjector$Injector;
 
   void main() {
-    final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
-        [!rootInjector!]: [!rootInjector!]);
+    final testBed = NgTestBed<HeroListComponent>(
+      ng.HeroListComponentNgFactory,
+      [!rootInjector!]: [!rootInjector!],
+    );
     // ···
   }
 ```

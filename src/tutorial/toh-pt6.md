@@ -65,15 +65,22 @@ Update package dependencies by adding the Dart [http][] and
 ```diff
 --- toh-5/pubspec.yaml
 +++ toh-6/pubspec.yaml
-@@ -9,3 +9,5 @@
--  angular: ^7.0.2
--  angular_forms: ^4.0.1
--  angular_router: ^3.0.1
-+  ngdart: ^7.0.2
-+  ngforms: ^4.0.1
-+  ngrouter: ^3.0.1
+@@ -9,12 +9,14 @@
+   ngdart: ^7.0.2
+   ngforms: ^4.0.1
+   ngrouter: ^3.0.1
 +  http: ^0.13.4
 +  stream_transform: ^2.0.0
+
+ dev_dependencies:
+   ngtest: ^4.0.1
+   build_runner: ^2.1.8
+   build_test: ^2.1.5
+   build_web_compilers: ^3.2.2
+-  mockito: ^5.1.0
++  mockito: ^5.3.0
+   ngpageloader: ^5.0.0
+   test: ^1.6.0
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-6"?>
