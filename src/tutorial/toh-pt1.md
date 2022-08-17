@@ -189,34 +189,23 @@ compiler doesn't recognize `ngModel`, and issues a parse error for
 
 <?code-excerpt path-base="examples/ng/doc"?>
 
-The `angular_forms` library comes in its own package. Add the package to the pubspec dependencies:
+The `ngforms` (also called `angular_forms`) library comes in its own package. Add the package to the pubspec dependencies:
 
-<?code-excerpt "toh-0/pubspec.yaml" diff-with="toh-1/pubspec.yaml" from="dependencies" to="angular_forms"?>
+<?code-excerpt "toh-0/pubspec.yaml" diff-with="toh-1/pubspec.yaml" from="dependencies" to="ngforms"?>
 ```diff
 --- toh-0/pubspec.yaml
 +++ toh-1/pubspec.yaml
-@@ -7,10 +7,12 @@
-
+@@ -8,2 +8,3 @@
  dependencies:
    ngdart: ^7.0.2
 +  ngforms: ^4.0.1
-
- dev_dependencies:
-   ngtest: ^4.0.1
--  build_runner: ^2.1.7
-+  build_runner: ^2.1.8
-   build_test: ^2.1.5
-   build_web_compilers: ^3.2.2
--  test: ^1.20.1
-+  ngpageloader: ^5.0.0
-+  test: ^1.6.0
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-1"?>
 
 ### Add _@Component(directives: ...)_ {#component-directives}
 
-Although `NgModel` is a valid Angular directive defined in the [angular_forms][]
+Although `NgModel` is a valid Angular directive defined in the [ngforms][]
 library, it isn't available by default.
 
 Before you can use any Angular directives in a template,
@@ -273,7 +262,7 @@ In the [next tutorial page](toh-pt2), you'll build on the Tour of Heroes app to 
 You'll also allow the user to select heroes and display their details.
 You'll learn more about how to retrieve lists and bind them to the template.
 
-[angular_forms]: {{site.api}}/angular_forms
+[ngforms]: {{site.api}}/angular_forms
 [webdev serve]: {{site.pub-pkg}}/webdev#usage
 [formDirectives]: {{site.pub-api}}/angular_forms/{{site.data.pkg-vers.angular.vers}}/angular_forms/formDirectives-constant.html
 [interpolation syntax]: /guide/template-syntax#interpolation

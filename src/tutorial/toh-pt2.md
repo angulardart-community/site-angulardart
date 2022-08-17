@@ -307,8 +307,11 @@ So replace the `hero` property with this simple `selected` property:
   Hero? selected;
 ```
 
-The hero names should all be unselected before the user picks a hero, so
-you won't initialize the `selected` as you did with `hero`.
+We use the `?` to indicate that `selected` can be `null` since you won't
+initialize `selected` as you did with `hero`. The hero names should
+all be unselected (in other words, `selected` should remain `null`) before the user picks
+a hero. You can learn more about Dart's null safety feature at [Sound null safety
+overview](https://dart.dev/null-safety).
 
 Add an `onSelect()` method that sets the `selected` property to the `hero` that the user clicks.
 
@@ -330,15 +333,22 @@ Bind to the new `selected` property instead as follows:
   </div>
 ```
 
+(Note the `!` after `selected`. It is a [null assertion
+operator](https://dart.dev/null-safety/understanding-null-safety#null-assertion-operator)
+that tells the Dart compiler that `selected` is not
+null here and its properties can be accessed safely. Indeed, why would we want
+to show a hero's id and name when he/she is null?)
+
+
 ### Hide the empty detail with ngIf
 
 When the app loads, `selected` is null.
-The selected hero is initialized when the user clicks a hero's name.
+The selected hero is only initialized after the user clicks a hero's name.
 Angular can't display properties of the null `selected` and throws the following error,
 visible in the browser's console:
 
 ```nocode
-  EXCEPTION: TypeError: Cannot read property 'name' of undefined in [null]
+EXCEPTION: Unexpected null value.
 ```
 
 Although `selected.name` is displayed in the template,
@@ -398,12 +408,13 @@ In the template, add the following binding to  the `<li>` tag:
   [class.selected]="hero == selected"
 ```
 
-When the expression (`hero === selected`) is `true`, Angular adds the `selected` CSS class.
+When the expression (`hero == selected`) is `true`, Angular adds the `selected` CSS class.
 When the expression is `false`, Angular removes the `selected` class.
 
 
 <div class="l-sub-section" markdown="1">
-  The `===` operator tests whether the given objects are [identical][].
+  The `==` operator tests whether the given objects are [identical][], just like
+  in normal Dart code.
 
   Read more about the `[class]` binding in the [Template Syntax](../guide/template-syntax#ngClass "Template syntax: NgClass") guide.
 </div>
