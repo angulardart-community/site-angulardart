@@ -38,14 +38,14 @@ Add the package to the pubspec dependencies:
 ```diff
 --- toh-0/pubspec.yaml
 +++ toh-1/pubspec.yaml
-@@ -11,6 +12,5 @@
+@@ -11,6 +12,7 @@
  dev_dependencies:
-   ngtest: ^4.0.1
--  build_runner: ^2.1.7
-+  build_runner: ^2.1.8
+   ngtest: ^4.1.1
+   build_runner: ^2.2.0
    build_test: ^2.1.5
-   build_web_compilers: ^3.2.2
--  test: ^1.20.1
+   build_web_compilers: ^3.2.4
++  ngpageloader: ^5.0.0
+   test: ^1.21.0
 ```
 
 ## Imports
@@ -65,11 +65,8 @@ Update the imports at the top of your test file:
 ```diff
 --- toh-0/test/app_test.dart
 +++ toh-1/test/app_test.dart
-@@ -1,8 +1,11 @@
- @TestOn('browser')
-
--import 'package:ngtest/angular_test.dart';
-+import 'package:ngtest/ngtest.dart';
+@@ -3,6 +3,9 @@
+ import 'package:ngtest/ngtest.dart';
  import 'package:angular_tour_of_heroes/app_component.dart';
  import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
 +import 'package:ngpageloader/html.dart';

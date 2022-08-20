@@ -159,7 +159,7 @@ Now Angular knows to supply a `HeroService` instance when it creates a new `AppC
 </div>
 
 The *injector* doesn't know yet how to create a `HeroService`.
-If you ran the code now, Angular would fail with this error:
+If you run the code now, Angular would fail with this error:
 
 ```
 EXCEPTION: No provider for HeroService! (AppComponent -> HeroService)
@@ -180,7 +180,7 @@ The `AppComponent`, as well as its child components, can use that service to get
 ### The *AppComponent.getHeroes()* method
 
 Add a `getHeroes()` method to the app component,
-and **remove** the `heroes` initializer:
+and give `heroes` an empty list as its initial value.
 
 <?code-excerpt "lib/app_component_1.dart (heroes and getHeroes)" title?>
 ```
@@ -191,7 +191,16 @@ and **remove** the `heroes` initializer:
   }
 ```
 
+**Note:** we can absolutely mark `heroes` as `late` and remove its initializer.
+Our code will still run fine. However, we recommend avoid using `late`, because
+as your code gets complicated it's harder to avoid using the variable before it
+is assigned. Instead, try giving it a default/dummy value that will not produce
+any unintended output even when it's called, just like what we did here.
+Question to the avid developer: What would happen if `heroes` is always an empty
+list?
+
 <a id="oninit"></a>
+
 ### The *ngOnInit* lifecycle hook
 
 `AppComponent` should fetch and display hero data with no issues.
