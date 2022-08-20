@@ -164,28 +164,18 @@ In other words, users should be able to navigate to the list of heroes.
 
 ### Update the pubspec
 
-Use the Angular router ([angular_router][]) to enable navigation. Since the
+Use the Angular router ([ngrouter][]) to enable navigation. Since the
 router is in its own package, first add the package to the app's pubspec:
 
-<?code-excerpt "toh-4/pubspec.yaml" diff-with="toh-5/pubspec.yaml" to="angular_router"?>
+<?code-excerpt "toh-4/pubspec.yaml" diff-with="toh-5/pubspec.yaml" to="ngrouter"?>
 ```diff
 --- toh-4/pubspec.yaml
 +++ toh-5/pubspec.yaml
-@@ -8,11 +8,13 @@
+@@ -8,3 +8,4 @@
  dependencies:
-   ngdart: ^7.0.2
-   ngforms: ^4.0.1
-+  ngrouter: ^3.0.1
-
- dev_dependencies:
-   ngtest: ^4.0.1
-   build_runner: ^2.1.8
-   build_test: ^2.1.5
-   build_web_compilers: ^3.2.2
-+  mockito: ^5.1.0
-   ngpageloader: ^5.0.0
--  test: ^1.6.3
-+  test: ^1.6.0
+   ngdart: ^7.1.1
+   ngforms: ^4.1.1
++  ngrouter: ^3.1.1
 ```
 
 Not all apps need routing, which is why the Angular router is
@@ -1289,16 +1279,16 @@ you’ll replace the mock data with data retrieved from a server using http.
 
 {%comment%}TODO: Add Recap and What's next sections{%endcomment%}
 
-[angular_router]: {{site.api}}/angular_router
+[angular_router]: {{site.api}}/ngrouter
 [commonPipes]: {{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/commonPipes-constant.html
 [deep linking]: https://en.wikipedia.org/wiki/Deep_linking
 [master styles]: https://raw.githubusercontent.com/angular/angular.io/master/public/docs/_examples/_boilerplate/src/styles.css
 [HashLocationStrategy]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/HashLocationStrategy-class.html
-[Location]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/Location-class.html
-[OnActivate]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/OnActivate-class.html
+[Location]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/Location-class.html
+[OnActivate]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/OnActivate-class.html
 [onActivate()]: /guide/router/5#on-activate
 [property binding]: /guide/template-syntax#property-binding
-[PathLocationStrategy]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/PathLocationStrategy-class.html
+[PathLocationStrategy]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/PathLocationStrategy-class.html
 [router lifecycle hook]: /guide/router/5
 [RouteDefinition]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/RouteDefinition-class.html
 [routerDirectives]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/routerDirectives-constant.html
