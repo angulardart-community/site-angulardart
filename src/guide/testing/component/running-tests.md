@@ -28,14 +28,14 @@ includes a few basic tests for its `AppComponent` in the following test file:
 ```
   @TestOn('browser')
 
-  import 'package:angular_test/angular_test.dart';
+  import 'package:ngtest/ngtest.dart';
   import 'package:angular_tour_of_heroes/app_component.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
   import 'package:test/test.dart';
 
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
 
     setUp(() async {
       fixture = await testBed.create();

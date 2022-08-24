@@ -133,7 +133,7 @@ The first draft looks like this:
 
 <?code-excerpt "lib/app_component_1.dart" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   import 'src/hero_service.dart';
   import 'src/hero_list_component.dart';
@@ -164,18 +164,18 @@ In other words, users should be able to navigate to the list of heroes.
 
 ### Update the pubspec
 
-Use the Angular router ([angular_router][]) to enable navigation. Since the
+Use the Angular router ([ngrouter][]) to enable navigation. Since the
 router is in its own package, first add the package to the app's pubspec:
 
-<?code-excerpt "toh-4/pubspec.yaml" diff-with="toh-5/pubspec.yaml" to="angular_router"?>
+<?code-excerpt "toh-4/pubspec.yaml" diff-with="toh-5/pubspec.yaml" to="ngrouter"?>
 ```diff
 --- toh-4/pubspec.yaml
 +++ toh-5/pubspec.yaml
 @@ -8,3 +8,4 @@
  dependencies:
-   angular: ^7.0.2
-   angular_forms: ^4.0.1
-+  angular_router: ^3.0.1
+   ngdart: ^7.1.1
+   ngforms: ^4.1.1
++  ngrouter: ^3.1.1
 ```
 
 Not all apps need routing, which is why the Angular router is
@@ -193,7 +193,7 @@ the router library:
 
 <?code-excerpt "lib/app_component.dart (angular_router)" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 ```
 
 ### Make the router available
@@ -203,8 +203,8 @@ an injector seeded with [routerProvidersHash][]:
 
 <?code-excerpt "web/main.dart" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
 
   import 'main.template.dart' as self;
@@ -253,7 +253,7 @@ First create a file to hold route paths. Initialize it with this content:
 
 <?code-excerpt "lib/src/route_paths.dart" region="v1" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   class RoutePaths {
     static final heroes = RoutePath(path: 'heroes');
@@ -264,7 +264,7 @@ As a first route, define a route to the heroes component:
 
 <?code-excerpt "lib/src/routes.dart (a first route)" plaster="none" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   import 'route_paths.dart';
   import 'hero_list_component.template.dart' as hero_list_template;
@@ -419,8 +419,8 @@ and the list of heroes displays.
 
 <?code-excerpt "lib/app_component.dart" remove="/style|[Dd]ash/" title?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
 
   import 'src/hero_service.dart';
   import 'src/routes.dart';
@@ -455,7 +455,7 @@ To add another view, create a placeholder `DashboardComponent`.
 
 <?code-excerpt "lib/src/dashboard_component_1.dart (v1)" region="" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   @Component(
     selector: 'my-dashboard',
@@ -606,7 +606,7 @@ In `dashboard_component.dart`, add the following `import` statements.
 
 <?code-excerpt "lib/src/dashboard_component_2.dart (imports)" title?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   import 'hero.dart';
   import 'hero_service.dart';
@@ -617,7 +617,7 @@ Now create the `DashboardComponent` class like this:
 <?code-excerpt "lib/src/dashboard_component_2.dart (class)" title?>
 ```
   class DashboardComponent implements OnInit {
-    List<Hero> heroes;
+    List<Hero> heroes = <Hero>[];
 
     final HeroService _heroService;
 
@@ -731,8 +731,8 @@ Here's what the `HeroComponent` looks like now:
 
 <?code-excerpt "../toh-4/lib/src/hero_component.dart" region="" title="lib/src/hero_component.dart (current)" linenums?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_forms/angular_forms.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngforms/ngforms.dart';
 
   import 'hero.dart';
 
@@ -740,11 +740,11 @@ Here's what the `HeroComponent` looks like now:
     selector: 'my-hero',
     template: '''
       <div *ngIf="hero != null">
-        <h2>{!{hero.name}!}</h2>
-        <div><label>id: </label>{!{hero.id}!}</div>
+        <h2>{!{hero!.name}!}</h2>
+        <div><label>id: </label>{!{hero!.id}!}</div>
         <div>
           <label>name: </label>
-          <input [(ngModel)]="hero.name" placeholder="name"/>
+          <input [(ngModel)]="hero!.name" placeholder="name"/>
         </div>
       </div>
     ''',
@@ -752,7 +752,13 @@ Here's what the `HeroComponent` looks like now:
   )
   class HeroComponent {
     @Input()
-    Hero hero;
+    Hero? hero;
+
+    void bruh(Hero? h) {
+      if (h != null) {
+        print(h.name);
+      }
+    }
   }
 ```
 
@@ -767,7 +773,7 @@ you can **remove the `@Input()` annotation** from the `hero` field:
 <?code-excerpt "lib/src/hero_component.dart (hero with @Input removed)" region="hero" replace="/implements \w+ //g" plaster="none" title?>
 ```
   class HeroComponent {
-    Hero hero;
+    Hero? hero;
   }
 ```
 
@@ -780,7 +786,7 @@ Add the following imports:
 
 <?code-excerpt "lib/src/hero_component.dart (added-imports)" title?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
   // ···
   import 'hero_service.dart';
   import 'route_paths.dart';
@@ -819,7 +825,7 @@ extracts the `id` from the [RouterState.parameters][] map.
 
 <?code-excerpt "lib/src/route_paths.dart (getId)" title?>
 ```
-  int getId(Map<String, String> parameters) {
+  int? getId(Map<String, String> parameters) {
     final id = parameters[idParam];
     return id == null ? null : int.tryParse(id);
   }
@@ -871,12 +877,12 @@ Migrate the template to its own file called `hero_component.html`:
 <?code-excerpt "lib/src/hero_component.html" title?>
 ```
   <div *ngIf="hero != null">
-    <h2>{!{hero.name}!}</h2>
+    <h2>{!{hero!.name}!}</h2>
     <div>
-      <label>id: </label>{!{hero.id}!}</div>
+      <label>id: </label>{!{hero!.id}!}</div>
     <div>
       <label>name: </label>
-      <input [(ngModel)]="hero.name" placeholder="name" />
+      <input [(ngModel)]="hero!.name" placeholder="name" />
     </div>
     <button (click)="goBack()">Back</button>
   </div>
@@ -1000,7 +1006,7 @@ Add the following HTML fragment at the bottom of the template where the `<my-her
 ```
   <div *ngIf="selected != null">
     <h2>
-      {!{$pipe.uppercase(selected.name)}!} is my hero
+      {!{$pipe.uppercase(selected!.name)}!} is my hero
     </h2>
     <button (click)="gotoDetail()">View Details</button>
   </div>
@@ -1010,7 +1016,7 @@ Add the following import and method stub to `HeroListComponent`:
 
 <?code-excerpt "lib/src/hero_list_component.dart (gotoDetail stub)" title retain="/^\s*($|[^_\s])/" replace="/(.*?=\x3E).*/$1 null;/g"?>
 ```
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngrouter/ngrouter.dart';
   // ···
   class HeroListComponent implements OnInit {
     // ···
@@ -1027,7 +1033,7 @@ that's included in the interpolation binding, right after the pipe operator ( | 
 
 <?code-excerpt "lib/src/hero_list_component.html (pipe)"?>
 ```
-  {!{$pipe.uppercase(selected.name)}!} is my hero
+  {!{$pipe.uppercase(selected!.name)}!} is my hero
 ```
 
 Pipes are a good way to format strings, currency amounts, dates and other display data.
@@ -1074,8 +1080,8 @@ Here's the revised `HeroListComponent` class:
   class HeroListComponent implements OnInit {
     final HeroService _heroService;
     final Router _router;
-    List<Hero> heroes;
-    Hero selected;
+    List<Hero> heroes = <Hero>[];
+    Hero? selected;
 
     HeroListComponent(this._heroService, this._router);
 
@@ -1091,7 +1097,7 @@ Here's the revised `HeroListComponent` class:
         RoutePaths.hero.toUrl(parameters: {idParam: '$id'});
 
     Future<NavigationResult> gotoDetail() =>
-        _router.navigate(_heroUrl(selected.id));
+        _router.navigate(_heroUrl(selected!.id));
   }
 ```
 
@@ -1273,16 +1279,16 @@ you’ll replace the mock data with data retrieved from a server using http.
 
 {%comment%}TODO: Add Recap and What's next sections{%endcomment%}
 
-[angular_router]: {{site.api}}/angular_router
+[angular_router]: {{site.api}}/ngrouter
 [commonPipes]: {{site.pub-api}}/angular/{{site.data.pkg-vers.angular.vers}}/angular/commonPipes-constant.html
 [deep linking]: https://en.wikipedia.org/wiki/Deep_linking
 [master styles]: https://raw.githubusercontent.com/angular/angular.io/master/public/docs/_examples/_boilerplate/src/styles.css
 [HashLocationStrategy]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/HashLocationStrategy-class.html
-[Location]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/Location-class.html
-[OnActivate]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/OnActivate-class.html
+[Location]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/Location-class.html
+[OnActivate]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/OnActivate-class.html
 [onActivate()]: /guide/router/5#on-activate
 [property binding]: /guide/template-syntax#property-binding
-[PathLocationStrategy]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/PathLocationStrategy-class.html
+[PathLocationStrategy]: {{site.pub-api}}/ngrouter/{{site.data.pkg-vers.angular.vers}}/angular_router/PathLocationStrategy-class.html
 [router lifecycle hook]: /guide/router/5
 [RouteDefinition]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/RouteDefinition-class.html
 [routerDirectives]: {{site.pub-api}}/angular_router/{{site.data.pkg-vers.angular.vers}}/angular_router/routerDirectives-constant.html

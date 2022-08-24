@@ -68,7 +68,7 @@ FROM dart as node
 
 RUN set -eu; \
     NODE_PPA="node_ppa.sh"; \
-    NODE_SHA256=9820c0fcf01527ffd3b2077de1f76d4bbe67bdb38df9d12fa195d7eea1521e8a; \
+    NODE_SHA256=27932797347f900242caaaeba5c1d7c965b3da70566d81123b15be1c0b80cc2c; \
     curl -fsSL https://deb.nodesource.com/setup_lts.x -o "$NODE_PPA"; \
     echo "$NODE_SHA256 $NODE_PPA" | sha256sum --check --status --strict - || (\
         echo -e "\n\nNODE CHECKSUM FAILED! Run tool/fetch-node-ppa-sum.sh for updated values.\n\n" && \
@@ -100,5 +100,5 @@ ENV BASE_DIR=/site
 ENV TOOL_DIR=$BASE_DIR/tool
 
 # Jekyl
-EXPOSE 5000
 EXPOSE 35729
+EXPOSE 5000

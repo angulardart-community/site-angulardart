@@ -65,12 +65,15 @@ Update package dependencies by adding the Dart [http][] and
 ```diff
 --- toh-5/pubspec.yaml
 +++ toh-6/pubspec.yaml
-@@ -9,3 +9,5 @@
-   angular: ^7.0.2
-   angular_forms: ^4.0.1
-   angular_router: ^3.0.1
+@@ -9,6 +9,8 @@
+   ngdart: ^7.1.1
+   ngforms: ^4.1.1
+   ngrouter: ^3.1.1
 +  http: ^0.13.4
 +  stream_transform: ^2.0.0
+
+ dev_dependencies:
+   ngtest: ^4.1.1
 ```
 
 <?code-excerpt path-base="examples/ng/doc/toh-6"?>
@@ -84,8 +87,8 @@ so provide it through the app's root injector:
 
 <?code-excerpt "web/main_1.dart" title linenums replace="/_\d//g"?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
   import 'package:http/browser_client.dart';
 
@@ -121,8 +124,8 @@ Update `web/main.dart` with this version, which uses the mock service:
 
 <?code-excerpt "web/main.dart" title linenums?>
 ```
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
   import 'package:angular_tour_of_heroes/in_memory_data_service.dart';
   import 'package:http/http.dart';
@@ -175,12 +178,13 @@ implementations.
       {'id': 19, 'name': 'Magma'},
       {'id': 20, 'name': 'Tornado'}
     ];
-    static List<Hero> _heroesDb;
-    static int _nextId;
+
+    static late List<Hero> _heroesDb;
+    static late int _nextId;
 
     static Future<Response> _handler(Request request) async {
-      if (_heroesDb == null) resetDb();
       var data;
+
       switch (request.method) {
         case 'GET':
           final id = int.tryParse(request.url.pathSegments.last);
@@ -217,15 +221,17 @@ implementations.
           headers: {'content-type': 'application/json'});
     }
 
-    static resetDb() {
+    static void resetDb() {
       _heroesDb = _initialHeroes.map((json) => Hero.fromJson(json)).toList();
       _nextId = _heroesDb.map((hero) => hero.id).fold(0, max) + 1;
     }
 
     static String lookUpName(int id) =>
-        _heroesDb.firstWhere((hero) => hero.id == id, orElse: null)?.name;
+        _heroesDb.firstWhere((hero) => hero.id == id, orElse: null).name;
 
-    InMemoryDataService() : super(_handler);
+    InMemoryDataService() : super(_handler) {
+      resetDb();
+    }
   }
 ```
 
@@ -418,7 +424,7 @@ Add the following `save()` method, which persists hero name changes using the he
 <?code-excerpt "lib/src/hero_component.dart (save)" title?>
 ```
   Future<void> save() async {
-    await _heroService.update(hero);
+    await _heroService.update(hero!);
     goBack();
   }
 ```
@@ -436,8 +442,8 @@ The overall structure of the `update()` method is similar to that of
   Future<Hero> update(Hero hero) async {
     try {
       final url = '$_heroesUrl/${hero.id}';
-      final response =
-          await _http.put(Uri.parse(url), headers: _headers, body: json.encode(hero));
+      final response = await _http.put(Uri.parse(url),
+          headers: _headers, body: json.encode(hero));
       return Hero.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
@@ -465,7 +471,7 @@ the heading:
 ```
   <div>
     <label>Hero name:</label> <input #heroName />
-    <button (click)="add(heroName.value)">
+    <button (click)="add(heroName)">
       Add
     </button>
   </div>
@@ -476,12 +482,12 @@ clear the input field so that it's ready for another name.
 
 <?code-excerpt "lib/src/hero_list_component.dart (add)" title?>
 ```
-  Future<void> add(String name) async {
-    name = name.trim();
-    if (name.isEmpty) return;
+  Future<void> add(InputElement event) async {
+    final String? name = event.value?.trim();
+    if (name == null || name.isEmpty) return;
     heroes.add(await _heroService.create(name));
     selected = null;
-  name = '';
+    event.value = "";
   }
 ```
 
@@ -546,8 +552,8 @@ The logic of the `delete()` handler is a bit trickier:
     heroes.remove(hero);
     if (selected == hero) selected = null;
 
-  // This makes any component **above** <my-hero>
-  event.stopPropagation();
+    // This makes any component **above** <my-hero>
+    event.stopPropagation();
   }
 ```
 
@@ -654,8 +660,8 @@ The component template is simple&mdash;just a text box and a list of matching se
   <div id="search-component">
     <h4>Hero Search</h4>
     <input #searchBox id="search-box"
-           (change)="search(searchBox.value)"
-           (keyup)="search(searchBox.value)" />
+           (change)="search(searchBox.value ?? '')"
+           (keyup)="search(searchBox.value ?? '')" />
     <div>
       <div *ngFor="let hero of $pipe.async(heroes)"
            (click)="gotoDetail(hero)" class="search-result" >
@@ -701,8 +707,8 @@ Create the `HeroSearchComponent` class and metadata.
 ```
   import 'dart:async';
 
-  import 'package:angular/angular.dart';
-  import 'package:angular_router/angular_router.dart';
+  import 'package:ngdart/angular.dart';
+  import 'package:ngrouter/ngrouter.dart';
   import 'package:stream_transform/stream_transform.dart';
 
   import 'route_paths.dart';
@@ -721,7 +727,7 @@ Create the `HeroSearchComponent` class and metadata.
     HeroSearchService _heroSearchService;
     Router _router;
 
-    Stream<List<Hero>> heroes;
+    late Stream<List<Hero>> heroes;
     StreamController<String> _searchTerms = StreamController<String>.broadcast();
 
     HeroSearchComponent(this._heroSearchService, this._router) {}
@@ -772,7 +778,7 @@ You can turn the stream of search terms into a stream of `Hero` lists and assign
 
 <?code-excerpt "lib/src/hero_search_component.dart (search)"?>
 ```
-  Stream<List<Hero>> heroes;
+  late Stream<List<Hero>> heroes;
   // ···
   void ngOnInit() async {
     heroes = _searchTerms.stream

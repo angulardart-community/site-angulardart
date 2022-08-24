@@ -27,11 +27,11 @@ under **`dev_dependencies`**, for example:
 <?code-excerpt "toh-0/pubspec.yaml (dev_dependencies)" title?>
 ```
   dev_dependencies:
-    angular_test: ^4.0.1
-    build_runner: ^2.1.7
+    ngtest: ^4.1.1
+    build_runner: ^2.2.0
     build_test: ^2.1.5
-    build_web_compilers: ^3.2.2
-    test: ^1.20.1
+    build_web_compilers: ^3.2.4
+    test: ^1.21.0
 ```
 
 ## API basics: _test_() and _expect_()
@@ -59,7 +59,7 @@ Component tests must explicitly define the **component under test**. You define 
   // ···
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
     // ···
   }
 ```
@@ -73,14 +73,14 @@ before it moves on to the next test group, if any. Here is an example:
 ```
   @TestOn('browser')
 
-  import 'package:angular_test/angular_test.dart';
+  import 'package:ngtest/ngtest.dart';
   import 'package:angular_tour_of_heroes/app_component.dart';
   import 'package:angular_tour_of_heroes/app_component.template.dart' as ng;
   import 'package:test/test.dart';
 
   void main() {
     final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory);
-    NgTestFixture<AppComponent> fixture;
+    late NgTestFixture<AppComponent> fixture;
 
     setUp(() async {
       fixture = await testBed.create();

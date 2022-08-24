@@ -1,0 +1,39 @@
+name: Docker CI
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/docker.yml
+      - Dockerfile
+      - pubspec.yaml
+      - Gemfile
+      - package-lock.json
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  push:
+    permissions:
+      packages: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Build image
+        run: docker compose build
+
+      - name: Push image
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/site
+          VERSION=latest
+
+          docker push $IMAGE_ID:$VERSION

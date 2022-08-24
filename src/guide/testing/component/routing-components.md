@@ -38,7 +38,7 @@ To test using a mock router, you must add the mock router class to the providers
 list of the generated root injector, as described in the section on
 [Component-external services: mock or real](services#component-external-services-mock-or-real):
 
-<?code-excerpt "toh-5/test/heroes.dart (excerpt)" region="providers-with-context" title?>
+<?code-excerpt "toh-5/test/heroes_test.dart (excerpt)" region="providers-with-context" title?>
 ```
   import 'package:angular_tour_of_heroes/src/hero_list_component.template.dart'
       as ng;
@@ -48,12 +48,12 @@ list of the generated root injector, as described in the section on
   import 'package:ngpageloader/html.dart';
   import 'package:test/test.dart';
 
-  import 'heroes.template.dart' as self;
+  import 'heroes_test.template.dart' as self;
   import 'heroes_po.dart';
   import 'utils.dart';
 
-  NgTestFixture<HeroListComponent> fixture;
-  HeroesPO po;
+  late NgTestFixture<HeroListComponent> fixture;
+  late HeroesPO po;
 
   @GenerateInjector([
     ClassProvider(HeroService),
@@ -63,8 +63,10 @@ list of the generated root injector, as described in the section on
 
   void main() {
     final injector = InjectorProbe(rootInjector);
-    final testBed = NgTestBed<HeroListComponent>(ng.HeroListComponentNgFactory,
-        rootInjector: injector.factory);
+    final testBed = NgTestBed<HeroListComponent>(
+      ng.HeroListComponentNgFactory,
+      rootInjector: injector.factory,
+    );
 
     setUp(() async {
       fixture = await testBed.create();
@@ -85,14 +87,14 @@ You'll see an example soon.
 ```
   class InjectorProbe {
     InjectorFactory _parent;
-    Injector _injector;
+    Injector? _injector;
 
     InjectorProbe(this._parent);
 
     InjectorFactory get factory => _factory;
-    Injector get injector => _injector ??= _factory();
+    Injector? get injector => _injector;
 
-    Injector _factory([Injector parent]) => _injector = _parent(parent);
+    Injector _factory(Injector parent) => _injector = _parent(parent);
     T get<T>(dynamic token) => injector?.get(token);
   }
 ```
@@ -104,7 +106,8 @@ appropriate API:
 
 <?code-excerpt "toh-5/test/utils.dart (MockRouter)" title?>
 ```
-  class MockRouter extends Mock implements Router {}
+  @GenerateNiceMocks([MockSpec<Router>()])
+  export 'utils.mocks.dart';
 ```
 
 ### Testing programmatic link navigation
@@ -121,7 +124,7 @@ The button's click event is bound to the `gotoDetail()` method which is defined 
 <?code-excerpt "toh-5/lib/src/hero_list_component.dart (gotoDetail)" title?>
 ```
   Future<NavigationResult> gotoDetail() =>
-      _router.navigate(_heroUrl(selected.id));
+      _router.navigate(_heroUrl(selected!.id));
 ```
 
 In the following test excerpt:
@@ -133,7 +136,7 @@ In the following test excerpt:
 <a id="heroes-go-to-detail-test"></a>
 
 <code-tabs>
-  <?code-pane "toh-5/test/heroes.dart (go-to detail)"?>
+  <?code-pane "toh-5/test/heroes_test.dart (go-to detail)"?>
   <?code-pane "toh-5/test/heroes_po.dart" linenums?>
 </code-tabs>
 
@@ -159,7 +162,7 @@ Since you'll be testing outside of the context
 of the app's `index.html` file, which sets the [\<base href>][base href], you also
 need to provide a value for [appBaseHref][]:
 
-<?code-excerpt "toh-5/test/dashboard.dart (providers)" title replace="/.addInjector[^;]+//g"?>
+<?code-excerpt "toh-5/test/dashboard_test.dart (providers)" title replace="/.addInjector[^;]+//g"?>
 ```
   final testBed = NgTestBed<DashboardComponent>(ng.DashboardComponentNgFactory,
       rootInjector: injector.factory);
@@ -171,7 +174,7 @@ to be called with two arguments. The following test checks for expected
 values for both arguments:
 
 <code-tabs>
-  <?code-pane "toh-5/test/dashboard.dart (go-to detail)"?>
+  <?code-pane "toh-5/test/dashboard_test.dart (go-to detail)"?>
   <?code-pane "toh-5/test/dashboard_po.dart" linenums?>
 </code-tabs>
 
@@ -185,7 +188,7 @@ That's covered next.
 Provisioning and setup for use of a real router is similar to what you've
 seen already:
 
-<?code-excerpt "toh-5/test/app.dart (provisioning and setup)" title?>
+<?code-excerpt "toh-5/test/app_test.dart (provisioning and setup)" title?>
 ```
   final injector = InjectorProbe(rootInjector);
   final testBed = NgTestBed<AppComponent>(ng.AppComponentNgFactory,
@@ -194,7 +197,7 @@ seen already:
   setUp(() async {
     fixture = await testBed.create();
     router = injector.get<Router>(Router);
-    await router?.navigate('/');
+    await router.navigate('/');
     await fixture.update();
     final context =
         HtmlPageLoaderElement.createFromElement(fixture.rootElement);
@@ -217,7 +220,7 @@ Where `routerProvidersForTesting` is defined as follows:
 Among other things, testing the app root using a real router allows you to
 exercise features like [deep linking][]:
 
-<?code-excerpt "toh-5/test/app.dart (deep linking)" title?>
+<?code-excerpt "toh-5/test/app_test.dart (deep linking)" title?>
 ```
   group('Deep linking:', () {
     test('navigate to hero details', () async {
@@ -265,7 +268,7 @@ Before you can test a dashboard, you need to create a test component
 with a router outlet and a suitably (restricted) set of routes, something
 like this:
 
-<?code-excerpt "toh-5/test/dashboard_real_router.dart (TestComponent)" title?>
+<?code-excerpt "toh-5/test/dashboard_real_router_test.dart (TestComponent)" title?>
 ```
   @Component(
     selector: 'test',
@@ -286,11 +289,11 @@ like this:
 The test bed and test fixture are then parameterized over `TestComponent`
 rather than `DashboardComponent`:
 
-<?code-excerpt "toh-5/test/dashboard_real_router.dart (excerpt)" region="providers-with-context" title?>
+<?code-excerpt "toh-5/test/dashboard_real_router_test.dart (excerpt)" region="providers-with-context" title?>
 ```
-  NgTestFixture<TestComponent> fixture;
-  DashboardPO po;
-  Router router;
+  late NgTestFixture<TestComponent> fixture;
+  late DashboardPO po;
+  late Router router;
 
   @GenerateInjector([
     ClassProvider(HeroService),
@@ -300,8 +303,10 @@ rather than `DashboardComponent`:
 
   void main() {
     final injector = InjectorProbe(rootInjector);
-    final testBed = NgTestBed<TestComponent>(self.TestComponentNgFactory,
-        rootInjector: injector.factory);
+    final testBed = NgTestBed<TestComponent>(
+      self.TestComponentNgFactory as ComponentFactory<TestComponent>,
+      rootInjector: injector.factory,
+    );
     // ···
   }
 ```
@@ -309,9 +314,9 @@ rather than `DashboardComponent`:
 One way to test navigation, is to log the real router's change in navigation state.
 You can achieve this by registering a listener:
 
-<?code-excerpt "toh-5/test/dashboard_real_router.dart (setUp)" title?>
+<?code-excerpt "toh-5/test/dashboard_real_router_test.dart (setUp)" title?>
 ```
-  List<RouterState> navHistory;
+  late List<RouterState> navHistory;
 
   setUp(() async {
     fixture = await testBed.create();
@@ -327,7 +332,7 @@ You can achieve this by registering a listener:
 Using this navigation history, the go-to-detail test illustrated previously when
 using a mock router, can be written as follows:
 
-<?code-excerpt "toh-5/test/dashboard_real_router.dart (go to detail)" title?>
+<?code-excerpt "toh-5/test/dashboard_real_router_test.dart (go to detail)" title?>
 ```
   test('select hero and navigate to detail + navHistory', () async {
     await po.selectHero(3);
@@ -347,7 +352,7 @@ the test has the advantage of ensuring that
 Alternatively, for a simple test scenario like go-to-detail,
 you can simply test the last URL cached by the mock platform location:
 
-<?code-excerpt "toh-5/test/dashboard_real_router.dart (excerpt)" region="go-to-detail-alt" title?>
+<?code-excerpt "toh-5/test/dashboard_real_router_test.dart (excerpt)" region="go-to-detail-alt" title?>
 ```
   test('select hero and navigate to detail + mock platform location', () async {
     await po.selectHero(3);

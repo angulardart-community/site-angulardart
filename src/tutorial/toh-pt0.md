@@ -47,7 +47,7 @@ A _component_ is the combination of an HTML template and a component class that 
 
 <?code-excerpt "lib/app_component.dart" title linenums?>
 ```
-  import 'package:angular/angular.dart';
+  import 'package:ngdart/angular.dart';
 
   @Component(
     selector: 'my-app',
