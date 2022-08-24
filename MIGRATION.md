@@ -31,8 +31,8 @@ As always, if you're confused about the little procedure here, ignore everything
   - [x] toh-2
   - [x] toh-3
   - [x] toh-4
-  - [ ] toh-5
-  - [ ] toh-6
+  - [x] toh-5
+  - [x] toh-6
 - Advanced
   - [ ] Attribute Directives
   - [ ] Component Styles
