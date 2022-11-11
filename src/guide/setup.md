@@ -20,14 +20,15 @@ that's featured in this guide and tutorial.
 For information on how to get the Dart SDK,
 see [the Dart site]({{site.dartlang}}/get-dart):
 
-- **Dart SDK** {{site.data.pkg-vers.SDK.vers}} or a compatible version.
+- **Dart SDK** {{site.data.pkg-vers.SDK.vers}} or a compatible version. For
+  AngularDart 7, SDK >= 2.17.0 is required.
 - Your favorite IDE & code editor, such as WebStorm, Eclipse, or **Visual Studio Code** (recommended).
 
 ## Install Command-line Tools
 
 ### webdev
 
-[`webdev`]({{pub-pkg}}/webdev) is an official command-line tool for developing and deploying Dart web applications. You **must** install `webdev` to run AngularDart apps. To install it, open a terminal window and run the following command:
+[`webdev`]({{site.pub-pkg}}/webdev) is an official command-line tool for developing and deploying Dart web applications. You **must** install `webdev` to run AngularDart apps. To install it, open a terminal window and run the following command:
 
 ```terminal
 $ dart pub global activate webdev
@@ -35,13 +36,13 @@ $ dart pub global activate webdev
 
 If this is your first time interacting with Pub global packages, Dart will tell you (in the terminal) to add the system cache `bin` directory to your `PATH` environment variable (see [this guide]({{site.dartlang}}/tools/pub/cmd/pub-global#running-a-script-from-your-path)). For more info on using global packages, see Dart's [official docs]({{site.dartlang}}/tools/pub/cmd/pub-global) about Pub.
 
-### ngdart (recommended)
+### ngdart_cli (recommended)
 
-[`ngdart`]({{pub-pkg}}/ngdart) is a community-maintained command-line tool for creating and managing AngularDart applications. AngularDart can still run without it, but `ngdart` makes your life much easier by providing some handy commands such as `ngdart create <project_name>` to create a new project and `ngdart clean` to clean all build artifacts and cache, similar to `flutter clean` if you come from Flutter. For more info on `ngdart`, see [`ngdart`'s Pub page]({{pub-pkg}}/ngdart).
+[`ngdart_cli`]({{site.pub-pkg}}/ngdart_cli) is a community-maintained command-line tool for creating and managing AngularDart applications. AngularDart can still run without it, but `ngdart_cli` makes your life much easier by providing some handy commands such as `ngdart create <project_name>` to create a new project and `ngdart clean` to clean all build artifacts and cache, similar to `flutter clean` if you come from Flutter. For more info on `ngdart_cli`, see [`ngdart_cli`'s Pub page]({{site.pub-pkg}}/ngdart_cli).
 
-Similar to `webdev`, run the following to install `ngdart`:
+Similar to `webdev`, run the following to install `ngdart_cli`:
 ```terminal
-$ dart pub global activate ngdart
+$ dart pub global activate ngdart_cli
 ```
 
 ### Note for Flutter developers

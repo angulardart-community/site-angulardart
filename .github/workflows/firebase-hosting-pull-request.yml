@@ -6,6 +6,7 @@ on:
   pull_request:
     branches:
       - ready-for-publish
+permissions: write-all
 
 jobs:
   build_and_preview:
