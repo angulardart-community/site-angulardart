@@ -15,9 +15,9 @@ Lastly, please make sure it's not a duplicate issue (but we will definitely not 
 
 As always, if you're confused about the little procedure here, ignore everything above and create an issue and say what you think needs to change or want to change, and we'll be happy to help you out. :)
 
-- Guide
-  - [ ] Overview
-  - [ ] Setup [@GZGavinZhao]
+- Guide [@GZGavinZhao]
+  - [x] Overview
+  - [x] Setup
   - [x] Learning Angular
   - [ ] Architecture
   - [ ] Displaying Data
