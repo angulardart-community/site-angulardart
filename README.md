@@ -8,6 +8,8 @@
 > 
 > Feel free to create & submit **ANY** issues and pull requests! Nothing is too small to fix, even just a typo :)
 
+> A more modern and up-to-date [new website](https://github.com/angulardart-community/website) is on its way!
+
 The [AngularDart](https://angulardart-community.web.app) **community-maintained** documentation site, built with [Jekyll][] and hosted on [Firebase Hosting][Firebase].
 
 [We welcome contributions](CONTRIBUTING.md), and we're [first-timer
